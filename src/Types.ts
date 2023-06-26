@@ -77,10 +77,8 @@ export interface AirportType {
 }
 
 export interface SearchParamsType {
-  from: string;
-  from_airport: string;
-  to: string;
-  to_airport: string;
+  from: AirportType;
+  to: AirportType;
   dept_date: string;
   return_date?: string;
 }
@@ -88,4 +86,9 @@ export interface SearchParamsType {
 export enum SearchType {
   From,
   To,
+}
+
+export enum CallBackType {
+  error,
+  success,
 }
