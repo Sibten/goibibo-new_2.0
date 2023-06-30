@@ -10,7 +10,7 @@ import { RootState } from "../../../store";
 import { useSelector, useDispatch } from "react-redux";
 import { Input, MenuItem, MenuList } from "@material-tailwind/react";
 import { FaPlane } from "react-icons/fa";
-import "./FlightInput.css";
+import "./CityInput.css";
 import { searchActions } from "../../../Actions/Search.action";
 
 export default function FlightInput({ label, type, callback }: MyProps) {
@@ -35,9 +35,9 @@ export default function FlightInput({ label, type, callback }: MyProps) {
   };
 
   const clickSearchParams: SearchParamsType = {
+    ...SearchParams,
     from: SearchParams.from,
     to: SearchParams.to,
-    dept_date: SearchParams.dept_date,
   };
 
   const handleclick = (airport: AirportType) => {

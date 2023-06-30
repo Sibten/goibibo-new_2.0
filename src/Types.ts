@@ -76,11 +76,20 @@ export interface AirportType {
   airport_code: string;
 }
 
+export enum Flighclass {
+  Economy,
+  PremiumEconomy,
+  Business,
+  FirstClass,
+}
+
 export interface SearchParamsType {
   from: AirportType;
   to: AirportType;
   dept_date: string;
   return_date?: string;
+  class: number;
+  pepoles: { adults: number; children?: number; infants?: number };
 }
 
 export enum SearchType {

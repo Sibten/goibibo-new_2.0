@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import { Button } from "@material-tailwind/react";
-import { SearchParamsType, MyProps } from "../../../Types";
+import { SearchParamsType, MyProps, CallBackType } from "../../../Types";
 import { searchActions } from "../../../Actions/Search.action";
 
-export default function JouernyCalender({ type }: MyProps) {
+export default function JouernyCalender({ type, callback }: MyProps) {
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
   const dispatch = useDispatch();
   const [clickParams, setClickParams] = useState<SearchParamsType>({
@@ -18,6 +18,8 @@ export default function JouernyCalender({ type }: MyProps) {
   const setParams = () => {
     console.log(clickParams);
     dispatch(searchActions.setParams(clickParams));
+    if (callback) callback();
+    else console.log("not");
   };
   return (
     <div className="flex flex-col">

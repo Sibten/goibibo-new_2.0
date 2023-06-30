@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SearchParamsType } from "../Types";
+import { Flighclass, SearchParamsType } from "../Types";
 const today = new Date();
 
 const initialState: SearchParamsType = {
@@ -16,10 +16,15 @@ const initialState: SearchParamsType = {
     airport_code: "BOM",
   },
   dept_date: new Date().toISOString(),
-  return_date: new Date(
-    new Date().setDate(new Date().getDate() + 2)
-  ).toISOString(),
+
+  class: Flighclass.Economy,
+  pepoles: {
+    adults: 1,
+    children: 0,
+    infants: 0,
+  },
 };
+console.log(initialState.pepoles.children);
 
 const searchSlice = createSlice({
   name: "Search",
