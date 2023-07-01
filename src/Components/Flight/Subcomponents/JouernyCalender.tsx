@@ -3,23 +3,26 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import { Button } from "@material-tailwind/react";
-import { SearchParamsType, MyProps, CallBackType } from "../../../Types";
+import { SearchParamsType, MyProps, SearchType } from "../../../Types";
 import { searchActions } from "../../../Actions/Search.action";
 
-export default function JouernyCalender({ type, callback }: MyProps) {
+export default function JouernyCalender({ label, type, callback }: MyProps) {
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
   const dispatch = useDispatch();
   const [clickParams, setClickParams] = useState<SearchParamsType>({
     ...SearchParams,
     dept_date: SearchParams.dept_date,
-    return_date: SearchParams.return_date,
+    return_date:
+      SearchParams.return_date ??
+      new Date(
+        new Date().setDate(new Date(SearchParams.dept_date).getDate() + 1)
+      ).toISOString(),
   });
 
   const setParams = () => {
     console.log(clickParams);
     dispatch(searchActions.setParams(clickParams));
     if (callback) callback();
-    else console.log("not");
   };
   return (
     <div className="flex flex-col">
@@ -27,11 +30,15 @@ export default function JouernyCalender({ type, callback }: MyProps) {
         htmlFor=""
         className="absolute text-sm -mt-2 mx-2 bg-white px-2 font-qs font-bold text-blue-500"
       >
-        Departure
+        {label}
       </label>
       <input
         type="date"
-        min={new Date().toISOString().split("T")[0]}
+        min={
+          type == SearchType.From
+            ? new Date().toISOString().split("T")[0]
+            : new Date(SearchParams.dept_date).toISOString().split("T")[0]
+        }
         max={
           new Date(new Date(new Date().setMonth(new Date().getMonth() + 12)))
             .toISOString()
@@ -41,7 +48,13 @@ export default function JouernyCalender({ type, callback }: MyProps) {
         value={
           type == 0
             ? new Date(clickParams.dept_date).toISOString().split("T")[0]
-            : new Date(clickParams.return_date!).toISOString().split("T")[0]
+            : new Date(
+                new Date().setDate(
+                  new Date(SearchParams.dept_date).getDate() + 1
+                )
+              )
+                .toISOString()
+                .split("T")[0]
         }
         onChange={(e) =>
           type == 0

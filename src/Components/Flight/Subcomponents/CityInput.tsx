@@ -8,7 +8,7 @@ import {
 } from "../../../Types";
 import { RootState } from "../../../store";
 import { useSelector, useDispatch } from "react-redux";
-import { Input, MenuItem, MenuList } from "@material-tailwind/react";
+import { MenuItem } from "@material-tailwind/react";
 import { FaPlane } from "react-icons/fa";
 import "./CityInput.css";
 import { searchActions } from "../../../Actions/Search.action";
@@ -27,7 +27,7 @@ export default function FlightInput({ label, type, callback }: MyProps) {
     else
       setAirportData(
         Airports.filter(
-          (s) =>
+          (s: any) =>
             s.city_name.toLowerCase().includes(e.target.value.toLowerCase()) ||
             s.airport_code.toLowerCase().includes(e.target.value.toLowerCase())
         )
@@ -59,17 +59,17 @@ export default function FlightInput({ label, type, callback }: MyProps) {
   };
 
   return (
-    <div className="w-96 overflow-hidden px-2 pt-2">
+    <div className="w-96 overflow-hidden px-2 pt-2 bg-white rounded-lg">
       <div>
         <label className="absolute bg-white mx-4 -mt-2 px-2 text-blue-500 font-qs font-bold capitalize">
           {" "}
           {label}
         </label>
         <input
-          className="text-xl font-qs w-full h-16 p-4 border-blue-500 border-2 focus:outline-blue-600 rounded-lg"
+          className="text-xl font-qs w-full p-2 border-blue-500 border-2 text-black focus:outline-blue-600 rounded-lg"
           onChange={(e) => handleSearch(e)}
         />
-        <div className="h-96 overflow-y-auto inputPred">
+        <div className="h-96 overflow-y-auto inputPred bg-white text-gray-600">
           <ul className="mt-2">
             {airportData.map((a, i) => (
               <MenuItem
@@ -84,7 +84,7 @@ export default function FlightInput({ label, type, callback }: MyProps) {
                       {a.city_name}{" "}
                       <span className="font-light"> ({a.airport_code})</span>
                     </h3>
-                    <p>{a.airport_name}</p>
+                    <p className="font-arial text-xs">{a.airport_name}</p>
                   </div>
                 </li>
               </MenuItem>

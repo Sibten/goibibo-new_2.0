@@ -17,8 +17,8 @@ import {
   SearchParamsType,
   SearchType,
 } from "../../Types";
-import { useState } from "react";
-import SearchAction, { searchActions } from "../../Actions/Search.action";
+import { useEffect, useState } from "react";
+import { searchActions } from "../../Actions/Search.action";
 import JouernyCalender from "./Subcomponents/JouernyCalender";
 import FlightClass from "./Subcomponents/FlightClass";
 import { useNavigate } from "react-router-dom";
@@ -45,7 +45,9 @@ export default function Flightsearch() {
   const [openDateTo, setOpenDateTo] = useState(false);
   const [openClass, setOpenClass] = useState(false);
 
-  const [returnDate, setReturnDate] = useState(false);
+  const [returnDate, setReturnDate] = useState(
+    SearchParams.return_date ? true : false
+  );
 
   const clickCallBack = (type: CallBackType) => {
     setOpenMenuFrom(false);
@@ -55,34 +57,29 @@ export default function Flightsearch() {
     setOpenClass(false);
   };
 
-  const clickSearchParams: SearchParamsType = {
-    ...SearchParams,
-    return_date: new Date(
-      new Date().setDate(new Date().getDate() + 2)
-    ).toISOString(),
-  };
+  const clickSearchParams: SearchParamsType = { ...SearchParams };
+
   const adultsSpelling = SearchParams.pepoles.adults > 1 ? "Adults" : "Adult";
   const childernSpelling =
     SearchParams.pepoles.children! > 1 ? "Children" : "Child";
 
   const navigate = useNavigate();
+
   const searchFlight = () => {
     let url = "";
     if (returnDate) {
-      dispatch(searchActions.setParams(clickSearchParams));
-      url = `${SearchParams.from.airport_code}-${
+      url = `?from=${SearchParams.from.airport_code}&to=${
         SearchParams.to.airport_code
-      }-${SearchParams.dept_date}-${SearchParams.return_date}--${
-        SearchParams.class
-      }-${SearchParams.pepoles.adults + SearchParams.pepoles.children!}`;
+      }&dep_date=${SearchParams.dept_date}&rtn_date=${
+        SearchParams.return_date
+      }&class=${SearchParams.class}&adults=${
+        SearchParams.pepoles.adults}&child=${SearchParams.pepoles.children}&infants=${SearchParams.pepoles.infants}`;
     } else {
-      url = `${SearchParams.from.airport_code}-${
+      url = `?from=${SearchParams.from.airport_code}&to=${
         SearchParams.to.airport_code
-      }-${SearchParams.dept_date}--${SearchParams.class}-${
-        SearchParams.pepoles.adults + SearchParams.pepoles.children!
-      }`;
+      }&dep_date=${SearchParams.dept_date}&class=${SearchParams.class}&adults=${
+        SearchParams.pepoles.adults}&child=${SearchParams.pepoles.children}&infants=${SearchParams.pepoles.infants}`;
     }
-
     navigate(`/flight/search/${url}`);
   };
 
@@ -95,8 +92,10 @@ export default function Flightsearch() {
             id="blue"
             name="color"
             color="blue"
-            defaultChecked
+            defaultChecked={SearchParams.return_date ? false : true}
             onChange={() => {
+              clickSearchParams.return_date = undefined;
+              dispatch(searchActions.setParams(clickSearchParams));
               setReturnDate(false);
             }}
           />{" "}
@@ -108,7 +107,18 @@ export default function Flightsearch() {
             id="blue"
             name="color"
             color="blue"
-            onChange={() => setReturnDate(true)}
+            defaultChecked={SearchParams.return_date ? true : false}
+            onChange={() => {
+              setReturnDate(true);
+              clickSearchParams.return_date =
+                SearchParams.return_date ??
+                new Date(
+                  new Date().setDate(
+                    new Date(SearchParams.dept_date).getDate() + 1
+                  )
+                ).toISOString();
+              dispatch(searchActions.setParams(clickSearchParams));
+            }}
           />{" "}
           <label className="text-lg">Round Trip</label>
         </span>
@@ -193,6 +203,7 @@ export default function Flightsearch() {
             <MenuList className="-mt-16">
               <>
                 <JouernyCalender
+                  label="From"
                   type={SearchType.From}
                   callback={clickCallBack}
                 />
@@ -210,27 +221,31 @@ export default function Flightsearch() {
                     Return
                   </label>{" "}
                   <h2>
-                    {SearchParams.return_date ? new Date(SearchParams.return_date).toLocaleDateString(
-                      undefined,
-                      { year: "2-digit", month: "short", day: "numeric" }
-                    ) : new Date(clickSearchParams.return_date!).toLocaleDateString(
-                      undefined,
-                      { year: "2-digit", month: "short", day: "numeric" }
-                    )  }
+                    {new Date(
+                      new Date().setDate(
+                        new Date(SearchParams.dept_date).getDate() + 1
+                      )
+                    ).toLocaleDateString(undefined, {
+                      dateStyle: "medium",
+                    })}
                   </h2>
                   <p className="text-xs text-gray-500 font-arial font-light">
                     {" "}
-                    {new Date(SearchParams.return_date!).toLocaleDateString(
-                      undefined,
-                      { weekday: "long" }
-                    )}{" "}
+                    {new Date(
+                      new Date().setDate(
+                        new Date(SearchParams.dept_date).getDate() + 1
+                      )
+                    ).toLocaleDateString(undefined, {
+                      weekday: "long",
+                    })}
                   </p>
                 </div>
               </MenuHandler>
               <MenuList className="-mt-16">
                 <>
                   <JouernyCalender
-                    type={SearchType.From}
+                    label="To"
+                    type={SearchType.To}
                     callback={clickCallBack}
                   />
                 </>

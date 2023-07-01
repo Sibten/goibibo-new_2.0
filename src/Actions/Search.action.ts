@@ -15,7 +15,7 @@ const initialState: SearchParamsType = {
     airport_name: "Chhatrapati Shivaji Maharaj International Airport",
     airport_code: "BOM",
   },
-  dept_date: new Date().toISOString(),
+  dept_date: new Date().toISOString().split("T")[0],
 
   class: Flighclass.Economy,
   pepoles: {

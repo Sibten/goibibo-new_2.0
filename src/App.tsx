@@ -16,7 +16,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/flight">
           <Route path="" element={<Homepage />} />
-          <Route path="search/:query" element={<Flightspage />} />
+          <Route path="search" element={<Flightspage />} />
         </Route>
         <Route path="/profile" element={<Profilepage />} />
         <Route path="/login" element={<LoginPage />} />
