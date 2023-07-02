@@ -21,7 +21,6 @@ const airportSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchAirports.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.push(...action.payload);
     });
   },

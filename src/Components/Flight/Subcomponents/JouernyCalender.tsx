@@ -24,6 +24,16 @@ export default function JouernyCalender({ label, type, callback }: MyProps) {
     dispatch(searchActions.setParams(clickParams));
     if (callback) callback();
   };
+
+  const getRetnVal = () => {
+    return SearchParams.return_date
+      ? new Date(SearchParams.return_date).toISOString().split("T")[0]
+      : new Date(
+          new Date().setDate(new Date(SearchParams.dept_date).getDate() + 1)
+        )
+          .toISOString()
+          .split("T")[0];
+  };
   return (
     <div className="flex flex-col">
       <label
@@ -45,16 +55,10 @@ export default function JouernyCalender({ label, type, callback }: MyProps) {
             .split("T")[0]
         }
         className="w-48 p-4 font-qs border text-lg font-bold text-black focus:outline-blue-500"
-        value={
+        defaultValue={
           type == 0
             ? new Date(clickParams.dept_date).toISOString().split("T")[0]
-            : new Date(
-                new Date().setDate(
-                  new Date(SearchParams.dept_date).getDate() + 1
-                )
-              )
-                .toISOString()
-                .split("T")[0]
+            : getRetnVal()
         }
         onChange={(e) =>
           type == 0

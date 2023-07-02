@@ -68,17 +68,9 @@ export default function Flightsearch() {
   const searchFlight = () => {
     let url = "";
     if (returnDate) {
-      url = `?from=${SearchParams.from.airport_code}&to=${
-        SearchParams.to.airport_code
-      }&dep_date=${SearchParams.dept_date}&rtn_date=${
-        SearchParams.return_date
-      }&class=${SearchParams.class}&adults=${
-        SearchParams.pepoles.adults}&child=${SearchParams.pepoles.children}&infants=${SearchParams.pepoles.infants}`;
+      url = `?from=${SearchParams.from.airport_code}&to=${SearchParams.to.airport_code}&dep_date=${SearchParams.dept_date}&rtn_date=${SearchParams.return_date}&class=${SearchParams.class}&adults=${SearchParams.pepoles.adults}&child=${SearchParams.pepoles.children}&infants=${SearchParams.pepoles.infants}`;
     } else {
-      url = `?from=${SearchParams.from.airport_code}&to=${
-        SearchParams.to.airport_code
-      }&dep_date=${SearchParams.dept_date}&class=${SearchParams.class}&adults=${
-        SearchParams.pepoles.adults}&child=${SearchParams.pepoles.children}&infants=${SearchParams.pepoles.infants}`;
+      url = `?from=${SearchParams.from.airport_code}&to=${SearchParams.to.airport_code}&dep_date=${SearchParams.dept_date}&class=${SearchParams.class}&adults=${SearchParams.pepoles.adults}&child=${SearchParams.pepoles.children}&infants=${SearchParams.pepoles.infants}`;
     }
     navigate(`/flight/search/${url}`);
   };
@@ -95,7 +87,7 @@ export default function Flightsearch() {
             defaultChecked={SearchParams.return_date ? false : true}
             onChange={() => {
               clickSearchParams.return_date = undefined;
-              dispatch(searchActions.setParams(clickSearchParams));
+
               setReturnDate(false);
             }}
           />{" "}
@@ -117,7 +109,6 @@ export default function Flightsearch() {
                     new Date(SearchParams.dept_date).getDate() + 1
                   )
                 ).toISOString();
-              dispatch(searchActions.setParams(clickSearchParams));
             }}
           />{" "}
           <label className="text-lg">Round Trip</label>
@@ -221,23 +212,41 @@ export default function Flightsearch() {
                     Return
                   </label>{" "}
                   <h2>
-                    {new Date(
-                      new Date().setDate(
-                        new Date(SearchParams.dept_date).getDate() + 1
-                      )
-                    ).toLocaleDateString(undefined, {
-                      dateStyle: "medium",
-                    })}
+                    {SearchParams.return_date
+                      ? new Date(SearchParams.return_date).toLocaleDateString(
+                          undefined,
+                          {
+                            year: "2-digit",
+                            month: "short",
+                            day: "numeric",
+                          }
+                        )
+                      : new Date(
+                          new Date().setDate(
+                            new Date(SearchParams.dept_date).getDate() + 1
+                          )
+                        ).toLocaleDateString(undefined, {
+                          year: "2-digit",
+                          month: "short",
+                          day: "numeric",
+                        })}
                   </h2>
                   <p className="text-xs text-gray-500 font-arial font-light">
                     {" "}
-                    {new Date(
-                      new Date().setDate(
-                        new Date(SearchParams.dept_date).getDate() + 1
-                      )
-                    ).toLocaleDateString(undefined, {
-                      weekday: "long",
-                    })}
+                    {SearchParams.return_date
+                      ? new Date(SearchParams.return_date).toLocaleDateString(
+                          undefined,
+                          {
+                            weekday: "long",
+                          }
+                        )
+                      : new Date(
+                          new Date().setDate(
+                            new Date(SearchParams.dept_date).getDate() + 1
+                          )
+                        ).toLocaleDateString(undefined, {
+                          weekday: "long",
+                        })}
                   </p>
                 </div>
               </MenuHandler>

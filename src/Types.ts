@@ -74,6 +74,7 @@ export interface AirportType {
   city_name: string;
   airport_name: string;
   airport_code: string;
+  country_name : string;
 }
 
 export enum Flighclass {

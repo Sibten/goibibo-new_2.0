@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import axios from "axios";
 import FlightSearchHead from "../../Components/Flight/FlightSearchHead.component";
+import FlightSearchHeadsmall from "../../Components/Flight/FlightSearchHead.small.component";
 
 export default function Flightspage() {
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
@@ -33,7 +34,12 @@ export default function Flightspage() {
 
   return (
     <div>
-      <FlightSearchHead />
+      <div className="lg:block hidden">
+        <FlightSearchHead />
+      </div>
+      <div className="block lg:hidden">
+        <FlightSearchHeadsmall />
+      </div>
     </div>
   );
 }
