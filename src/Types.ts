@@ -5,6 +5,20 @@ export interface MyProps {
   type?: number;
 }
 
+export enum APICallType {
+  POST,
+  GET,
+  DELETE,
+  PUT,
+}
+
+export interface Config {
+  method: string;
+  url: string;
+  headers: Object;
+  data?: string;
+}
+
 export interface UserType {
   profile_photo?: string;
   role?: {
@@ -74,7 +88,7 @@ export interface AirportType {
   city_name: string;
   airport_name: string;
   airport_code: string;
-  country_name : string;
+  country_name: string;
 }
 
 export enum Flighclass {
@@ -88,7 +102,7 @@ export interface SearchParamsType {
   from: AirportType;
   to: AirportType;
   dept_date: string;
-  return_date?: string;
+  return_date?: string | null;
   class: number;
   pepoles: { adults: number; children?: number; infants?: number };
 }

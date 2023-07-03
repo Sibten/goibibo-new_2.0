@@ -9,7 +9,7 @@ import { Menu, MenuHandler, MenuList, Radio } from "@material-tailwind/react";
 import { HiOutlineArrowsRightLeft } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import FlightClass from "./Subcomponents/FlightClass";
-import { FaLastfm } from "react-icons/fa";
+
 
 export default function FlightSearchHead() {
   const location = useLocation();
@@ -20,26 +20,36 @@ export default function FlightSearchHead() {
   const dispatch = useDispatch();
 
   let [URLSearchParamsData, setURLSearchParamsData] =
-    useState<SearchParamsType>({ ...SearchParams });
+    useState<SearchParamsType>({
+      ...SearchParams,
+      dept_date: url.get("dep_date") ?? new Date().toISOString(),
+      return_date: url.get("rtn_date") ?? null,
+    });
 
   const [openReturnDate, setopenReturnDate] = useState(
-    SearchParams.return_date ? true : false
+    url.get("rtn_date") ? true : false
   );
   useEffect(() => {
-    if (Airports) {
+    dispatch(searchActions.setParams(URLSearchParamsData));
+  }, []);
+
+  useEffect(() => {
+    if (Airports && url.get("from") != url.get("to")) {
       URLSearchParamsData.from =
         Airports.find((s) => s.airport_code === url.get("from")) ??
         SearchParams.from;
       URLSearchParamsData.to =
         Airports.find((s) => s.airport_code === url.get("to")) ??
         SearchParams.to;
-      URLSearchParamsData.dept_date =
-        url.get("dep_date") ?? new Date().toISOString();
-      URLSearchParamsData.return_date = url.get("rtn_date") ?? undefined;
-      if (URLSearchParamsData.return_date) setopenReturnDate(true);
       dispatch(searchActions.setParams(URLSearchParamsData));
+    } else {
+      updateSearch();
     }
   }, [Airports]);
+
+  useEffect(() => {
+    URLSearchParamsData.pepoles = SearchParams.pepoles;
+  }, [SearchParams.pepoles]);
 
   const [openFrom, setOpenFrom] = useState(false);
   const [openTo, setOpenTo] = useState(false);
@@ -60,14 +70,13 @@ export default function FlightSearchHead() {
     )
       .toISOString()
       .split("T")[0];
-
-    // setURLSearchParamsData({ ...URLSearchParamsData, return_date: val });
   };
-  useEffect(() => {
-    URLSearchParamsData.pepoles = SearchParams.pepoles;
-  }, [SearchParams.pepoles]);
+
   const updateSearch = () => {
-    if (openReturnDate && !URLSearchParamsData.return_date) {
+    if (
+      (URLSearchParamsData.return_date &&
+      URLSearchParamsData.dept_date > URLSearchParamsData.return_date) || (openReturnDate && !URLSearchParamsData.return_date)
+    ) {
       URLSearchParamsData.return_date = retnDateDef();
     }
     dispatch(searchActions.setParams(URLSearchParamsData));
@@ -85,13 +94,14 @@ export default function FlightSearchHead() {
       <div className="w-full flex justify-center">
         <div className="mx-4">
           <div className="flex">
+            {/* Dep : url  */}
             <div className="mx-2 ">
               <input
                 type="radio"
                 name="trip"
                 id="oneway"
                 className="p-4 mx-2"
-                defaultChecked={SearchParams.return_date ? false : true}
+                defaultChecked={url.get("rtn_date") ? false : true}
                 onChange={() => setopenReturnDate(false)}
               />
               <label className="font-qs font-bold">One way</label>
@@ -102,13 +112,14 @@ export default function FlightSearchHead() {
                 name="trip"
                 id="roundtrip"
                 className="p-4 mx-2"
-                defaultChecked={SearchParams.return_date ? true : false}
+                defaultChecked={url.get("rtn_date") ? true : false}
                 onChange={() => setopenReturnDate(true)}
               />
               <label className="font-qs font-bold">Round trip</label>
             </div>
           </div>
           <div className="flex items-center flex-wrap">
+            {/* city,  Dep : SearchParams */}
             <div className="mx-2">
               <Menu open={openFrom} handler={setOpenFrom}>
                 <MenuHandler>
@@ -176,6 +187,7 @@ export default function FlightSearchHead() {
                 </MenuList>
               </Menu>
             </div>
+            {/* Dates, Dep : url*/}
             <div className="mx-2">
               <label
                 htmlFor=""
@@ -188,12 +200,12 @@ export default function FlightSearchHead() {
                 name="dep_date"
                 id="dep_date"
                 min={new Date().toISOString().split("T")[0]}
+                className="block bg-indigo-500 p-2 w-30 rounded-lg font-qs font-bold"
                 defaultValue={
                   new Date(URLSearchParamsData.dept_date)
                     .toISOString()
                     .split("T")[0]
                 }
-                className="block bg-indigo-500 p-2 w-30 rounded-lg font-qs font-bold"
                 onChange={(e) =>
                   setURLSearchParamsData({
                     ...URLSearchParamsData,
@@ -209,7 +221,8 @@ export default function FlightSearchHead() {
               >
                 Return Date
               </label>
-              {openReturnDate ? (
+              {
+                openReturnDate ? 
                 <input
                   type="date"
                   name="retn_date"
@@ -233,15 +246,11 @@ export default function FlightSearchHead() {
                       return_date: e.target.value,
                     });
                   }}
-                />
-              ) : (
-                <input
-                  type="date"
-                  disabled
-                  className="disabled:bg-indigo-400 block disabled:text-gray-400 bg-indigo-500 p-2 w-30 rounded-lg font-qs font-bold"
-                />
-              )}
+                /> : <input type="date" className="block disabled:bg-indigo-400 disabled:text-gray-500 bg-indigo-500 p-2 w-30 rounded-lg font-qs font-bold" disabled/>
+              }
             </div>
+
+            {/* Class, Dep : Search Params  */}
             <div className="mx-2">
               <Menu open={openClass} handler={setOpenClass}>
                 <MenuHandler>
@@ -266,6 +275,8 @@ export default function FlightSearchHead() {
                 </MenuList>
               </Menu>
             </div>
+
+            {/* Button Task : dispatch */}
             <div className="mt-6">
               <button
                 className="uppercase tracking-wider bg-white text-indigo-500 p-2 rounded-lg font-qs font-bold"

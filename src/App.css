@@ -2,3 +2,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+table,tr,td{
+	border: 1px solid rgb(195, 195, 195);
+	border-collapse: collapse;
+	padding: 5px;
+}
+th{
+	border: 1px solid rgb(195, 195, 195);
+	background-color: #f4f4f4;
+}

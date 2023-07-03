@@ -65,10 +65,27 @@ export default function Flightsearch() {
 
   const navigate = useNavigate();
 
+  const retnDateDef = () => {
+    return new Date(
+      new Date().setDate(new Date(SearchParams.dept_date).getDate() + 1)
+    );
+  };
+
   const searchFlight = () => {
     let url = "";
+    if (!clickSearchParams.return_date) {
+      clickSearchParams.return_date = retnDateDef().toISOString().split("T")[0];
+    }
     if (returnDate) {
-      url = `?from=${SearchParams.from.airport_code}&to=${SearchParams.to.airport_code}&dep_date=${SearchParams.dept_date}&rtn_date=${SearchParams.return_date}&class=${SearchParams.class}&adults=${SearchParams.pepoles.adults}&child=${SearchParams.pepoles.children}&infants=${SearchParams.pepoles.infants}`;
+      url = `?from=${SearchParams.from.airport_code}&to=${
+        SearchParams.to.airport_code
+      }&dep_date=${SearchParams.dept_date}&rtn_date=${
+        SearchParams.return_date ?? clickSearchParams.return_date
+      }&class=${SearchParams.class}&adults=${
+        SearchParams.pepoles.adults
+      }&child=${SearchParams.pepoles.children}&infants=${
+        SearchParams.pepoles.infants
+      }`;
     } else {
       url = `?from=${SearchParams.from.airport_code}&to=${SearchParams.to.airport_code}&dep_date=${SearchParams.dept_date}&class=${SearchParams.class}&adults=${SearchParams.pepoles.adults}&child=${SearchParams.pepoles.children}&infants=${SearchParams.pepoles.infants}`;
     }
@@ -221,11 +238,7 @@ export default function Flightsearch() {
                             day: "numeric",
                           }
                         )
-                      : new Date(
-                          new Date().setDate(
-                            new Date(SearchParams.dept_date).getDate() + 1
-                          )
-                        ).toLocaleDateString(undefined, {
+                      : retnDateDef().toLocaleDateString(undefined, {
                           year: "2-digit",
                           month: "short",
                           day: "numeric",
@@ -240,11 +253,7 @@ export default function Flightsearch() {
                             weekday: "long",
                           }
                         )
-                      : new Date(
-                          new Date().setDate(
-                            new Date(SearchParams.dept_date).getDate() + 1
-                          )
-                        ).toLocaleDateString(undefined, {
+                      : retnDateDef().toLocaleDateString(undefined, {
                           weekday: "long",
                         })}
                   </p>

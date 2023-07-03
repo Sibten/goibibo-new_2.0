@@ -7,6 +7,7 @@ import LoginPage from "./Pages/Login/Login.page";
 import Homepage from "./Pages/Home/Home.page";
 import Profilepage from "./Pages/Profile/Profile.page";
 import Flightspage from "./Pages/Flights/FlightsSearch.page";
+import Pagenotfound from "./Components/Errors/Pagenotfound";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         </Route>
         <Route path="/profile" element={<Profilepage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="*" element={<Pagenotfound />} />
       </Routes>
     </div>
   );

@@ -12,11 +12,7 @@ export default function JouernyCalender({ label, type, callback }: MyProps) {
   const [clickParams, setClickParams] = useState<SearchParamsType>({
     ...SearchParams,
     dept_date: SearchParams.dept_date,
-    return_date:
-      SearchParams.return_date ??
-      new Date(
-        new Date().setDate(new Date(SearchParams.dept_date).getDate() + 1)
-      ).toISOString(),
+    return_date: undefined,
   });
 
   const setParams = () => {
