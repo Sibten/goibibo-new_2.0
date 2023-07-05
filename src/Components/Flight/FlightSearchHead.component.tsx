@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { RootState } from "../../store";
 import { SearchParamsType, SearchType } from "../../Types";
-import { searchActions } from "../../Actions/Search.action";
+import { initialState, searchActions } from "../../Actions/Search.action";
 import FlightInput from "./Subcomponents/CityInput";
 import { Menu, MenuHandler, MenuList, Radio } from "@material-tailwind/react";
 import { HiOutlineArrowsRightLeft } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import FlightClass from "./Subcomponents/FlightClass";
-
 
 export default function FlightSearchHead() {
   const location = useLocation();
@@ -18,6 +17,7 @@ export default function FlightSearchHead() {
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
   const Airports = useSelector((state: RootState) => state.Airports);
   const dispatch = useDispatch();
+  
 
   let [URLSearchParamsData, setURLSearchParamsData] =
     useState<SearchParamsType>({
@@ -30,20 +30,24 @@ export default function FlightSearchHead() {
     url.get("rtn_date") ? true : false
   );
   useEffect(() => {
-    dispatch(searchActions.setParams(URLSearchParamsData));
+    if (SearchParams == initialState) {
+      dispatch(searchActions.setParams(URLSearchParamsData));
+    }
   }, []);
 
   useEffect(() => {
-    if (Airports && url.get("from") != url.get("to")) {
-      URLSearchParamsData.from =
-        Airports.find((s) => s.airport_code === url.get("from")) ??
-        SearchParams.from;
-      URLSearchParamsData.to =
-        Airports.find((s) => s.airport_code === url.get("to")) ??
-        SearchParams.to;
-      dispatch(searchActions.setParams(URLSearchParamsData));
-    } else {
-      updateSearch();
+    if (SearchParams == initialState) {
+      if (Airports && url.get("from") != url.get("to")) {
+        URLSearchParamsData.from =
+          Airports.find((s) => s.airport_code === url.get("from")) ??
+          SearchParams.from;
+        URLSearchParamsData.to =
+          Airports.find((s) => s.airport_code === url.get("to")) ??
+          SearchParams.to;
+        dispatch(searchActions.setParams(URLSearchParamsData));
+      } else {
+        updateSearch();
+      }
     }
   }, [Airports]);
 
@@ -75,7 +79,8 @@ export default function FlightSearchHead() {
   const updateSearch = () => {
     if (
       (URLSearchParamsData.return_date &&
-      URLSearchParamsData.dept_date > URLSearchParamsData.return_date) || (openReturnDate && !URLSearchParamsData.return_date)
+        URLSearchParamsData.dept_date > URLSearchParamsData.return_date) ||
+      (openReturnDate && !URLSearchParamsData.return_date)
     ) {
       URLSearchParamsData.return_date = retnDateDef();
     }
@@ -221,8 +226,7 @@ export default function FlightSearchHead() {
               >
                 Return Date
               </label>
-              {
-                openReturnDate ? 
+              {openReturnDate ? (
                 <input
                   type="date"
                   name="retn_date"
@@ -246,8 +250,14 @@ export default function FlightSearchHead() {
                       return_date: e.target.value,
                     });
                   }}
-                /> : <input type="date" className="block disabled:bg-indigo-400 disabled:text-gray-500 bg-indigo-500 p-2 w-30 rounded-lg font-qs font-bold" disabled/>
-              }
+                />
+              ) : (
+                <input
+                  type="date"
+                  className="block disabled:bg-indigo-400 disabled:text-gray-500 bg-indigo-500 p-2 w-30 rounded-lg font-qs font-bold"
+                  disabled
+                />
+              )}
             </div>
 
             {/* Class, Dep : Search Params  */}

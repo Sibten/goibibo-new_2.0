@@ -116,3 +116,64 @@ export enum CallBackType {
   error,
   success,
 }
+
+export interface LuggageType {
+  type: number;
+  limit: number;
+}
+export interface ClassFare {
+  class_type: number;
+  basic_fare: number;
+}
+
+export interface Filter {
+  time: number;
+  stops: number;
+  airline_code: string;
+}
+
+export interface Airline {
+  airline_id: string;
+  airline_name: string;
+  airline_icon: string;
+  airline_code: string;
+}
+
+export interface ResultBase {
+  timing: {
+    source_time: string;
+    destination_time: string;
+  };
+  available_seats: {
+    BC: number;
+    EC: number;
+    PE: number;
+    FC: number;
+  };
+  booked_seats: {
+    BC: Array<string>;
+    EC: Array<string>;
+    PE: Array<string>;
+    FC: Array<string>;
+  };
+  flight_no: string;
+  airline_id: Airline;
+  route_id: {
+    route_id: string;
+    source_city: AirportType;
+    destination_city: AirportType;
+    stops: Array<AirportType>;
+    distance: number;
+  };
+  airbus_id: {
+    airbus_code: string;
+  };
+  status: number;
+  fare: {
+    fare: Array<ClassFare>;
+    tax: number;
+  };
+  rule: {
+    luggage: Array<LuggageType>;
+  };
+}

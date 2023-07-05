@@ -11,10 +11,15 @@ export const getAPICallType = (callNo: number) => {
       return "get";
     case APICallType.PUT:
       return "put";
+    default:
+      return "";
   }
 };
 
-const callAPI = async (config: AxiosRequestConfig<string>) => {
+export const callAPI = async (config: AxiosRequestConfig<string>) => {
   const data = await axios(config);
-  return data;
+  return new Promise((res, rej) => {
+    if (data.statusText == "OK") return res(data);
+    else return rej(data.data);
+  });
 };
