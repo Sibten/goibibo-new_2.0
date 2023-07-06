@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-
-import { AirportType, ClassFare, Flighclass, ResultBase } from "../../../Types";
+import { ResultBase } from "../../../Types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import ExtraInfo from "./ExtraInfo";
@@ -13,6 +11,7 @@ import {
   date,
   getStops,
 } from "../../Helper/Method";
+import { defFilter } from "./FliterCard";
 
 export default function SearchCard({ value }: { value: ResultBase }) {
   const [openDetails, setOpenDetails] = useState(false);
@@ -27,7 +26,16 @@ export default function SearchCard({ value }: { value: ResultBase }) {
     );
     return (
       <div>
-        <div className="bg-white my-4 p-2 mx-4 rounded-md shadow-md transition-all duration-200">
+        <div className="bg-white my-4 p-2 mx-4 rounded-md shadow-md transition-all duration-200 relative overflow-hidden z-0">
+          <div className="absolute right-0">
+            {defFilter.min == Flightfare.basic + Flightfare.tax ? (
+              <div className="bg-green-700 text-sm rounded-bl-lg font-bold text-white p-1 -mt-2">
+                Cheapest
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
           <div className="flex">
             {" "}
             <img

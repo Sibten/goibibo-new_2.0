@@ -6,7 +6,7 @@ import {
   Radio,
 } from "@material-tailwind/react";
 
-import FlightInput from "./Subcomponents/CityInput";
+import FlightInput from "./MainSubcomponents/CityInput";
 import { BsArrowLeftRight } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
@@ -16,11 +16,12 @@ import {
   Flighclass,
   SearchParamsType,
   SearchType,
+  callTypes,
 } from "../../Types";
 import { useEffect, useState } from "react";
 import { searchActions } from "../../Actions/Search.action";
-import JouernyCalender from "./Subcomponents/JouernyCalender";
-import FlightClass from "./Subcomponents/FlightClass";
+import JouernyCalender from "./MainSubcomponents/JouernyCalender";
+import FlightClass from "./MainSubcomponents/FlightClass";
 import { useNavigate } from "react-router-dom";
 
 export const ClassName = (no: number) => {
@@ -67,7 +68,9 @@ export default function Flightsearch() {
 
   const retnDateDef = () => {
     return new Date(
-      new Date().setDate(new Date(SearchParams.dept_date).getDate() + 1)
+      new Date(SearchParams.dept_date).setDate(
+        new Date(SearchParams.dept_date).getDate() + 1
+      )
     );
   };
 
@@ -153,6 +156,7 @@ export default function Flightsearch() {
                     label="From"
                     type={SearchType.From}
                     callback={clickCallBack}
+                    callType={callTypes.UpdateStore}
                   />
                 </>
               </MenuList>
@@ -179,6 +183,7 @@ export default function Flightsearch() {
                     label="To"
                     type={SearchType.To}
                     callback={clickCallBack}
+                    callType={callTypes.UpdateStore}
                   />
                 </>
               </MenuList>

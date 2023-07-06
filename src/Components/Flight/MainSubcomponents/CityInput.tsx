@@ -5,6 +5,7 @@ import {
   SearchType,
   SearchParamsType,
   CallBackType,
+  callTypes,
 } from "../../../Types";
 import { RootState } from "../../../store";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,7 +14,12 @@ import { FaPlane } from "react-icons/fa";
 import "./CityInput.css";
 import { searchActions } from "../../../Actions/Search.action";
 
-export default function FlightInput({ label, type, callback }: MyProps) {
+export default function FlightInput({
+  label,
+  type,
+  callback,
+  callType,
+}: MyProps) {
   const Airports = useSelector((state: RootState) => state.Airports);
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
   const dispatch = useDispatch();
@@ -54,8 +60,12 @@ export default function FlightInput({ label, type, callback }: MyProps) {
         clickSearchParams.from = airport;
       }
     }
-    dispatch(searchActions.setParams(clickSearchParams));
-    callback!(CallBackType.success);
+    if (callType == callTypes.JustReturn) {
+      callback!(clickSearchParams);
+    } else {
+      dispatch(searchActions.setParams(clickSearchParams));
+      callback!(CallBackType.success);
+    }
   };
 
   return (

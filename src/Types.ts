@@ -1,8 +1,10 @@
+import { toast } from "react-toastify";
 export interface MyProps {
   label?: string;
   Start?: boolean;
   callback?: Function;
   type?: number;
+  callType?: Number;
 }
 
 export enum APICallType {
@@ -11,7 +13,10 @@ export enum APICallType {
   DELETE,
   PUT,
 }
-
+export enum callTypes {
+  UpdateStore,
+  JustReturn,
+}
 export interface Config {
   method: string;
   url: string;
@@ -127,9 +132,12 @@ export interface ClassFare {
 }
 
 export interface Filter {
-  time: number;
+  time1: number;
+  time2: number;
   stops: number;
-  airline_code: string;
+  airline: Array<string>;
+  min: number;
+  max: number;
 }
 
 export interface Airline {
@@ -172,6 +180,7 @@ export interface ResultBase {
   fare: {
     fare: Array<ClassFare>;
     tax: number;
+    total?: number;
   };
   rule: {
     luggage: Array<LuggageType>;

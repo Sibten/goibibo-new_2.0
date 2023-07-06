@@ -8,11 +8,12 @@ import {
   SearchParamsType,
   MyProps,
   CallBackType,
+  callTypes,
 } from "../../../Types";
 import { searchActions } from "../../../Actions/Search.action";
 import { ClassName } from "../Flightsearch.components";
 
-export default function FlightClass({ callback }: MyProps) {
+export default function FlightClass({ callback, callType }: MyProps) {
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
   const dispatch = useDispatch();
   const [adults, setAdults] = useState(SearchParams.pepoles.adults);
@@ -44,9 +45,12 @@ export default function FlightClass({ callback }: MyProps) {
   };
 
   const handleClick = () => {
-    console.log(clickParams);
-    dispatch(searchActions.setParams(clickParams));
-    callback!(CallBackType.success);
+    if (callType == callTypes.JustReturn) {
+      callback!(clickParams);
+    } else {
+      dispatch(searchActions.setParams(clickParams));
+      callback!(CallBackType.success);
+    }
   };
 
   return (

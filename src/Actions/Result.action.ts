@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ResultBase } from "../Types";
 import axios, { AxiosRequestConfig } from "axios";
+import { initialState } from "./Search.action";
 
 const initalState: Array<ResultBase> = [];
 
@@ -14,12 +15,20 @@ export const fetchResult = createAsyncThunk(
 const ResultSlice = createSlice({
   name: "Result",
   initialState: initalState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchResult.fulfilled, (state, action) => {
+  reducers: {
+    add: (state, action: PayloadAction<Array<ResultBase>>) => {
       state.splice(0, state.length);
       state.push(...action.payload);
-    });
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(
+      fetchResult.fulfilled,
+      (state, action: PayloadAction<Array<ResultBase>>) => {
+        state.splice(0, state.length);
+        state.push(...action.payload);
+      }
+    );
   },
 });
 
