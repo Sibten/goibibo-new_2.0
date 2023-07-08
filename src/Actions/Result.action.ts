@@ -9,24 +9,30 @@ export const fetchResult = createAsyncThunk(
   "fetchResult",
   async (config: AxiosRequestConfig) => {
     const data = await axios(config);
+    console.log("-->", data.data);
     return data.data;
   }
 );
 const ResultSlice = createSlice({
   name: "Result",
-  initialState: initalState,
+  initialState: { data: initalState, loader: true },
   reducers: {
     add: (state, action: PayloadAction<Array<ResultBase>>) => {
-      state.splice(0, state.length);
-      state.push(...action.payload);
+      state.data.splice(0, state.data.length);
+      state.data.push(...action.payload);
+      state.loader = false;
+    },
+    setLoader: (state) => {
+      state.loader = true;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
       fetchResult.fulfilled,
       (state, action: PayloadAction<Array<ResultBase>>) => {
-        state.splice(0, state.length);
-        state.push(...action.payload);
+        state.data.splice(0, state.data.length);
+        state.data.push(...action.payload);
+        state.loader = false;
       }
     );
   },

@@ -7,7 +7,7 @@ import { calFare } from "../../Helper/Method";
 
 export default function Result({ filter }: { filter: Filter }) {
   const [result, setResult] = useState<Array<ResultBase>>([]);
-  const selector = useSelector((state: RootState) => state.Result);
+  const selector = useSelector((state: RootState) => state.Result.data);
   const SearchParms = useSelector((state: RootState) => state.SearchParms);
 
   useEffect(() => {
@@ -50,10 +50,31 @@ export default function Result({ filter }: { filter: Filter }) {
 
   return (
     <div>
-      <p className="mx-4 text-xs">Showing {result.length} flights</p>
-      {result.map((result) => (
-        <SearchCard value={result} key={result.timing.source_time} />
-      ))}
+      {result.length != 0 ? (
+        <>
+          <p className="mx-4 text-xs">Showing {result.length} flights</p>
+          {result.map((res) => (
+            <SearchCard value={res} key={res.flight_no} />
+          ))}{" "}
+        </>
+      ) : (
+        <div className="w-max my-4 flex">
+          <img
+            src="https://res.cloudinary.com/dgsqarold/image/upload/v1688817720/Goibibo/42735_fhxgwb.png"
+            alt="sad"
+            className="w-8 h-8 mx-4 my-2 opacity-50"
+          />
+          <div>
+            <p className="text-gray-700">
+              Sorry! we couldn't find flights on this route!{" "}
+            </p>
+            <p className="text-xs text-gray-500">
+              {" "}
+              Try with new search params{" "}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

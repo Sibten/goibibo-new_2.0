@@ -15,7 +15,7 @@ export const defFilter: Filter = {
   max: 0,
 };
 export default function FliterCard({ callback }: { callback: Function }) {
-  const selector = useSelector((state: RootState) => state.Result);
+  const selector = useSelector((state: RootState) => state.Result.data);
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
 
   const [filter, setFilter] = useState<Filter>(defFilter);

@@ -185,4 +185,5 @@ export interface ResultBase {
   rule: {
     luggage: Array<LuggageType>;
   };
+  loader: boolean;
 }
