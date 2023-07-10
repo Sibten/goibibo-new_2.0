@@ -26,7 +26,7 @@ export const initialState: SearchParamsType = {
     infants: 0,
   },
 };
-console.log(initialState.pepoles.children);
+
 
 const searchSlice = createSlice({
   name: "Search",

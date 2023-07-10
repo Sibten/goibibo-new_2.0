@@ -63,8 +63,8 @@ export default function ExtraInfo({
           </TabsHeader>
           <TabsBody>
             <TabPanel key="info" value="finfo">
-              <div className="border rounded-lg p-2 my-2 flex justify-evenly items-center">
-                <div>
+              <div className="border rounded-lg p-2 my-2 grid grid-cols-4">
+                <div className="">
                   <img
                     src={value.airline_id.airline_icon}
                     alt="airline"
@@ -72,41 +72,41 @@ export default function ExtraInfo({
                   />{" "}
                   <p className="text-xs"> {value.flight_no}</p>
                 </div>
-                <div className="text-right my-2 w-48">
-                  <h1 className="text-lg">
+                <div className="text-right my-2">
+                  <h1 className="text-sm">
                     {" "}
                     <span className="font-bold text-black">
                       {" "}
                       {value.route_id.source_city.airport_code}{" "}
                     </span>{" "}
-                    <span>{time(value.timing.source_time)}</span>
+                    <span>{time(value.timing[0].source_time)}</span>
                   </h1>
-                  <p className="text-sm">
+                  <p className="text-xs">
                     {value.route_id.source_city.airport_name}
                   </p>
                 </div>
-                <div className="w-48 flex items-center">
+                <div className="flex items-center mx-4">
                   <RxDotFilled className="text-xl text-blue-700" />
                   <p className="w-full text-center border-b h-3 -mt-2 mx-2 border-dashed border-gray-400">
-                    <span className="bg-white px-2">
+                    <span className="bg-white px-2 text-sm">
                       {" "}
                       {calDuration(
-                        value.timing.source_time,
-                        value.timing.destination_time
+                        value.timing[0].source_time,
+                        value.timing[0].destination_time
                       )}
                     </span>
                   </p>
                   <IoIosAirplane className="text-xl text-blue-700" />
                 </div>
-                <div className="my-2 w-48">
-                  <h1 className="text-lg">
+                <div className="my-2">
+                  <h1 className="text-sm">
                     {" "}
                     <span className="font-bold text-black">
                       {value.route_id.destination_city.airport_code}
                     </span>{" "}
-                    <span>{time(value.timing.destination_time)}</span>
+                    <span>{time(value.timing[0].destination_time)}</span>
                   </h1>
-                  <p className="text-sm">
+                  <p className="text-xs">
                     {value.route_id.destination_city.airport_name}
                   </p>
                 </div>
@@ -168,8 +168,8 @@ export default function ExtraInfo({
                   <tbody>
                     <tr>
                       <td>ADULT</td>
-                      <td>{findLuggage.limit}</td>
-                      <td>{Math.ceil(findLuggage.limit / 2)}</td>
+                      <td>{findLuggage.limit} Kg</td>
+                      <td>{Math.ceil(findLuggage.limit / 2)} Kg</td>
                     </tr>
                   </tbody>
                 </table>

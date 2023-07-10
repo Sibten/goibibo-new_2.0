@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { ResultBase } from "../../../Types";
+import { ResultBase, SearchParamsType, SearchType } from "../../../Types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import ExtraInfo from "./ExtraInfo";
@@ -12,10 +12,21 @@ import {
   getStops,
 } from "../../Helper/Method";
 import { defFilter } from "./FliterCard";
+import { Radio } from "@material-tailwind/react";
 
-export default function SearchCard({ value }: { value: ResultBase }) {
+export default function SearchCard({
+  value,
+  type,
+  callBack,
+}: {
+  value: ResultBase;
+  type: number;
+  callBack: Function;
+}) {
   const [openDetails, setOpenDetails] = useState(false);
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
+  const Result = useSelector((state: RootState) => state.Result);
+
   if (value) {
     const Flightfare = calFare(
       value.route_id.distance,
@@ -25,10 +36,13 @@ export default function SearchCard({ value }: { value: ResultBase }) {
       value.route_id.stops.length
     );
     return (
-      <div>
+      <div className="">
         <div className="bg-white my-4 p-2 mx-4 rounded-md shadow-md transition-all duration-200 relative overflow-hidden z-0">
           <div className="absolute right-0">
-            {defFilter.min == Flightfare.basic + Flightfare.tax ? (
+            {(type == SearchType.From &&
+              defFilter.dep.min == Flightfare.basic + Flightfare.tax) ||
+            (type == SearchType.To &&
+              defFilter.rtn.min == Flightfare.basic + Flightfare.tax) ? (
               <div className="bg-green-700 text-sm rounded-bl-lg font-bold text-white p-1 -mt-2">
                 Cheapest
               </div>
@@ -55,10 +69,10 @@ export default function SearchCard({ value }: { value: ResultBase }) {
               </p>
               <h3 className="font-bold text-xl mx-2 mt-2">
                 {" "}
-                {time(value.timing.source_time)}
+                {time(value.timing[0].source_time)}
               </h3>
               <span className="text-xs text-gray-500 mx-1">
-                {date(value.timing.source_time)}
+                {date(value.timing[0].source_time)}
               </span>
             </div>
             <div>
@@ -71,8 +85,8 @@ export default function SearchCard({ value }: { value: ResultBase }) {
               <h3 className="font-bold text-xl mt-2">
                 {" "}
                 {calDuration(
-                  value.timing.source_time,
-                  value.timing.destination_time
+                  value.timing[0].source_time,
+                  value.timing[0].destination_time
                 )}{" "}
               </h3>
             </div>
@@ -85,10 +99,10 @@ export default function SearchCard({ value }: { value: ResultBase }) {
               </p>
               <h3 className="font-bold text-xl mx-2 mt-2">
                 {" "}
-                {time(value.timing.destination_time)}{" "}
+                {time(value.timing[0].destination_time)}{" "}
               </h3>
               <span className="text-xs text-gray-500 mx-1">
-                {date(value.timing.destination_time)}
+                {date(value.timing[0].destination_time)}
               </span>
             </div>
             <div>
@@ -98,10 +112,20 @@ export default function SearchCard({ value }: { value: ResultBase }) {
                 &#8377; {Flightfare.basic + Flightfare.tax}{" "}
               </h1>
             </div>
+
             <div>
-              <button className="font-bold uppercase bg-blue-700 rounded-md text-white px-6 p-2 text-xs shadow-md">
-                Book
-              </button>
+              {Result.data.rtn?.length ? (
+                <Radio
+                  name={type.toString()}
+                  onChange={(e) => {
+                    if (e.target.checked) callBack(value, type);
+                  }}
+                />
+              ) : (
+                <button className="font-bold uppercase bg-blue-700 rounded-md text-white px-6 p-2 text-xs shadow-md">
+                  Book
+                </button>
+              )}
             </div>
           </div>
           <div className="w-max ml-auto">

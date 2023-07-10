@@ -132,12 +132,22 @@ export interface ClassFare {
 }
 
 export interface Filter {
-  time1: number;
-  time2: number;
-  stops: number;
-  airline: Array<string>;
-  min: number;
-  max: number;
+  dep: {
+    time1: number;
+    time2: number;
+    stops: number;
+    airline: Array<string>;
+    min: number;
+    max: number;
+  };
+  rtn: {
+    time1: number;
+    time2: number;
+    stops: number;
+    airline: Array<string>;
+    min: number;
+    max: number;
+  };
 }
 
 export interface Airline {
@@ -148,22 +158,30 @@ export interface Airline {
 }
 
 export interface ResultBase {
-  timing: {
-    source_time: string;
-    destination_time: string;
-  };
-  available_seats: {
-    BC: number;
-    EC: number;
-    PE: number;
-    FC: number;
-  };
-  booked_seats: {
-    BC: Array<string>;
-    EC: Array<string>;
-    PE: Array<string>;
-    FC: Array<string>;
-  };
+  timing: [
+    {
+      source_time: string;
+      destination_time: string;
+    }
+  ];
+  available_seats: [
+    {
+      date: Date;
+      BC: number;
+      EC: number;
+      PE: number;
+      FC: number;
+    }
+  ];
+  booked_seats: [
+    {
+      date: Date;
+      BC: Array<string>;
+      EC: Array<string>;
+      PE: Array<string>;
+      FC: Array<string>;
+    }
+  ];
   flight_no: string;
   airline_id: Airline;
   route_id: {
@@ -185,5 +203,8 @@ export interface ResultBase {
   rule: {
     luggage: Array<LuggageType>;
   };
-  loader: boolean;
+}
+export interface ResultData {
+  dep: Array<ResultBase>;
+  rtn?: Array<ResultBase>;
 }

@@ -26,7 +26,6 @@ export default function JouernyCalender({
   });
 
   const setParams = () => {
-    console.log(clickParams);
     if (callType == callTypes.JustReturn) {
       callback!(clickParams);
     } else {

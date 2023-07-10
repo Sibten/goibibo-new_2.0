@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
-import { RootState } from "../../store";
+import { RootState, AppThunkDispatch } from "../../store";
 import { SearchParamsType, SearchType, callTypes } from "../../Types";
 import { initialState, searchActions } from "../../Actions/Search.action";
 import FlightInput from "./MainSubcomponents/CityInput";
@@ -10,6 +10,7 @@ import { HiOutlineArrowsRightLeft } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import FlightClass from "./MainSubcomponents/FlightClass";
 import { URL } from "url";
+import { fetchResult } from "../../Actions/Result.action";
 
 export default function FlightSearchHead() {
   const location = useLocation();
@@ -17,6 +18,8 @@ export default function FlightSearchHead() {
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
   const Airports = useSelector((state: RootState) => state.Airports);
   const dispatch = useDispatch();
+
+  const dispatchThunk = useDispatch<AppThunkDispatch>();
   let [URLSearchParamsData, setURLSearchParamsData] =
     useState<SearchParamsType>({
       ...SearchParams,
@@ -27,11 +30,15 @@ export default function FlightSearchHead() {
       },
       dept_date: url.get("dep_date") ?? new Date().toISOString(),
       return_date: url.get("rtn_date") ?? null,
-      class: parseInt(url.get("class") ?? "0") ,
-    }); 
+      class: parseInt(url.get("class") ?? "0"),
+    });
 
   useEffect(() => {
-    if (SearchParams != URLSearchParamsData && Airports && url.get("from") != url.get("to")) {
+    if (
+      SearchParams != URLSearchParamsData &&
+      Airports &&
+      url.get("from") != url.get("to")
+    ) {
       URLSearchParamsData.from =
         Airports.find((s) => s.airport_code === url.get("from")) ??
         SearchParams.from;
@@ -96,6 +103,7 @@ export default function FlightSearchHead() {
     } else {
       url = `?from=${URLSearchParamsData.from.airport_code}&to=${URLSearchParamsData.to.airport_code}&dep_date=${URLSearchParamsData.dept_date}&class=${URLSearchParamsData.class}&adults=${URLSearchParamsData.pepoles.adults}&child=${URLSearchParamsData.pepoles.children}&infants=${URLSearchParamsData.pepoles.infants}`;
     }
+
     navigate(`/flight/search/${url}`);
   };
 
@@ -129,6 +137,18 @@ export default function FlightSearchHead() {
             defaultChecked={url.get("rtn_date") ? true : false}
             onChange={() => {
               setOpenReturn(true);
+              setURLSearchParamsData({
+                ...URLSearchParamsData,
+                return_date:
+                  url.get("rtn_date") ??
+                  new Date(
+                    new Date(URLSearchParamsData.dept_date).setDate(
+                      new Date(URLSearchParamsData.dept_date).getDate() + 1
+                    )
+                  )
+                    .toISOString()
+                    .split("T")[0],
+              });
             }}
           />
           <label className="font-qs font-bold">Round trip</label>

@@ -2,79 +2,163 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import SearchCard from "./SearchCard";
-import { Filter, ResultBase } from "../../../Types";
+import {
+  Filter,
+  ResultBase,
+  ResultData,
+  SearchParamsType,
+  SearchType,
+} from "../../../Types";
 import { calFare } from "../../Helper/Method";
+import NotFound from "./NotFound";
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+import SelectionCard from "./SelectionCard";
 
 export default function Result({ filter }: { filter: Filter }) {
   const [result, setResult] = useState<Array<ResultBase>>([]);
+  const [returnResult, setReturnResult] = useState<Array<ResultBase>>([]);
   const selector = useSelector((state: RootState) => state.Result.data);
   const SearchParms = useSelector((state: RootState) => state.SearchParms);
 
   useEffect(() => {
-    if (selector.length > 0) {
-      setResult(
-        selector.filter((s) => {
-          let fare = calFare(
-            s.route_id.distance,
-            s.fare.fare,
-            s.fare.tax,
-            SearchParms.class,
-            s.route_id.stops.length
-          );
-          let total = fare.basic + fare.tax;
-          if (
-            new Date(s.timing.source_time) >=
-              new Date(
-                new Date(s.timing.destination_time).setHours(filter.time1)
-              ) &&
-            new Date(s.timing.source_time) <
-              new Date(
-                new Date(s.timing.destination_time).setHours(filter.time2)
-              ) &&
-            (filter.stops == 3 ? s.route_id.stops.length > 3 : true) &&
-            (filter.stops == -1
-              ? true
-              : s.route_id.stops.length == filter.stops) &&
-            (filter.airline.length == 0
-              ? true
-              : filter.airline.includes(s.airline_id.airline_code)) &&
-            total <= filter.max &&
-            total >= filter.min
-          ) {
-            return true;
-          } else return false;
-        })
-      );
-    }
+    setResult(
+      selector.dep.filter((s) => {
+        let fare = calFare(
+          s.route_id.distance,
+          s.fare.fare,
+          s.fare.tax,
+          SearchParms.class,
+          s.route_id.stops.length
+        );
+        let total = fare.basic + fare.tax;
+        if (
+          new Date(s.timing[0].source_time) >=
+            new Date(
+              new Date(s.timing[0].destination_time).setHours(filter.dep.time1)
+            ) &&
+          new Date(s.timing[0].source_time) <
+            new Date(
+              new Date(s.timing[0].destination_time).setHours(filter.dep.time2)
+            ) &&
+          (filter.dep.stops == 3 ? s.route_id.stops.length > 3 : true) &&
+          (filter.dep.stops == -1
+            ? true
+            : s.route_id.stops.length == filter.dep.stops) &&
+          (filter.dep.airline.length == 0
+            ? true
+            : filter.dep.airline.includes(s.airline_id.airline_code)) &&
+          total <= filter.dep.max &&
+          total >= filter.dep.min
+        ) {
+          return true;
+        } else return false;
+      })
+    );
+
+    setReturnResult(
+      selector.rtn?.filter((s) => {
+        let fare = calFare(
+          s.route_id.distance,
+          s.fare.fare,
+          s.fare.tax,
+          SearchParms.class,
+          s.route_id.stops.length
+        );
+        let total = fare.basic + fare.tax;
+        if (
+          new Date(s.timing[0].source_time) >=
+            new Date(
+              new Date(s.timing[0].destination_time).setHours(filter.rtn.time1)
+            ) &&
+          new Date(s.timing[0].source_time) <
+            new Date(
+              new Date(s.timing[0].destination_time).setHours(filter.rtn.time2)
+            ) &&
+          (filter.rtn.stops == 3 ? s.route_id.stops.length > 3 : true) &&
+          (filter.rtn.stops == -1
+            ? true
+            : s.route_id.stops.length == filter.rtn.stops) &&
+          (filter.rtn.airline.length == 0
+            ? true
+            : filter.rtn.airline.includes(s.airline_id.airline_code)) &&
+          total <= filter.rtn.max &&
+          total >= filter.rtn.min
+        ) {
+          return true;
+        } else return false;
+      }) ?? []
+    );
   }, [filter]);
 
+  const [selectedFlight, setSelectedFlight] = useState<{
+    from?: ResultBase;
+    to?: ResultBase;
+  }>();
+
+  const handleCallBack = (flight: ResultBase, type: number) => {
+    if (type == SearchType.From) {
+      setSelectedFlight({ ...selectedFlight, from: flight });
+    } else {
+      setSelectedFlight({ ...selectedFlight, to: flight });
+    }
+  };
+
+  useEffect(() => {
+    console.log(selectedFlight);
+  }, [selectedFlight]);
   return (
     <div>
-      {result.length != 0 ? (
-        <>
-          <p className="mx-4 text-xs">Showing {result.length} flights</p>
-          {result.map((res) => (
-            <SearchCard value={res} key={res.flight_no} />
-          ))}{" "}
-        </>
-      ) : (
-        <div className="w-max my-4 flex">
-          <img
-            src="https://res.cloudinary.com/dgsqarold/image/upload/v1688817720/Goibibo/42735_fhxgwb.png"
-            alt="sad"
-            className="w-8 h-8 mx-4 my-2 opacity-50"
-          />
-          <div>
-            <p className="text-gray-700">
-              Sorry! we couldn't find flights on this route!{" "}
-            </p>
-            <p className="text-xs text-gray-500">
-              {" "}
-              Try with new search params{" "}
-            </p>
-          </div>
+      {selectedFlight ? <SelectionCard data={selectedFlight} /> : ""}
+      <div className="grid grid-cols-2">
+        <div>
+          {result.length > 0 ? (
+            <>
+              <div className="mx-4">
+                <h1 className="flex font-bold text-sm font-qs">
+                  {SearchParms.from.city_name}{" "}
+                  <HiOutlineArrowNarrowRight className="my-1 mx-2" />
+                  {SearchParms.to.city_name}
+                </h1>
+                <p className="text-xs">Showing {result.length} Flights</p>
+              </div>
+              {result.map((res) => (
+                <SearchCard
+                  type={SearchType.From}
+                  value={res}
+                  callBack={handleCallBack}
+                  key={`${res.flight_no}-${res.timing[0].source_time}`}
+                />
+              ))}{" "}
+            </>
+          ) : (
+            <NotFound />
+          )}
         </div>
-      )}
+        <div>
+          {returnResult.length > 0 ? (
+            <>
+              <div className="mx-4">
+                <h1 className="flex font-bold text-sm font-qs">
+                  {SearchParms.to.city_name}{" "}
+                  <HiOutlineArrowNarrowRight className="my-1 mx-2" />
+                  {SearchParms.from.city_name}
+                </h1>
+                <p className="text-xs">Showing {returnResult.length} Flights</p>
+              </div>
+              {returnResult.map((res) => (
+                <SearchCard
+                  value={res}
+                  callBack={handleCallBack}
+                  type={SearchType.To}
+                  key={`${res.flight_no}-${res.timing[0].source_time}`}
+                />
+              ))}
+            </>
+          ) : (
+            <NotFound />
+          )}
+        </div>
+      </div>
     </div>
   );
 }
