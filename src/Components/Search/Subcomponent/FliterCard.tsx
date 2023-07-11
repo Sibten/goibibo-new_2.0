@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { Airline, AirportType, Filter } from "../../../Types";
 import { GrPowerReset } from "react-icons/gr";
-import { calFare } from "../../Helper/Method";
+import { calFare } from "../../../Helper/Method";
 
 
 export const defFilter: Filter = {

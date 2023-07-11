@@ -10,9 +10,10 @@ import {
   time,
   date,
   getStops,
-} from "../../Helper/Method";
+} from "../../../Helper/Method";
 import { defFilter } from "./FliterCard";
 import { Radio } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchCard({
   value,
@@ -26,6 +27,8 @@ export default function SearchCard({
   const [openDetails, setOpenDetails] = useState(false);
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
   const Result = useSelector((state: RootState) => state.Result);
+
+  const navigate = useNavigate();
 
   if (value) {
     const Flightfare = calFare(
@@ -122,7 +125,12 @@ export default function SearchCard({
                   }}
                 />
               ) : (
-                <button className="font-bold uppercase bg-blue-700 rounded-md text-white px-6 p-2 text-xs shadow-md">
+                <button
+                  className="font-bold uppercase bg-blue-700 rounded-md text-white px-6 p-2 text-xs shadow-md"
+                  onClick={() =>
+                    navigate(`/flight/review/?dep_flight_no=${value.flight_no}`)
+                  }
+                >
                   Book
                 </button>
               )}

@@ -117,6 +117,12 @@ export enum SearchType {
   To,
 }
 
+export enum People {
+  Adult,
+  Child,
+  Infant,
+}
+
 export enum CallBackType {
   error,
   success,
@@ -208,3 +214,4 @@ export interface ResultData {
   dep: Array<ResultBase>;
   rtn?: Array<ResultBase>;
 }
+

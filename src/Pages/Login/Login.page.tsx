@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import Timer from "../../Components/Helper/Timer";
+import Timer from "../../Helper/Timer";
 import { useSelector, useDispatch } from "react-redux";
 import { AppThunkDispatch, RootState } from "../../store";
 import { fetchUser, userActions } from "../../Actions/User.action";

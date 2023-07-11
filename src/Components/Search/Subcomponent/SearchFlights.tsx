@@ -10,7 +10,6 @@ import {
 } from "../../../Types";
 import { callAPI, getAPICallType } from "../../../Services/APIFetch";
 import axios, { AxiosRequestConfig } from "axios";
-import { useLocation } from "react-router";
 import { Spinner } from "@material-tailwind/react";
 import Result from "./Result";
 import { ResultActions, fetchResult } from "../../../Actions/Result.action";

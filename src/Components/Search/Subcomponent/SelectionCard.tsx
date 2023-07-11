@@ -1,6 +1,6 @@
 import React from "react";
 import { ResultBase } from "../../../Types";
-import { calDuration, calFare, getStops, time } from "../../Helper/Method";
+import { calDuration, calFare, getStops, time } from "../../../Helper/Method";
 import { Button } from "@material-tailwind/react";
 import { HiRefresh } from "react-icons/hi";
 import { GrPowerReset } from "react-icons/gr";

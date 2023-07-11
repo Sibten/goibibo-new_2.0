@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MyProps } from "../../Types";
+import { MyProps } from "../Types";
 
 export default function Timer({ Start, callback }: MyProps) {
   const [second, setSecond] = useState(30);

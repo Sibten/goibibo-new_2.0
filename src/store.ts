@@ -3,6 +3,7 @@ import UserReducer from "./Actions/User.action";
 import AirportReducer from "./Actions/Airport.action";
 import SearchReducer from "./Actions/Search.action";
 import ResultReducer from "./Actions/Result.action";
+import BookingFlightReducer from "./Actions/BookingFlight.action";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     Airports: AirportReducer,
     SearchParms: SearchReducer,
     Result: ResultReducer,
+    BookingFlight: BookingFlightReducer,
   },
 });
 

@@ -11,7 +11,7 @@ import { RxDotFilled } from "react-icons/rx";
 import { LuBaggageClaim } from "react-icons/lu";
 import { MdOutlineAirlineSeatReclineNormal } from "react-icons/md";
 import { ClassFare, Flighclass, LuggageType, ResultBase } from "../../../Types";
-import { calDuration, calFare, time } from "../../Helper/Method";
+import { calDuration, calFare, time } from "../../../Helper/Method";
 
 const findLuggaeInfo = (
   luggage: Array<LuggageType>,

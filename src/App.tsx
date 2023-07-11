@@ -8,6 +8,8 @@ import Homepage from "./Pages/Home/Home.page";
 import Profilepage from "./Pages/Profile/Profile.page";
 import Flightspage from "./Pages/Flights/FlightsSearch.page";
 import Pagenotfound from "./Components/Errors/Pagenotfound";
+import Reviewpage from "./Pages/Review/Review.page";
+import Protected from "./Protected";
 
 function App() {
   return (
@@ -18,6 +20,9 @@ function App() {
         <Route path="/flight">
           <Route path="" element={<Homepage />} />
           <Route path="search" element={<Flightspage />} />
+          <Route element={<Protected />}>
+            <Route path="review" element={<Reviewpage />} />
+          </Route>
         </Route>
         <Route path="/profile" element={<Profilepage />} />
         <Route path="/login" element={<LoginPage />} />

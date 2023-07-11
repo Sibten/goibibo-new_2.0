@@ -9,7 +9,7 @@ import {
   SearchParamsType,
   SearchType,
 } from "../../../Types";
-import { calFare } from "../../Helper/Method";
+import { calFare } from "../../../Helper/Method";
 import NotFound from "./NotFound";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import SelectionCard from "./SelectionCard";
