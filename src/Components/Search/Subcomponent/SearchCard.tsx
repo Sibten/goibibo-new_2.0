@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { ResultBase, SearchParamsType, SearchType } from "../../../Types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import ExtraInfo from "./ExtraInfo";
 import {
@@ -14,6 +14,7 @@ import {
 import { defFilter } from "./FliterCard";
 import { Radio } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
+import { trackingActions } from "../../../Actions/Tracking.actions";
 
 export default function SearchCard({
   value,
@@ -29,6 +30,8 @@ export default function SearchCard({
   const Result = useSelector((state: RootState) => state.Result);
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   if (value) {
     const Flightfare = calFare(
@@ -127,9 +130,12 @@ export default function SearchCard({
               ) : (
                 <button
                   className="font-bold uppercase bg-blue-700 rounded-md text-white px-6 p-2 text-xs shadow-md"
-                  onClick={() =>
-                    navigate(`/flight/review/?dep_flight_no=${value.flight_no}`)
-                  }
+                  onClick={() => {
+                    dispatch(trackingActions.activeBookig());
+                    navigate(
+                      `/flight/review/?dep_flight_no=${value.flight_no}`
+                    );
+                  }}
                 >
                   Book
                 </button>

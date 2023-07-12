@@ -10,11 +10,16 @@ import store from "./store";
 import { fetchUser } from "./Actions/User.action";
 import Cookies from "js-cookie";
 import { fetchAirports } from "./Actions/Airport.action";
+import { fetchOffers } from "./Actions/Offers.action";
 
 store.subscribe(() => console.log(store.getState()));
 
 const email = Cookies.get("email");
-if (email) store.dispatch(fetchUser(email));
+if (email) {
+  store.dispatch(fetchUser(email));
+  store.dispatch(fetchOffers());
+}
+  
 
 store.dispatch(fetchAirports());
 

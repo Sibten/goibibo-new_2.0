@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppThunkDispatch, RootState } from "../../store";
 import { fetchUser, userActions } from "../../Actions/User.action";
 import Cookies from "js-cookie";
+import { fetchOffers } from "../../Actions/Offers.action";
 const makeSecrete = (data: string) => {
   let part = data.slice(2, data.length - 4);
   part = part.replaceAll(/\w/g, "*");
@@ -99,8 +100,10 @@ export default function LoginPage() {
 
     axios(config)
       .then(function (response) {
+        Cookies.set("token", response.data.token);
         Cookies.set("email", email);
         dispatch(fetchUser(email));
+        dispatch(fetchOffers());
         navigate("/profile");
         console.log(response.data);
       })

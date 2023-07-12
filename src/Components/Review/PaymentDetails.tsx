@@ -1,167 +1,251 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import {
+  OfferBase,
+  People,
+  TotalPaymentDetails,
+  TravellerIndiPayment,
+} from "../../Types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { calFare } from "../../Helper/Method";
-import { People } from "../../Types";
-import { FaBaby, FaChild, FaPersonBooth } from "react-icons/fa";
-import { MdChildCare, MdOutlineEmojiPeople, MdPeople } from "react-icons/md";
-import { BsPerson } from "react-icons/bs";
-import { Button, Input } from "@material-tailwind/react";
+import { MdPeople } from "react-icons/md";
+import { FaBaby, FaChild } from "react-icons/fa";
+import { Input } from "@material-tailwind/react";
+import axios, { AxiosRequestConfig } from "axios";
+import Cookies from "js-cookie";
 
-export default function PaymentDetails() {
-  const selector = useSelector((state: RootState) => state.BookingFlight);
-
-  const bookingParams = useSelector((state: RootState) => state.SearchParms);
-  const people = bookingParams.pepoles;
-  const childSpelling =
-    people.children && people.children > 1 ? "children" : "Child";
-  const adultSpelling = people.adults > 1 ? "Adults" : "Adult";
-  let fare = { basic: 0, tax: 0 };
-  let infantFare = { basic: 0, tax: 0 };
-  if (selector.dep) {
-    fare = calFare(
-      selector.dep?.route_id.distance,
-      selector.dep?.fare.fare,
-      selector.dep?.fare.tax,
-      bookingParams.class,
-      selector.dep?.route_id.stops.length
-    );
-    infantFare = calFare(
-      selector.dep?.route_id.distance,
-      selector.dep?.fare.fare,
-      selector.dep?.fare.tax,
-      bookingParams.class,
-      selector.dep?.route_id.stops.length,
-      People.Infant
-    );
+const getPeopleType = (peopleType: number, peopleNumber: number) => {
+  switch (peopleType) {
+    case People.Adult:
+      return (
+        <span className="flex">
+          {" "}
+          <MdPeople className="mx-2 mt-1" /> {peopleNumber}{" "}
+          {peopleNumber > 1 ? "Adults" : "Adult"}
+        </span>
+      );
+    case People.Child:
+      return (
+        <span className="flex">
+          <FaChild className="mx-2 mt-1" /> {peopleNumber}{" "}
+          {peopleNumber > 1 ? "Children" : "Child"}
+        </span>
+      );
+    case People.Infant:
+      return (
+        <span className="flex">
+          <FaBaby className="mx-2 mt-1" />
+          {peopleNumber} Infants
+        </span>
+      );
   }
+};
 
-  const EachFare: Array<{
-    type: number;
-    fare: { basic: number; tax: number };
-    total: number;
-    basic_total: number;
-    tax_total: number;
-  }> = [];
+export default function PaymentDetails({
+  appliedOffer,
+}: {
+  appliedOffer: OfferBase | null;
+}) {
+  const bookingParams = useSelector((state: RootState) => state.SearchParms);
+  const bookingFlight = useSelector((state: RootState) => state.BookingFlight);
 
-  EachFare.push({
-    type: People.Adult,
-    fare: fare,
-    total: people.adults * (fare.basic + fare.tax),
-    basic_total: people.adults * fare.basic,
-    tax_total: people.adults * fare.tax,
+  const adultSpelling = bookingParams.pepoles.adults > 1 ? "Adults" : "Adult";
+  const childSpelling =
+    bookingParams.pepoles.children && bookingParams.pepoles.children > 1
+      ? "Children"
+      : "Child";
+
+  const [IndiPayment, setIndiPayment] = useState<Array<TravellerIndiPayment>>(
+    []
+  );
+  const [TotalPayment, setTotalPayment] = useState<TotalPaymentDetails>({
+    basic_total: 0,
+    tax_total: 0,
+    original_total: 0,
+    discount: 0,
+    promotion: 0,
   });
-  if (people.children)
-    EachFare.push({
-      type: People.Child,
-      fare: fare,
-      total: people.children * (fare.basic + fare.tax),
-      basic_total: people.children * fare.basic,
-      tax_total: people.children * fare.tax,
-    });
+  let fare = { basic: 0, tax: 0 };
+  let infantsFare = { basic: 0, tax: 0 };
 
-  if (people.infants)
-    EachFare.push({
-      type: People.Infant,
-      fare: fare,
-      total: people.infants * (infantFare.basic + infantFare.tax),
-      basic_total: people.infants * infantFare.basic,
-      tax_total: people.infants * infantFare.tax,
-    });
+  useEffect(() => {
+    if (bookingFlight.dep) {
+      IndiPayment.splice(0, IndiPayment.length);
+      fare = calFare(
+        bookingFlight.dep?.route_id.distance,
+        bookingFlight.dep?.fare.fare,
+        bookingFlight.dep?.fare.tax,
+        bookingParams.class,
+        bookingFlight.dep?.route_id.stops.length
+      );
 
-  const getPeopleType = (peopleNumber: number) => {
-    switch (peopleNumber) {
-      case People.Adult:
-        return (
-          <span className="flex">
-            {" "}
-            <MdPeople className="mx-2 mt-1" /> {people.adults} {adultSpelling}{" "}
-          </span>
+      IndiPayment.push({
+        no_people: bookingParams.pepoles.adults,
+        type: People.Adult,
+        fare: fare,
+        tax_total: fare.tax * bookingParams.pepoles.adults,
+        basic_total: fare.basic * bookingParams.pepoles.adults,
+      });
+      if (bookingParams.pepoles.children) {
+        IndiPayment.push({
+          no_people: bookingParams.pepoles.children,
+          type: People.Child,
+          fare: fare,
+          tax_total: fare.tax * bookingParams.pepoles.children,
+          basic_total: fare.basic * bookingParams.pepoles.children,
+        });
+      }
+      if (bookingParams.pepoles.infants) {
+        infantsFare = calFare(
+          bookingFlight.dep?.route_id.distance,
+          bookingFlight.dep?.fare.fare,
+          bookingFlight.dep?.fare.tax,
+          bookingParams.class,
+          bookingFlight.dep?.route_id.stops.length,
+          People.Infant
         );
-      case People.Child:
-        return (
-          <span className="flex">
-            <FaChild className="mx-2 mt-1" /> {people.children} {childSpelling}
-          </span>
-        );
-      case People.Infant:
-        return (
-          <span className="flex">
-            <FaBaby className="mx-2 mt-1" />
-            {people.infants} Infants
-          </span>
-        );
+        IndiPayment.push({
+          no_people: bookingParams.pepoles.infants,
+          type: People.Infant,
+          fare: infantsFare,
+          tax_total: infantsFare.tax * bookingParams.pepoles.infants,
+          basic_total: infantsFare.basic * bookingParams.pepoles.infants,
+        });
+      }
+
+      setIndiPayment([...IndiPayment]);
+      console.log(IndiPayment);
+    }
+  }, [bookingFlight]);
+
+  useEffect(() => {
+    if (IndiPayment.length > 0) {
+      let basicTotal = 0,
+        taxTotal = 0;
+
+      IndiPayment.forEach((s) => {
+        basicTotal += s.basic_total;
+        taxTotal += s.tax_total;
+      });
+
+      TotalPayment.basic_total = basicTotal;
+      TotalPayment.tax_total = taxTotal;
+      TotalPayment.original_total = basicTotal + taxTotal;
+    }
+    setTotalPayment({ ...TotalPayment });
+  }, [IndiPayment]);
+
+  useEffect(() => {
+    if (appliedOffer) {
+      setTotalPayment({
+        ...TotalPayment,
+        discount: Math.ceil(
+          TotalPayment.original_total * appliedOffer.offer_discount
+        ),
+      });
+    }
+  }, [appliedOffer]);
+
+  const [promocode, setPromoCode] = useState<string>();
+
+  const [active, setActive] = useState<boolean>(false);
+  const [promoError, setPromoError] = useState("");
+
+  const applyPromoCode = async () => {
+    const config: AxiosRequestConfig = {
+      method: "get",
+      url: `http://localhost:5050/offers/reedme?code=${promocode}`,
+      headers: {
+        token: Cookies.get("token"),
+      },
+    };
+
+    const res = await axios(config);
+    if (res.status == 200 && res.data.reedme) {
+      TotalPayment.promotion =
+        TotalPayment.original_total * res.data.offer.offer_discount;
+    } else {
+      setPromoError("Invalid Promocode.");
     }
   };
 
-  let basicTotal = 0,
-    GrandTotal = 0,
-    taxTotal = 0;
-
-  EachFare.forEach((s) => {
-    basicTotal = basicTotal + s.basic_total;
-    taxTotal = taxTotal + s.tax_total;
-    GrandTotal = GrandTotal + s.total;
-  });
-
-  const ApplyPromoCode = () => {};
-
   return (
-    <div className="mx-8 bg-white shadow-md  rounded-md w-[20rem] h-max py-4 my-4 font-arial">
+    <div className=" bg-white shadow-md  rounded-md w-[20rem] h-max py-4 my-4 font-arial">
       <div className="border-b border-gray-300 p-4">
         <h1 className="font-bold uppercase tracking-wide"> Fare Summary </h1>
         <p className="text-xs uppercase">
           {" "}
-          {people.adults} {adultSpelling}{" "}
-          {people.children ? (
+          {bookingParams.pepoles.adults} {adultSpelling}{" "}
+          {bookingParams.pepoles.children ? (
             <span>
-              | {people.children} {childSpelling}
+              | {bookingParams.pepoles.children} {childSpelling}
             </span>
           ) : (
             ""
           )}
-          {people.infants ? <span>| {people.children} Infants</span> : ""}
+          {bookingParams.pepoles.infants ? (
+            <span>| {bookingParams.pepoles.infants} Infants</span>
+          ) : (
+            ""
+          )}
         </p>
       </div>
       <div className="p-4">
-        <div className="flex justify-between font-bold">
-          <h1> Base fare</h1>
-          <p>&#8377; {basicTotal}</p>
+        <div className="flex font-bold justify-between">
+          <h1>Basic Fare </h1>
+          <p>&#8377; {TotalPayment.basic_total}</p>
         </div>
-        <div className="text-sm mx-2 my-2">
-          <ul>
-            {EachFare.map((s) => {
-              return (
-                <li key={s.type} className="flex justify-between">
-                  {" "}
-                  <p className="flex">
-                    {" "}
-                    {getPeopleType(s.type)} &nbsp;(1 x &#8377; {s.fare.basic})
-                  </p>
-                  <p> &#8377; {s.basic_total} </p>
-                </li>
-              );
-            })}
-          </ul>
+        <ul className="mx-2 my-2">
+          {IndiPayment.map((s) => (
+            <li key={s.type} className="flex justify-between text-sm my-1">
+              <p className="flex">
+                {" "}
+                {getPeopleType(s.type, s.no_people)} &nbsp; ( 1 x &#8377;{" "}
+                {s.fare.basic})
+              </p>{" "}
+              <p> &#8377; {s.basic_total} </p>
+            </li>
+          ))}
+        </ul>
+        <div className="flex  justify-between my-2 text-gray-700">
+          <h1>Tax & Surcharges </h1>
+          <p>&#8377; {TotalPayment.tax_total}</p>
         </div>
-        <div className="border-t text-gray-800 flex justify-between my-2 p-2">
-          <p> Taxes and Surcharges</p>
-          <p>&#8377; {taxTotal}</p>
-        </div>
-        <div className="border-t text-base text-indigo-800 flex justify-between my-2 p-2 font-bold">
-          <p>Grand Total </p>
-          <p className="text-xl">&#8377; {GrandTotal} </p>
+        {TotalPayment.discount > 0 ? (
+          <div className="flex justify-between my-2">
+            <h1>Discount</h1>
+            <p className="text-red-600">- &#8377; {TotalPayment.discount}</p>
+          </div>
+        ) : (
+          ""
+        )}
+        {TotalPayment.promotion > 0 ? (
+          <div className="flex justify-between">
+            <h1>Promotion</h1>
+            <p className="text-red-600">- &#8377; {TotalPayment.promotion}</p>
+          </div>
+        ) : (
+          ""
+        )}
+        <div className="flex font-bold justify-between border-t my-2 py-2">
+          <h1>Grand Total</h1>
+          <p>
+            &#8377;{" "}
+            {TotalPayment.original_total -
+              TotalPayment.discount -
+              TotalPayment.promotion}
+          </p>
         </div>
       </div>
-      <div className="mx-4 flex">
+      <div className="flex mx-4">
         <Input
           label="Promo Code"
-          className="text-indigo-700 font-bold"
           color="indigo"
-        />
+          onChange={(e) => setPromoCode(e.target.value)}
+        />{" "}
         <button
-          className="bg-indigo-700 text-white p-1 rounded-md mx-2 px-4"
-          onClick={() => ApplyPromoCode()}
+          className="bg-indigo-700 rounded-md mx-2 p-1 text-white"
+          onClick={() => applyPromoCode()}
         >
           Apply
         </button>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import FlightDetails from "../../Components/Review/FlightDetails";
 import PaymentDetails from "../../Components/Review/PaymentDetails";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,9 +6,12 @@ import { AppThunkDispatch, RootState } from "../../store";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AxiosRequestConfig } from "axios";
 import { getAPICallType } from "../../Services/APIFetch";
-import { APICallType, SearchType } from "../../Types";
+import { APICallType, SearchType, OfferBase } from "../../Types";
 import { fetchFlight } from "../../Actions/BookingFlight.action";
 import { Spinner } from "@material-tailwind/react";
+import Offers from "../../Components/Review/Offers";
+import Tracking from "../../Components/Tracking/Tracking";
+import MainContainer from "../../Components/Review/MainContainer";
 
 export default function Reviewpage() {
   const result = useSelector((state: RootState) => state.Result);
@@ -38,13 +41,15 @@ export default function Reviewpage() {
 
   return result.data.dep.length > 0 ? (
     <div className="bg-[#e9eef7]">
-      <div className="bg-[#2176e3] h-[24rem] py-8 flex justify-center flex-wrap">
+      <Tracking active="" />
+      <div className="bg-[#2176e3]  py-8 flex justify-center flex-wrap">
         <h1 className="text-white font-arial text-xl font-bold w-full mx-8 text-center">
           {" "}
           Review Your Booking{" "}
         </h1>
-        <FlightDetails />
-        <PaymentDetails />
+      </div>
+      <div>
+        <MainContainer />
       </div>
     </div>
   ) : (

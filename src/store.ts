@@ -4,6 +4,8 @@ import AirportReducer from "./Actions/Airport.action";
 import SearchReducer from "./Actions/Search.action";
 import ResultReducer from "./Actions/Result.action";
 import BookingFlightReducer from "./Actions/BookingFlight.action";
+import OfferReducer from "./Actions/Offers.action";
+import TrackingReducer from "./Actions/Tracking.actions";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +14,8 @@ const store = configureStore({
     SearchParms: SearchReducer,
     Result: ResultReducer,
     BookingFlight: BookingFlightReducer,
+    Offers: OfferReducer,
+    Tracking: TrackingReducer,
   },
 });
 

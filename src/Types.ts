@@ -215,3 +215,26 @@ export interface ResultData {
   rtn?: Array<ResultBase>;
 }
 
+export interface TravellerIndiPayment {
+  no_people: number;
+  type: number;
+  fare: { basic: number; tax: number };
+  basic_total: number;
+  tax_total: number;
+}
+
+export interface TotalPaymentDetails {
+  basic_total: number;
+  tax_total: number;
+  original_total: number;
+  discount: number;
+  promotion: number;
+}
+
+export interface OfferBase {
+  offer_name: string;
+  referal_code: string;
+  offer_discount: number;
+  valid_till: Date;
+  description: string;
+}
