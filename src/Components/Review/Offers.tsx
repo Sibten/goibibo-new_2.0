@@ -11,7 +11,7 @@ export default function Offers({ callback }: { callback: Function }) {
   return (
     <div className="w-[20rem] bg-white shadow-md my-2 rounded-md font-arial">
       <form>
-        <div className="border-b  font-bold p-4 flex justify-between">
+        <div className="border-b  font-bold p-4 flex justify-between font-qs">
           <h1 className="text-lg"> Goibibo Offers</h1>
           <button type="reset">
             <GrPowerReset type="reset" onClick={() => callback(null)} />

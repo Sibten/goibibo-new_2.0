@@ -4,8 +4,10 @@ import { calDuration, calFare, getStops, time } from "../../../Helper/Method";
 import { Button } from "@material-tailwind/react";
 import { HiRefresh } from "react-icons/hi";
 import { GrPowerReset } from "react-icons/gr";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store";
+import { useNavigate } from "react-router-dom";
+import { trackingActions } from "../../../Actions/Tracking.actions";
 
 export default function SelectionCard({
   data,
@@ -13,7 +15,7 @@ export default function SelectionCard({
   data: { from?: ResultBase; to?: ResultBase };
 }) {
   const selector = useSelector((state: RootState) => state.SearchParms);
-  let depFare = {},
+  let depFare = { basic: 0, tax: 0 },
     rtnFare = { basic: 0, tax: 0 };
   if (data.from && data.to) {
     depFare = calFare(
@@ -31,6 +33,10 @@ export default function SelectionCard({
       data.to.route_id.stops.length
     );
   }
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   return (
     <div className="mx-4 grid grid-cols-3 bg-white p-2 my-4 sticky top-auto rounded-md shadow-sm">
@@ -120,13 +126,23 @@ export default function SelectionCard({
       </div>
       <div className="mx-4">
         {data.from && data.to ? (
-          <>
-            <h1> </h1>
-            <Button className="my-2 mx-4" color="indigo">
+          <div className="flex items-center">
+            <h1 className="font-bold text-lg">
+              {" "}
+              Total Fare : &#8377;
+              {rtnFare.basic + rtnFare.tax + (depFare.basic + depFare.tax)}{" "}
+            </h1>
+
+            <Button className="my-2 mx-4" color="indigo" onClick={() => {
+                    dispatch(trackingActions.activeBookig());
+                    navigate(
+                      `/flight/review/?dep_flight_no=${data.from?.flight_no}&rtn_flight_no=${data.to?.flight_no}`
+                    );
+                  }}>
               {" "}
               Book{" "}
             </Button>
-          </>
+          </div>
         ) : (
           <div className="mx-4">
             {" "}

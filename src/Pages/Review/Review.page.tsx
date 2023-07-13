@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import FlightDetails from "../../Components/Review/FlightDetails";
-import PaymentDetails from "../../Components/Review/PaymentDetails";
+
 import { useDispatch, useSelector } from "react-redux";
 import { AppThunkDispatch, RootState } from "../../store";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -26,7 +25,8 @@ export default function Reviewpage() {
       setTimeout(() => {
         navigate("/flight");
       }, 1000);
-    } else {
+    }
+    if (url.get("dep_flight_no")) {
       const config: AxiosRequestConfig = {
         method: getAPICallType(APICallType.GET),
         url: `http://localhost:5050/flight/get_flight?flightno=${url.get(
@@ -34,8 +34,18 @@ export default function Reviewpage() {
         )}`,
         headers: {},
       };
-
       dispatch(fetchFlight({ config: config, type: SearchType.From }));
+    }
+
+    if (url.get("rtn_flight_no")) {
+      const config: AxiosRequestConfig = {
+        method: getAPICallType(APICallType.GET),
+        url: `http://localhost:5050/flight/get_flight?flightno=${url.get(
+          "rtn_flight_no"
+        )}`,
+        headers: {},
+      };
+      dispatch(fetchFlight({ config: config, type: SearchType.To }));
     }
   }, []);
 
@@ -43,13 +53,13 @@ export default function Reviewpage() {
     <div className="bg-[#e9eef7]">
       <Tracking active="" />
       <div className="bg-[#2176e3]  py-8 flex justify-center flex-wrap">
-        <h1 className="text-white font-arial text-xl font-bold w-full mx-8 text-center">
+        <h1 className="text-white  text-xl font-bold w-full mx-8 text-center font-qs">
           {" "}
           Review Your Booking{" "}
         </h1>
       </div>
       <div>
-        <MainContainer />
+        <MainContainer isReturn={url.get("rtn_flight_no") ? true : false} />
       </div>
     </div>
   ) : (

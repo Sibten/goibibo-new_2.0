@@ -218,7 +218,10 @@ export interface ResultData {
 export interface TravellerIndiPayment {
   no_people: number;
   type: number;
-  fare: { basic: number; tax: number };
+  fare: {
+    dep: { basic: number; tax: number };
+    rtn: { basic: number; tax: number };
+  };
   basic_total: number;
   tax_total: number;
 }
@@ -237,4 +240,17 @@ export interface OfferBase {
   offer_discount: number;
   valid_till: Date;
   description: string;
+}
+
+export interface Traveller {
+  first_name: string;
+  last_name: string;
+  age: number;
+  gender: string;
+}
+
+export interface TravellerDetailsBase {
+  adults: Array<Traveller>;
+  children?: Array<Traveller>;
+  infants?: Array<Traveller>;
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  APICallType,
   OfferBase,
   People,
   TotalPaymentDetails,
@@ -10,9 +11,10 @@ import { RootState } from "../../store";
 import { calFare } from "../../Helper/Method";
 import { MdPeople } from "react-icons/md";
 import { FaBaby, FaChild } from "react-icons/fa";
-import { Input } from "@material-tailwind/react";
+import { Button, Input } from "@material-tailwind/react";
 import axios, { AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
+import { getAPICallType } from "../../Services/APIFetch";
 
 const getPeopleType = (peopleType: number, peopleNumber: number) => {
   switch (peopleType) {
@@ -66,7 +68,9 @@ export default function PaymentDetails({
     promotion: 0,
   });
   let fare = { basic: 0, tax: 0 };
+  let rtnFare = { basic: 0, tax: 0 };
   let infantsFare = { basic: 0, tax: 0 };
+  let rtnInfantFare = { basic: 0, tax: 0 };
 
   useEffect(() => {
     if (bookingFlight.dep) {
@@ -78,44 +82,71 @@ export default function PaymentDetails({
         bookingParams.class,
         bookingFlight.dep?.route_id.stops.length
       );
-
-      IndiPayment.push({
-        no_people: bookingParams.pepoles.adults,
-        type: People.Adult,
-        fare: fare,
-        tax_total: fare.tax * bookingParams.pepoles.adults,
-        basic_total: fare.basic * bookingParams.pepoles.adults,
-      });
-      if (bookingParams.pepoles.children) {
-        IndiPayment.push({
-          no_people: bookingParams.pepoles.children,
-          type: People.Child,
-          fare: fare,
-          tax_total: fare.tax * bookingParams.pepoles.children,
-          basic_total: fare.basic * bookingParams.pepoles.children,
-        });
-      }
-      if (bookingParams.pepoles.infants) {
-        infantsFare = calFare(
-          bookingFlight.dep?.route_id.distance,
-          bookingFlight.dep?.fare.fare,
-          bookingFlight.dep?.fare.tax,
-          bookingParams.class,
-          bookingFlight.dep?.route_id.stops.length,
-          People.Infant
-        );
-        IndiPayment.push({
-          no_people: bookingParams.pepoles.infants,
-          type: People.Infant,
-          fare: infantsFare,
-          tax_total: infantsFare.tax * bookingParams.pepoles.infants,
-          basic_total: infantsFare.basic * bookingParams.pepoles.infants,
-        });
-      }
-
-      setIndiPayment([...IndiPayment]);
-      console.log(IndiPayment);
+      infantsFare = calFare(
+        bookingFlight.dep?.route_id.distance,
+        bookingFlight.dep?.fare.fare,
+        bookingFlight.dep?.fare.tax,
+        bookingParams.class,
+        bookingFlight.dep?.route_id.stops.length,
+        People.Infant
+      );
     }
+    if (bookingFlight.rtn) {
+      rtnFare = calFare(
+        bookingFlight.rtn?.route_id.distance,
+        bookingFlight.rtn?.fare.fare,
+        bookingFlight.rtn?.fare.tax,
+        bookingParams.class,
+        bookingFlight.rtn?.route_id.stops.length
+      );
+      rtnInfantFare = calFare(
+        bookingFlight.rtn?.route_id.distance,
+        bookingFlight.rtn?.fare.fare,
+        bookingFlight.rtn?.fare.tax,
+        bookingParams.class,
+        bookingFlight.rtn?.route_id.stops.length,
+        People.Infant
+      );
+    }
+
+    IndiPayment.push({
+      no_people: bookingParams.pepoles.adults,
+      type: People.Adult,
+      fare: { dep: fare, rtn: rtnFare },
+      tax_total:
+        fare.tax * bookingParams.pepoles.adults +
+        rtnFare.tax * bookingParams.pepoles.adults,
+      basic_total:
+        fare.basic * bookingParams.pepoles.adults +
+        rtnFare.basic * bookingParams.pepoles.adults,
+    });
+    if (bookingParams.pepoles.children) {
+      IndiPayment.push({
+        no_people: bookingParams.pepoles.children,
+        type: People.Child,
+        fare: { dep: fare, rtn: rtnFare },
+        tax_total:
+          fare.tax * bookingParams.pepoles.children +
+          rtnFare.tax * bookingParams.pepoles.children,
+        basic_total:
+          fare.basic * bookingParams.pepoles.children +
+          rtnFare.basic * bookingParams.pepoles.children,
+      });
+    }
+    if (bookingParams.pepoles.infants) {
+      IndiPayment.push({
+        no_people: bookingParams.pepoles.infants,
+        type: People.Infant,
+        fare: { dep: infantsFare, rtn: rtnInfantFare },
+        tax_total:
+          infantsFare.tax * bookingParams.pepoles.infants +
+          rtnInfantFare.tax * bookingParams.pepoles.infants,
+        basic_total:
+          infantsFare.basic * bookingParams.pepoles.infants +
+          rtnInfantFare.basic * bookingParams.pepoles.infants,
+      });
+    }
+    setIndiPayment([...IndiPayment]);
   }, [bookingFlight]);
 
   useEffect(() => {
@@ -143,6 +174,11 @@ export default function PaymentDetails({
           TotalPayment.original_total * appliedOffer.offer_discount
         ),
       });
+    } else {
+      setTotalPayment({
+        ...TotalPayment,
+        discount: 0,
+      });
     }
   }, [appliedOffer]);
 
@@ -159,11 +195,14 @@ export default function PaymentDetails({
         token: Cookies.get("token"),
       },
     };
-
     const res = await axios(config);
     if (res.status == 200 && res.data.reedme) {
-      TotalPayment.promotion =
-        TotalPayment.original_total * res.data.offer.offer_discount;
+      setPromoError("");
+      TotalPayment.promotion = Math.ceil(
+        TotalPayment.original_total * res.data.offer.offer_discount
+      );
+      setTotalPayment({ ...TotalPayment });
+      setActive(true);
     } else {
       setPromoError("Invalid Promocode.");
     }
@@ -172,7 +211,10 @@ export default function PaymentDetails({
   return (
     <div className=" bg-white shadow-md  rounded-md w-[20rem] h-max py-4 my-4 font-arial">
       <div className="border-b border-gray-300 p-4">
-        <h1 className="font-bold uppercase tracking-wide"> Fare Summary </h1>
+        <h1 className="font-bold uppercase tracking-wide font-qs">
+          {" "}
+          Fare Summary{" "}
+        </h1>
         <p className="text-xs uppercase">
           {" "}
           {bookingParams.pepoles.adults} {adultSpelling}{" "}
@@ -198,11 +240,22 @@ export default function PaymentDetails({
         <ul className="mx-2 my-2">
           {IndiPayment.map((s) => (
             <li key={s.type} className="flex justify-between text-sm my-1">
-              <p className="flex">
-                {" "}
-                {getPeopleType(s.type, s.no_people)} &nbsp; ( 1 x &#8377;{" "}
-                {s.fare.basic})
-              </p>{" "}
+              <div>
+                <p className="flex">
+                  {" "}
+                  <span> {getPeopleType(s.type, s.no_people)} </span>
+                </p>{" "}
+                <p className="w-max"> 
+                <span className="ms-8 text-xs">
+                  {" "}
+                  (Dep - 1 x &#8377; {s.fare.dep.basic}){" "}
+                </span>
+                {bookingFlight.rtn ? <span className="text-xs">
+                  {" "}
+                  (Rtn - 1 x &#8377; {s.fare.rtn.basic}){" "}
+                </span> : ""}
+                </p>
+              </div>
               <p> &#8377; {s.basic_total} </p>
             </li>
           ))}
@@ -227,9 +280,9 @@ export default function PaymentDetails({
         ) : (
           ""
         )}
-        <div className="flex font-bold justify-between border-t my-2 py-2">
+        <div className="flex font-bold font-qs justify-between border-t my-2 py-2 text-indigo-600">
           <h1>Grand Total</h1>
-          <p>
+          <p className="text-xl">
             &#8377;{" "}
             {TotalPayment.original_total -
               TotalPayment.discount -
@@ -237,18 +290,25 @@ export default function PaymentDetails({
           </p>
         </div>
       </div>
-      <div className="flex mx-4">
-        <Input
-          label="Promo Code"
-          color="indigo"
-          onChange={(e) => setPromoCode(e.target.value)}
-        />{" "}
-        <button
-          className="bg-indigo-700 rounded-md mx-2 p-1 text-white"
-          onClick={() => applyPromoCode()}
-        >
-          Apply
-        </button>
+      <div className=" mx-4">
+        <div className="flex">
+          <Input
+            label="Promo Code"
+            color="indigo"
+            onChange={(e) => setPromoCode(e.target.value)}
+            disabled={active}
+          />{" "}
+          <Button
+            className="bg-indigo-700 rounded-md mx-2 p-1 text-white"
+            onClick={() => applyPromoCode()}
+            disabled={active}
+          >
+            {active ? "Applied" : "Apply"}
+          </Button>
+        </div>
+        <div className="w-full">
+          {promoError && <p className="text-red-500">{promoError}</p>}
+        </div>
       </div>
     </div>
   );
