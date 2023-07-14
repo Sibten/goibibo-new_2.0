@@ -4,7 +4,7 @@ import { FaCalendarCheck } from "react-icons/fa";
 import { MdOutlineAirlineSeatReclineNormal, MdPayment } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-export default function Tracking({ active }: { active: string }) {
+export default function Tracking() {
   const trackingSelector = useSelector((state: RootState) => state.Tracking);
 
   const [activeState, setActiveState] = useState(0);

@@ -6,6 +6,7 @@ import ResultReducer from "./Actions/Result.action";
 import BookingFlightReducer from "./Actions/BookingFlight.action";
 import OfferReducer from "./Actions/Offers.action";
 import TrackingReducer from "./Actions/Tracking.actions";
+import BookingReducer from "./Actions/ConfirmBookingDetails.action";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     BookingFlight: BookingFlightReducer,
     Offers: OfferReducer,
     Tracking: TrackingReducer,
+    BookingDetails: BookingReducer,
   },
 });
 

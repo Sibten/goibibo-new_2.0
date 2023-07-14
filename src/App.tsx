@@ -10,6 +10,9 @@ import Flightspage from "./Pages/Flights/FlightsSearch.page";
 import Pagenotfound from "./Components/Errors/Pagenotfound";
 import Reviewpage from "./Pages/Review/Review.page";
 import Protected from "./Protected";
+import Tracking from "./Components/Tracking/Tracking";
+import SeatSelection from "./Pages/SeatSelection/SeatSelection.page";
+import SeatSelectionPage from "./Pages/SeatSelection/SeatSelection.page";
 
 function App() {
   return (
@@ -22,6 +25,7 @@ function App() {
           <Route path="search" element={<Flightspage />} />
           <Route element={<Protected />}>
             <Route path="review" element={<Reviewpage />} />
+            <Route path="seat_selection" element={<SeatSelectionPage />} />
           </Route>
         </Route>
         <Route path="/profile" element={<Profilepage />} />

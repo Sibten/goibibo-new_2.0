@@ -13,3 +13,13 @@ th{
 	background-color: #f4f4f4;
 }
 
+::-webkit-scrollbar{
+	width: 5px;
+}
+::-webkit-scrollbar-track{
+	background: #ddd;
+}
+::-webkit-scrollbar-thumb{
+	background: #666; 
+	border-radius: 20px;
+}

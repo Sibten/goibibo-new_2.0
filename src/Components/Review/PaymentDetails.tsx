@@ -6,15 +6,17 @@ import {
   TotalPaymentDetails,
   TravellerIndiPayment,
 } from "../../Types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { calFare } from "../../Helper/Method";
 import { MdPeople } from "react-icons/md";
-import { FaBaby, FaChild } from "react-icons/fa";
-import { Button, Input } from "@material-tailwind/react";
+import { FaBaby, FaChild, FaLock } from "react-icons/fa";
+import { Button, Input, Alert } from "@material-tailwind/react";
 import axios, { AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
 import { getAPICallType } from "../../Services/APIFetch";
+import { ClassName } from "../Flight/Flightsearch.components";
+import { BookingActions } from "../../Actions/ConfirmBookingDetails.action";
 
 const getPeopleType = (peopleType: number, peopleNumber: number) => {
   switch (peopleType) {
@@ -45,8 +47,10 @@ const getPeopleType = (peopleType: number, peopleNumber: number) => {
 
 export default function PaymentDetails({
   appliedOffer,
+  callback,
 }: {
   appliedOffer: OfferBase | null;
+  callback: Function;
 }) {
   const bookingParams = useSelector((state: RootState) => state.SearchParms);
   const bookingFlight = useSelector((state: RootState) => state.BookingFlight);
@@ -185,7 +189,10 @@ export default function PaymentDetails({
   const [promocode, setPromoCode] = useState<string>();
 
   const [active, setActive] = useState<boolean>(false);
+  const [payLock, setPayLock] = useState<boolean>(false);
   const [promoError, setPromoError] = useState("");
+
+  const dispatch = useDispatch();
 
   const applyPromoCode = async () => {
     const config: AxiosRequestConfig = {
@@ -205,7 +212,17 @@ export default function PaymentDetails({
       setActive(true);
     } else {
       setPromoError("Invalid Promocode.");
+      setTimeout(() => {
+        setPromoError("");
+      }, 2000);
     }
+  };
+
+  const lockPayment = () => {
+    dispatch(BookingActions.addPayment(TotalPayment));
+    setActive(true);
+    setPayLock(true);
+    callback();
   };
 
   return (
@@ -245,15 +262,19 @@ export default function PaymentDetails({
                   {" "}
                   <span> {getPeopleType(s.type, s.no_people)} </span>
                 </p>{" "}
-                <p className="w-max"> 
-                <span className="ms-8 text-xs">
-                  {" "}
-                  (Dep - 1 x &#8377; {s.fare.dep.basic}){" "}
-                </span>
-                {bookingFlight.rtn ? <span className="text-xs">
-                  {" "}
-                  (Rtn - 1 x &#8377; {s.fare.rtn.basic}){" "}
-                </span> : ""}
+                <p className="w-max">
+                  <span className="ms-8 text-xs">
+                    {" "}
+                    (Dep - 1 x &#8377; {s.fare.dep.basic}){" "}
+                  </span>
+                  {bookingFlight.rtn ? (
+                    <span className="text-xs">
+                      {" "}
+                      (Rtn - 1 x &#8377; {s.fare.rtn.basic}){" "}
+                    </span>
+                  ) : (
+                    ""
+                  )}
                 </p>
               </div>
               <p> &#8377; {s.basic_total} </p>
@@ -299,15 +320,40 @@ export default function PaymentDetails({
             disabled={active}
           />{" "}
           <Button
-            className="bg-indigo-700 rounded-md mx-2 p-1 text-white"
+            className="bg-indigo-700 w-24 rounded-md mx-2 p-1 text-white"
             onClick={() => applyPromoCode()}
             disabled={active}
           >
             {active ? "Applied" : "Apply"}
           </Button>
         </div>
+        <div className="w-full text-xs my-2">
+          {promoError && (
+            <Alert className="bg-red-50 p-1 text-center px-2">
+              {" "}
+              <p className="text-red-500">{promoError}</p>{" "}
+            </Alert>
+          )}
+        </div>
+
+        <div className="my-2 w-max mx-auto">
+          <Button
+            className="flex"
+            color="indigo"
+            onClick={lockPayment}
+            disabled={payLock}
+          >
+            <FaLock className="mx-2" />{" "}
+            {payLock ? "Price Locked" : "Lock Price"}{" "}
+          </Button>
+        </div>
+
         <div className="w-full">
-          {promoError && <p className="text-red-500">{promoError}</p>}
+          <Alert className="bg-blue-50 text-indigo-500 text-xs w-full">
+            {" "}
+            Once you have locked your payment, you are not eligible to add
+            promotion code or any offer.{" "}
+          </Alert>
         </div>
       </div>
     </div>

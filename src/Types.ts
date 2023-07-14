@@ -117,6 +117,11 @@ export enum SearchType {
   To,
 }
 
+export enum JouernyType {
+  Departure,
+  Return,
+}
+
 export enum People {
   Adult,
   Child,
@@ -198,7 +203,14 @@ export interface ResultBase {
     distance: number;
   };
   airbus_id: {
+    available_class?: {
+      BC: true;
+      EC: true;
+      PE: false;
+      FC: false;
+    };
     airbus_code: string;
+    seat_map: Array<SeatLayout>;
   };
   status: number;
   fare: {
@@ -250,7 +262,32 @@ export interface Traveller {
 }
 
 export interface TravellerDetailsBase {
-  adults: Array<Traveller>;
-  children?: Array<Traveller>;
-  infants?: Array<Traveller>;
+  basic: {
+    adults: Array<Traveller>;
+    children?: Array<Traveller>;
+    infants?: Array<Traveller>;
+    email: string;
+    address: string;
+    state: string;
+    pincode: number;
+  };
+  payment?: TotalPaymentDetails;
+  info?: SearchParamsType;
+}
+
+export interface SeatLayout {
+  class_type: number;
+  row_start: number;
+  row_end: number;
+  col_start: string;
+  col_gap: string;
+  col_end: string;
+}
+
+export interface BookedSeat {
+  date: Date;
+  BC: Array<string>;
+  EC: Array<string>;
+  PE: Array<string>;
+  FC: Array<string>;
 }

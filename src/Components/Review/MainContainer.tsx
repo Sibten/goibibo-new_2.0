@@ -17,6 +17,8 @@ export default function MainContainer({ isReturn }: { isReturn: boolean }) {
   const selector = useSelector((state: RootState) => state.BookingFlight);
   const bookingParams = useSelector((state: RootState) => state.SearchParms);
 
+  const [locked, setLocked] = useState<boolean>(false);
+
   return (
     <div className="flex justify-center">
       <div className="my-4">
@@ -51,8 +53,11 @@ export default function MainContainer({ isReturn }: { isReturn: boolean }) {
         <TravellerDetails />
       </div>
       <div>
-        <PaymentDetails appliedOffer={selectedOffer ?? null} />
-        <Offers callback={handleCallBack} />
+        <PaymentDetails
+          appliedOffer={selectedOffer ?? null}
+          callback={() => setLocked(true)}
+        />
+        <Offers callback={handleCallBack} locked={locked} />
       </div>
     </div>
   );

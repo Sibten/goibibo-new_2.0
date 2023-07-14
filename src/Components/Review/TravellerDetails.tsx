@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Alert, Button, Input } from "@material-tailwind/react";
 import Accordian from "./SubComponents/Accordian";
-import { People, Traveller, TravellerDetailsBase } from "../../Types";
+import {
+  People,
+  Traveller,
+  TravellerDetailsBase,
+  indianStates,
+} from "../../Types";
+import { BookingActions } from "../../Actions/ConfirmBookingDetails.action";
+import { trackingActions } from "../../Actions/Tracking.actions";
+import { useNavigate } from "react-router-dom";
 
 export default function TravellerDetails() {
   const selector = useSelector((state: RootState) => state.SearchParms);
+
+  const UserData = useSelector((state: RootState) => state.User);
 
   const adultSpelling = selector.pepoles.adults > 1 ? "Adults" : "Adult";
   const childSpelling =
@@ -15,35 +25,80 @@ export default function TravellerDetails() {
       : "Child";
 
   const [TravellerDetails, setTravellerDetails] =
-    useState<TravellerDetailsBase>({ adults: [], children: [], infants: [] });
+    useState<TravellerDetailsBase>({
+      basic: {
+        adults: [],
+        children: [],
+        infants: [],
+        email: "",
+        address: UserData.billing_address ?? "",
+        state: UserData.state ?? "",
+        pincode: UserData.pincode ?? 0,
+      },
+    });
 
   useEffect(() => {
     console.log(TravellerDetails);
   }, [TravellerDetails]);
 
-  const [email, setEmail] = useState("");
   const emailRegx = /^[A-Za-z0-9_.]+@[a-z.]+\.[a-z]{2,4}$/;
   const [deactive, setDeactive] = useState<boolean>(true);
   const validateEmail = (comingEmail: string) => {
     if (emailRegx.test(comingEmail)) {
       setDeactive(false);
-      setEmail(comingEmail);
+
+      setTravellerDetails({
+        ...TravellerDetails,
+        basic: { ...TravellerDetails.basic, email: comingEmail },
+      });
     } else {
       setDeactive(true);
     }
   };
 
   const [Message, setMessage] = useState<string>("");
+  const dispatch = useDispatch();
+
+  const bookingDetails = useSelector(
+    (state: RootState) => state.BookingDetails
+  );
+  const bookingFlight = useSelector((state: RootState) => state.BookingFlight);
+  const navigate = useNavigate();
 
   const navigateSeatSelection = () => {
     if (
-      TravellerDetails.adults.length == selector.pepoles.adults &&
-      TravellerDetails.children?.length == selector.pepoles.children &&
-      TravellerDetails.infants?.length == selector.pepoles.infants
+      bookingDetails.payment?.basic_total != 0 &&
+      bookingDetails.payment?.tax_total != 0 &&
+      bookingDetails.payment?.original_total != 0
     ) {
-      setMessage("");
+      if (
+        TravellerDetails.basic &&
+        TravellerDetails.basic.adults.length == selector.pepoles.adults &&
+        TravellerDetails.basic.children?.length == selector.pepoles.children &&
+        TravellerDetails.basic.infants?.length == selector.pepoles.infants &&
+        TravellerDetails.basic.address != "" &&
+        TravellerDetails.basic.email != "" &&
+        TravellerDetails.basic.pincode != 0 &&
+        TravellerDetails.basic.state != "def"
+      ) {
+        setMessage("");
+        TravellerDetails.payment = bookingDetails.payment;
+        dispatch(BookingActions.addBasic(TravellerDetails));
+        dispatch(trackingActions.activeSeat());
+        navigate(
+          `/flight/seat_selection/?dep_flight_no=${bookingFlight.dep?.flight_no}`
+        );
+      } else {
+        setMessage("Please Provide Details Properly");
+        setTimeout(() => {
+          setMessage("");
+        }, 2000);
+      }
     } else {
-      setMessage("Please Provide Details Properly");
+      setMessage("Please lock the payment first");
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
     }
   };
 
@@ -64,7 +119,10 @@ export default function TravellerDetails() {
             number={selector.pepoles.adults}
             type={People.Adult}
             callback={(value: Array<Traveller>) =>
-              setTravellerDetails({ ...TravellerDetails, adults: value })
+              setTravellerDetails({
+                ...TravellerDetails,
+                basic: { ...TravellerDetails.basic, adults: value },
+              })
             }
           />
           {selector.pepoles.children && selector.pepoles.children > 0 ? (
@@ -73,7 +131,10 @@ export default function TravellerDetails() {
               type={People.Child}
               number={selector.pepoles.children}
               callback={(value: Array<Traveller>) =>
-                setTravellerDetails({ ...TravellerDetails, children: value })
+                setTravellerDetails({
+                  ...TravellerDetails,
+                  basic: { ...TravellerDetails.basic, children: value },
+                })
               }
             />
           ) : (
@@ -85,7 +146,10 @@ export default function TravellerDetails() {
               type={People.Infant}
               number={selector.pepoles.infants}
               callback={(value: Array<Traveller>) =>
-                setTravellerDetails({ ...TravellerDetails, infants: value })
+                setTravellerDetails({
+                  ...TravellerDetails,
+                  basic: { ...TravellerDetails.basic, infants: value },
+                })
               }
             />
           ) : (
@@ -104,8 +168,81 @@ export default function TravellerDetails() {
             Your ticket will be sent to this email address
           </p>
         </div>
+        <div className="mx-4">
+          <div className="">
+            <h1 className="font-arial font-bold text-lg my-2 mx-2">
+              {" "}
+              Billing Address{" "}
+            </h1>
+            <div className="my-4 font-qs flex flex-wrap">
+              <div className="my-2 w-full md:w-80 mx-2">
+                <Input
+                  type="text"
+                  label="Billing Address"
+                  value={TravellerDetails.basic.address}
+                  onChange={(e) =>
+                    setTravellerDetails({
+                      ...TravellerDetails,
+                      basic: {
+                        ...TravellerDetails.basic,
+                        address: e.target.value,
+                      },
+                    })
+                  }
+                />
+              </div>
+              <div className="my-2 w-full md:w-80 mx-2">
+                <Input
+                  type="number"
+                  label="Pincode"
+                  value={TravellerDetails.basic.pincode}
+                  onChange={(e) =>
+                    setTravellerDetails({
+                      ...TravellerDetails,
+                      basic: {
+                        ...TravellerDetails.basic,
+                        pincode: parseInt(e.target.value),
+                      },
+                    })
+                  }
+                />
+              </div>
+              <div className="my-2 w-full mx-2 block font-arial">
+                <select
+                  className=" p-2 w-full md:w-80 rounded-md focus:outline-blue-500 focus:outline-1"
+                  value={TravellerDetails.basic.state}
+                  onChange={(e) => {
+                    if (e.target.value == "def") setMessage("Invalid State");
+                    else
+                      setTravellerDetails({
+                        ...TravellerDetails,
+                        basic: {
+                          ...TravellerDetails.basic,
+                          state: e.target.value,
+                        },
+                      });
+                  }}
+                >
+                  <option value="def"> -- Select State -- </option>
+                  {indianStates.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="px-4">
+          {Message && (
+            <Alert className="bg-red-50">
+              {" "}
+              <p className="text-sm text-red-500">{Message}</p>{" "}
+            </Alert>
+          )}
+        </div>
         <div className="w-max ml-auto m-4 h-max">
-          <p className="text-sm text-red-500">{Message}</p>
           <Button
             className="bg-orange-600 p-2 shadow-md rounded-md font-qs font-bold text-sm text-white"
             disabled={deactive}

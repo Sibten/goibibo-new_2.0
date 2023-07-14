@@ -11,6 +11,7 @@ import { Spinner } from "@material-tailwind/react";
 import Offers from "../../Components/Review/Offers";
 import Tracking from "../../Components/Tracking/Tracking";
 import MainContainer from "../../Components/Review/MainContainer";
+import Title from "../../Components/Utility/Title";
 
 export default function Reviewpage() {
   const result = useSelector((state: RootState) => state.Result);
@@ -51,13 +52,8 @@ export default function Reviewpage() {
 
   return result.data.dep.length > 0 ? (
     <div className="bg-[#e9eef7]">
-      <Tracking active="" />
-      <div className="bg-[#2176e3]  py-8 flex justify-center flex-wrap">
-        <h1 className="text-white  text-xl font-bold w-full mx-8 text-center font-qs">
-          {" "}
-          Review Your Booking{" "}
-        </h1>
-      </div>
+      {/* <Tracking /> */}
+      <Title text="Review your booking" />
       <div>
         <MainContainer isReturn={url.get("rtn_flight_no") ? true : false} />
       </div>

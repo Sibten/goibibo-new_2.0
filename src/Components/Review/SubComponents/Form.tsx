@@ -133,10 +133,16 @@ export default function Form({
               if (f != -1) {
                 Message[0] = "Please Enter Valid Input! All Field are required";
                 setMessage([...Message]);
+                setTimeout(() => {
+                  Message.splice(0, 1);
+                }, 200);
               } else if (Message.length > 0) {
                 Message[0] =
                   "Please Enter the valid Age. Age must be >18 for Adult, For Child >2<18. For Infants >0<2";
                 setMessage([...Message]);
+                setTimeout(() => {
+                  Message.splice(0, 1);
+                }, 200);
               } else {
                 callback(formData);
                 Message[0] = "Successfully Saved!";
