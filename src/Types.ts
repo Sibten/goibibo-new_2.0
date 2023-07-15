@@ -167,7 +167,13 @@ export interface Airline {
   airline_icon: string;
   airline_code: string;
 }
-
+export interface AvaliableSeat {
+  date: Date;
+  BC: number;
+  EC: number;
+  PE: number;
+  FC: number;
+}
 export interface ResultBase {
   timing: [
     {
@@ -175,15 +181,7 @@ export interface ResultBase {
       destination_time: string;
     }
   ];
-  available_seats: [
-    {
-      date: Date;
-      BC: number;
-      EC: number;
-      PE: number;
-      FC: number;
-    }
-  ];
+  available_seats: Array<AvaliableSeat>;
   booked_seats: [
     {
       date: Date;
@@ -255,17 +253,18 @@ export interface OfferBase {
 }
 
 export interface Traveller {
+  type: number;
   first_name: string;
   last_name: string;
   age: number;
+  seat_no?: string;
   gender: string;
 }
 
 export interface TravellerDetailsBase {
   basic: {
-    adults: Array<Traveller>;
-    children?: Array<Traveller>;
-    infants?: Array<Traveller>;
+    people: Array<Traveller>;
+    infants: Array<Traveller>;
     email: string;
     address: string;
     state: string;

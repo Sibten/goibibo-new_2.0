@@ -23,19 +23,7 @@ import { searchActions } from "../../Actions/Search.action";
 import JouernyCalender from "./MainSubcomponents/JouernyCalender";
 import FlightClass from "./MainSubcomponents/FlightClass";
 import { useNavigate } from "react-router-dom";
-
-export const ClassName = (no: number) => {
-  switch (no) {
-    case Flighclass.Economy:
-      return "Economy";
-    case Flighclass.FirstClass:
-      return "First Class";
-    case Flighclass.Business:
-      return "Business";
-    case Flighclass.PremiumEconomy:
-      return "Premium Economy";
-  }
-};
+import { getFlightClass } from "../../Helper/Method";
 
 export default function Flightsearch() {
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
@@ -312,7 +300,7 @@ export default function Flightsearch() {
                   )}
                 </h2>
                 <p className="text-xs text-gray-500 font-arial font-light">
-                  {ClassName(SearchParams.class)}
+                  {getFlightClass(SearchParams.class)}
                 </p>
               </div>
             </MenuHandler>

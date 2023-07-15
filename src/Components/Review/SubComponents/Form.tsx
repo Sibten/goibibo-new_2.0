@@ -33,7 +33,13 @@ export default function Form({
     rawForm.splice(0, rawForm.length);
     formData.splice(0, formData.length);
     for (let i = 0; i < number; i++) {
-      formData.push({ first_name: "", last_name: "", gender: "", age: 0 });
+      formData.push({
+        type: type,
+        first_name: "",
+        last_name: "",
+        gender: "",
+        age: 0,
+      });
       rawForm.push(
         <div key={i}>
           <h1 className="mx-2 my-1">

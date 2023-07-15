@@ -11,7 +11,7 @@ import {
   callTypes,
 } from "../../../Types";
 import { searchActions } from "../../../Actions/Search.action";
-import { ClassName } from "../Flightsearch.components";
+import { getFlightClass } from "../../../Helper/Method";
 
 export default function FlightClass({ callback, callType }: MyProps) {
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
@@ -76,7 +76,7 @@ export default function FlightClass({ callback, callType }: MyProps) {
               {infants > 0 && <span>,{infants} Infants </span>}
             </h2>
             <p className="text-xs text-gray-500 font-arial font-light">
-              {ClassName(travelClass)}
+              {getFlightClass(travelClass)}
             </p>
           </div>
         </div>

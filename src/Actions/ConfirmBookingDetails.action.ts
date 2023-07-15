@@ -1,11 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { TotalPaymentDetails, TravellerDetailsBase } from "../Types";
+import { TotalPaymentDetails, Traveller, TravellerDetailsBase } from "../Types";
 
 const initialState: TravellerDetailsBase = {
   basic: {
-    adults: [],
-    children: [],
+    people: [],
     infants: [],
     address: "",
     state: "def",
@@ -30,6 +29,9 @@ const BookingSlice = createSlice({
     },
     addPayment: (state, action: PayloadAction<TotalPaymentDetails>) => {
       state.payment = action.payload;
+    },
+    updatePeople: (state, action: PayloadAction<Array<Traveller>>) => {
+      state.basic.people = action.payload;
     },
   },
 });

@@ -1,5 +1,11 @@
 import FlightClass from "../Components/Flight/MainSubcomponents/FlightClass";
-import { Flighclass, ClassFare, AirportType, People } from "../Types";
+import {
+  Flighclass,
+  ClassFare,
+  AirportType,
+  People,
+  AvaliableSeat,
+} from "../Types";
 
 export const time = (time: string) => {
   return new Date(time).toLocaleTimeString(undefined, {
@@ -94,6 +100,19 @@ export const getStops = (stop: Array<AirportType>): string => {
     string += `- ${s.airport_code} -`;
   });
   return string;
+};
+
+export const getLongFormClass = (class_name: string) => {
+  switch (class_name) {
+    case "BC":
+      return `Bussiness`;
+    case "EC":
+      return "Economy";
+    case "FC":
+      return "First Class";
+    case "PE":
+      return "Premium Economy";
+  }
 };
 
 export const getFlightClass = (class_number: number) => {

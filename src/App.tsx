@@ -11,8 +11,8 @@ import Pagenotfound from "./Components/Errors/Pagenotfound";
 import Reviewpage from "./Pages/Review/Review.page";
 import Protected from "./Protected";
 import Tracking from "./Components/Tracking/Tracking";
-import SeatSelection from "./Pages/SeatSelection/SeatSelection.page";
-import SeatSelectionPage from "./Pages/SeatSelection/SeatSelection.page";
+import SeatSelection from "./Pages/SeatSelection/DepSeatSelection.page";
+import DepSeatSelectionPage from "./Pages/SeatSelection/DepSeatSelection.page";
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
           <Route path="search" element={<Flightspage />} />
           <Route element={<Protected />}>
             <Route path="review" element={<Reviewpage />} />
-            <Route path="seat_selection" element={<SeatSelectionPage />} />
+            <Route path="seat_selection" element={<DepSeatSelectionPage />} />
           </Route>
         </Route>
         <Route path="/profile" element={<Profilepage />} />

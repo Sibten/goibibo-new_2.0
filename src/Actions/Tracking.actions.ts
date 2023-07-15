@@ -2,11 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: {
   booking: boolean;
-  seat_selection: boolean;
+  dep_seat_selection: boolean;
+  rtn_seat_selection?: boolean;
   payment: boolean;
 } = {
   booking: false,
-  seat_selection: false,
+  dep_seat_selection: false,
+
   payment: false,
 };
 
@@ -18,7 +20,7 @@ const trackingSlice = createSlice({
       state.booking = true;
     },
     activeSeat: (state) => {
-      state.seat_selection = true;
+      state.dep_seat_selection = true;
     },
     activePayment: (state) => {
       state.payment = true;

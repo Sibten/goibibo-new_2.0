@@ -27,8 +27,7 @@ export default function TravellerDetails() {
   const [TravellerDetails, setTravellerDetails] =
     useState<TravellerDetailsBase>({
       basic: {
-        adults: [],
-        children: [],
+        people: [],
         infants: [],
         email: "",
         address: UserData.billing_address ?? "",
@@ -73,9 +72,9 @@ export default function TravellerDetails() {
     ) {
       if (
         TravellerDetails.basic &&
-        TravellerDetails.basic.adults.length == selector.pepoles.adults &&
-        TravellerDetails.basic.children?.length == selector.pepoles.children &&
-        TravellerDetails.basic.infants?.length == selector.pepoles.infants &&
+        TravellerDetails.basic.people.length ==
+          selector.pepoles.adults + (selector.pepoles.children ?? 0) &&
+        TravellerDetails.basic.infants.length == selector.pepoles.infants &&
         TravellerDetails.basic.address != "" &&
         TravellerDetails.basic.email != "" &&
         TravellerDetails.basic.pincode != 0 &&
@@ -121,7 +120,10 @@ export default function TravellerDetails() {
             callback={(value: Array<Traveller>) =>
               setTravellerDetails({
                 ...TravellerDetails,
-                basic: { ...TravellerDetails.basic, adults: value },
+                basic: {
+                  ...TravellerDetails.basic,
+                  people: [...TravellerDetails.basic.people, ...value],
+                },
               })
             }
           />
@@ -133,7 +135,10 @@ export default function TravellerDetails() {
               callback={(value: Array<Traveller>) =>
                 setTravellerDetails({
                   ...TravellerDetails,
-                  basic: { ...TravellerDetails.basic, children: value },
+                  basic: {
+                    ...TravellerDetails.basic,
+                    people: [...TravellerDetails.basic.people, ...value],
+                  },
                 })
               }
             />
@@ -148,7 +153,10 @@ export default function TravellerDetails() {
               callback={(value: Array<Traveller>) =>
                 setTravellerDetails({
                   ...TravellerDetails,
-                  basic: { ...TravellerDetails.basic, infants: value },
+                  basic: {
+                    ...TravellerDetails.basic,
+                    infants: [...value],
+                  },
                 })
               }
             />

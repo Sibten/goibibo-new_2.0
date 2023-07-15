@@ -8,14 +8,14 @@ import {
 } from "../../Types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { calFare } from "../../Helper/Method";
+import { calFare, getFlightClass } from "../../Helper/Method";
 import { MdPeople } from "react-icons/md";
 import { FaBaby, FaChild, FaLock } from "react-icons/fa";
 import { Button, Input, Alert } from "@material-tailwind/react";
 import axios, { AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
 import { getAPICallType } from "../../Services/APIFetch";
-import { ClassName } from "../Flight/Flightsearch.components";
+
 import { BookingActions } from "../../Actions/ConfirmBookingDetails.action";
 
 const getPeopleType = (peopleType: number, peopleNumber: number) => {
@@ -202,19 +202,28 @@ export default function PaymentDetails({
         token: Cookies.get("token"),
       },
     };
-    const res = await axios(config);
-    if (res.status == 200 && res.data.reedme) {
-      setPromoError("");
-      TotalPayment.promotion = Math.ceil(
-        TotalPayment.original_total * res.data.offer.offer_discount
-      );
-      setTotalPayment({ ...TotalPayment });
-      setActive(true);
-    } else {
-      setPromoError("Invalid Promocode.");
-      setTimeout(() => {
+    try{
+
+      const res = await axios(config);
+      if (res.status == 200 && res.data.reedme) {
         setPromoError("");
-      }, 2000);
+        TotalPayment.promotion = Math.ceil(
+          TotalPayment.original_total * res.data.offer.offer_discount
+        );
+        setTotalPayment({ ...TotalPayment });
+        setActive(true);
+      } else {
+        setPromoError("Invalid Promocode.");
+        setTimeout(() => {
+          setPromoError("");
+        }, 2000);
+      }
+    }
+    catch(e){
+      setPromoError("Offer is not valid!")
+      setTimeout(() => {
+        setPromoError("")
+      },2000)
     }
   };
 
