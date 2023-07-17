@@ -23,7 +23,11 @@ export const fetchFlight = createAsyncThunk(
 const BookingFlightSlice = createSlice({
   name: "Booking Flight",
   initialState: initalState,
-  reducers: {},
+  reducers: {
+    reset: (state) => {
+      Object.assign(state, initalState);
+    },
+  },
   extraReducers: (build) => {
     build.addCase(
       fetchFlight.fulfilled,

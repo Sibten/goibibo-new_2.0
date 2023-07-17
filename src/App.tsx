@@ -1,6 +1,4 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 import Header from "./Components/Header/Header.components";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./Pages/Login/Login.page";
@@ -10,9 +8,9 @@ import Flightspage from "./Pages/Flights/FlightsSearch.page";
 import Pagenotfound from "./Components/Errors/Pagenotfound";
 import Reviewpage from "./Pages/Review/Review.page";
 import Protected from "./Protected";
-import Tracking from "./Components/Tracking/Tracking";
-import SeatSelection from "./Pages/SeatSelection/DepSeatSelection.page";
 import DepSeatSelectionPage from "./Pages/SeatSelection/DepSeatSelection.page";
+import RtnSeatSelectionPage from "./Pages/SeatSelection/RtnSeatSelection.page";
+import PaymentPage from "./Pages/Payment/Payment.page";
 
 function App() {
   return (
@@ -26,6 +24,11 @@ function App() {
           <Route element={<Protected />}>
             <Route path="review" element={<Reviewpage />} />
             <Route path="seat_selection" element={<DepSeatSelectionPage />} />
+            <Route
+              path="rtn_seat_selection"
+              element={<RtnSeatSelectionPage />}
+            />
+            <Route path="payment" element={<PaymentPage />} />
           </Route>
         </Route>
         <Route path="/profile" element={<Profilepage />} />

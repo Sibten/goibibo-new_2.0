@@ -27,7 +27,7 @@ const getBookedSeat = (bclass: number, bookedSeat: BookedSeat | undefined) => {
   }
 };
 
-export default function DepSeatSelectionPage() {
+export default function RtnSeatSelectionPage() {
   const flight = useSelector((state: RootState) => state.BookingFlight);
   const bookingParams = useSelector((state: RootState) => state.BookingDetails);
   const travellingParams = useSelector((state: RootState) => state.SearchParms);
@@ -36,42 +36,33 @@ export default function DepSeatSelectionPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!flight.dep) {
+    if (!flight.rtn) {
       setTimeout(() => {
         navigate("/flight");
       }, 1000);
     }
   }, []);
 
-  const seatMap = flight.dep?.airbus_id.seat_map.find(
+  const seatMap = flight.rtn?.airbus_id.seat_map.find(
     (s) => s.class_type == travellingParams.class
   );
 
-  const bookedSeat = flight.dep?.booked_seats.find(
+  const bookedSeat = flight.rtn?.booked_seats.find(
     (s) =>
       new Date(s.date).toDateString() ==
-      new Date(travellingParams.dept_date).toDateString()
+      new Date(travellingParams.return_date!).toDateString()
   );
 
   let sendBooked: Array<string> =
     getBookedSeat(travellingParams.class, bookedSeat) ?? [];
 
   const handleCallBack = (value: Array<Traveller>) => {
-    if (flight.rtn) {
-      dispatch(trackingActions.activeRtnSeat());
-      dispatch(BookingActions.updatePeople(value));
-      navigate(
-        `/flight/rtn_seat_selection/?rtn_flight_no=${flight.rtn?.flight_no}`
-      );
-    } else {
-      dispatch(BookingActions.updatePeople(value));
-      dispatch(trackingActions.activePayment());
-      navigate("/flight/payment");
-      console.log("done");
-    }
+    dispatch(BookingActions.updatePeople(value));
+    dispatch(trackingActions.activePayment());
+    navigate("/flight/payment");
   };
 
-  return flight.dep ? (
+  return flight.rtn ? (
     <div>
       <div className="">
         <Title text="Seat Selection" />
@@ -79,7 +70,10 @@ export default function DepSeatSelectionPage() {
       <div>
         <div className="flex flex-wrap justify-center font-arial text-gray-800">
           <div>
-            <FlightData data={flight.dep} date={travellingParams.dept_date} />
+            <FlightData
+              data={flight.rtn}
+              date={travellingParams.return_date!}
+            />
             <Legend />
           </div>
           <div className="col-span-3">
@@ -92,7 +86,7 @@ export default function DepSeatSelectionPage() {
                   (travellingParams.pepoles.children ?? 0)
                 }
                 callback={handleCallBack}
-                mapType={SearchType.From}
+                mapType={SearchType.To}
               />
             ) : (
               "NO Seat Map Avaliable"

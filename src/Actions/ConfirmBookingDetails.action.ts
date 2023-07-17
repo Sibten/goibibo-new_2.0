@@ -1,6 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { TotalPaymentDetails, Traveller, TravellerDetailsBase } from "../Types";
+import {
+  AddonBase,
+  SearchType,
+  TotalPaymentDetails,
+  Traveller,
+  TravellerDetailsBase,
+} from "../Types";
 
 const initialState: TravellerDetailsBase = {
   basic: {
@@ -17,7 +23,10 @@ const initialState: TravellerDetailsBase = {
     original_total: 0,
     discount: 0,
     promotion: 0,
+    total_add_on: 0,
   },
+  addOnDep: [],
+  addOnRtn: [],
 };
 
 const BookingSlice = createSlice({
@@ -30,8 +39,24 @@ const BookingSlice = createSlice({
     addPayment: (state, action: PayloadAction<TotalPaymentDetails>) => {
       state.payment = action.payload;
     },
+    addAddon: (
+      state,
+      action: PayloadAction<{ type: number; data?: AddonBase }>
+    ) => {
+      if (action.payload.type == SearchType.From && action.payload.data) {
+        state.addOnDep?.push(action.payload.data);
+      } else if (action.payload.data) {
+        state.addOnRtn?.push(action.payload.data);
+      }
+    },
+    addAddOnPayment: (state, action: PayloadAction<number>) => {
+      state.payment!.total_add_on += action.payload;
+    },
     updatePeople: (state, action: PayloadAction<Array<Traveller>>) => {
       state.basic.people = action.payload;
+    },
+    reset: (state) => {
+      Object.assign(state, initialState);
     },
   },
 });

@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { BookedSeat, Flighclass, SeatLayout, Traveller } from "../../Types";
+import {
+  AddonType,
+  BookedSeat,
+  Flighclass,
+  SearchType,
+  SeatBase,
+  SeatLayout,
+  SeatType,
+  Traveller,
+} from "../../Types";
 import { Button, Tooltip } from "@material-tailwind/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { BookingActions } from "../../Actions/ConfirmBookingDetails.action";
 
 export default function SeatLayoutCompo({
   seatMap,
   bookedSeat,
   selectionCount,
   callback,
+  mapType,
 }: {
   seatMap: SeatLayout;
   bookedSeat: Array<string>;
   selectionCount: number;
   callback: Function;
+  mapType: number;
 }) {
   const [seats, setSeats] = useState<Array<React.ReactNode>>([]);
 
@@ -34,7 +46,7 @@ export default function SeatLayoutCompo({
       break;
   }
 
-  const [selectedSeat, setSelectedSeat] = useState<Array<string>>([]);
+  const [selectedSeat, setSelectedSeat] = useState<Array<SeatBase>>([]);
 
   const selector = useSelector((state: RootState) => state.BookingDetails);
 
@@ -42,28 +54,73 @@ export default function SeatLayoutCompo({
     ...selector.basic.people,
   ]);
 
-  const getClassName = (
+  let add_on = 0;
+  const dispatch = useDispatch();
+
+  const getSeatType = (
     i: number,
     row_no: number,
     col_start: number,
     col_end: number,
     col_gap: number
-  ) => {
+  ): { seat: SeatBase; design: string } => {
     if (bookedSeat.includes(`${type}${row_no}${String.fromCharCode(i)}`)) {
-      return "text-xs w-12 h-12 rounded-full border  border-blue-300 text-center text-white bg-blue-400";
+      return {
+        seat: {
+          seat_no: `${type}${row_no}${String.fromCharCode(i)}`,
+          type: SeatType.Booked,
+          price: null,
+        },
+        design:
+          "text-xs w-12 h-12 rounded-full border  border-blue-300 text-center text-white bg-blue-400",
+      };
     } else if (
-      selectedSeat.includes(`${type}${row_no}${String.fromCharCode(i)}`)
+      selectedSeat.findIndex(
+        (s) => s.seat_no == `${type}${row_no}${String.fromCharCode(i)}`
+      ) != -1
     ) {
-      return "text-xs w-12 h-12 rounded-full border cursor-pointer  bg-green-100 text-center hover:bg-green-200";
+      return {
+        seat: {
+          seat_no: `${type}${row_no}${String.fromCharCode(i)}`,
+          type: -1,
+          price: null,
+        },
+        design:
+          "text-xs w-12 h-12 rounded-full border cursor-pointer  bg-green-100 text-center hover:bg-green-200",
+      };
     } else if (i == col_start || i == col_end) {
-      return "text-xs w-12 h-12 rounded-full border cursor-pointer border-blue-300 text-center hover:bg-blue-100";
+      return {
+        seat: {
+          seat_no: `${type}${row_no}${String.fromCharCode(i)}`,
+          type: SeatType.Window,
+          price: 150,
+        },
+        design:
+          "text-xs w-12 h-12 rounded-full border cursor-pointer border-blue-300 text-center hover:bg-blue-100",
+      };
     } else if (
       (i == col_start + 1 && i + 1 != col_gap) ||
       (i == col_end - 1 && i - 1 != col_gap)
     ) {
-      return "text-xs w-12 h-12 rounded-full border cursor-pointer border-gray-300 text-center hover:bg-gray-100";
+      return {
+        seat: {
+          seat_no: `${type}${row_no}${String.fromCharCode(i)}`,
+          type: SeatType.Middle,
+          price: 70,
+        },
+        design:
+          "text-xs w-12 h-12 rounded-full border cursor-pointer border-gray-300 text-center hover:bg-gray-100",
+      };
     } else {
-      return "text-xs w-12 h-12 rounded-full border cursor-pointer border-cyan-300 text-center hover:bg-cyan-50";
+      return {
+        seat: {
+          seat_no: `${type}${row_no}${String.fromCharCode(i)}`,
+          type: SeatType.Aisle,
+          price: 100,
+        },
+        design:
+          "text-xs w-12 h-12 rounded-full border cursor-pointer border-cyan-300 text-center hover:bg-cyan-50",
+      };
     }
   };
 
@@ -74,7 +131,7 @@ export default function SeatLayoutCompo({
     col_gap: number
   ) => {
     const array = [];
-    let class_name = "";
+
     for (let i = col_start; i <= col_end; i++) {
       if (i == col_gap) {
         array.push(
@@ -83,23 +140,27 @@ export default function SeatLayoutCompo({
           </td>
         );
       } else {
-        class_name = getClassName(i, row_no, col_start, col_end, col_gap);
+        let seatDetails: { seat: SeatBase; design: string } = getSeatType(
+          i,
+          row_no,
+          col_start,
+          col_end,
+          col_gap
+        );
         array.push(
-          <td className="py-4 border-none " key={`${row_no}-${i}`}>
-            <Tooltip content={`${type}-${row_no}${String.fromCharCode(i)}`}>
+          <td className="py-4 border-none " key={seatDetails.seat.seat_no}>
+            <Tooltip content={`Rs. ${seatDetails.seat.price! * 1}`}>
               <button
-                className={class_name}
+                className={seatDetails.design}
                 onClick={() => {
                   let f = selectedSeat.findIndex(
-                    (s) => s == `${type}${row_no}${String.fromCharCode(i)}`
+                    (s) => s.seat_no == seatDetails.seat.seat_no
                   );
                   if (f == -1) {
                     if (selectedSeat.length == passanger.length) {
                       alert("Limit exceed!");
                     } else {
-                      selectedSeat.push(
-                        `${type}${row_no}${String.fromCharCode(i)}`
-                      );
+                      selectedSeat.push(seatDetails.seat);
                     }
                     setSelectedSeat([...selectedSeat]);
                   } else {
@@ -107,15 +168,9 @@ export default function SeatLayoutCompo({
                     setSelectedSeat([...selectedSeat]);
                   }
                 }}
-                disabled={bookedSeat.includes(
-                  `${type}${row_no}${String.fromCharCode(i)}`
-                )}
+                disabled={bookedSeat.includes(seatDetails.seat.seat_no)}
               >
-                <p className="my-4">
-                  {" "}
-                  {row_no}
-                  {String.fromCharCode(i)}{" "}
-                </p>
+                <p className="my-4">{seatDetails.seat.seat_no}</p>
               </button>
             </Tooltip>
           </td>
@@ -151,10 +206,26 @@ export default function SeatLayoutCompo({
   }, [seatMap, selectedSeat]);
 
   const confirmSeat = () => {
-    selectedSeat.forEach(
-      (s, i) => (passanger[i] = { ...passanger[i], seat_no: s })
-    );
+    let add = 0;
+    if (mapType == SearchType.From) {
+      selectedSeat.forEach((s, i) => {
+        add += s.price!;
+        passanger[i] = { ...passanger[i], seat_no: s };
+      });
+    } else {
+      selectedSeat.forEach((s, i) => {
+        add += s.price!;
+        passanger[i] = { ...passanger[i], rtn_seat_no: s };
+      });
+    }
     setPassanger([...passanger]);
+    dispatch(BookingActions.addAddOnPayment(add));
+    dispatch(
+      BookingActions.addAddon({
+        type: mapType,
+        data: { name: "User Preferd Seat", price: add, type: AddonType.Seat },
+      })
+    );
     callback(passanger);
   };
 
@@ -169,20 +240,33 @@ export default function SeatLayoutCompo({
           </tbody>
         </table>
       </div>
-      <div className="border h-max mx-4 p-4 rounded-md w-48 text-sm">
+      <div className="border h-max mx-4 p-4 rounded-md w-56 text-sm">
         <h1 className="font-qs font-bold text-black border-b">Selected Seat</h1>
         <div className="my-2">
           <ul>
-            {selectedSeat.map((s, i) => (
-              <li key={s} className="flex justify-between items-center my-1">
-                {" "}
-                <span>
+            {selectedSeat.map((s, i) => {
+              add_on += s.price!;
+              return (
+                <li
+                  key={s.seat_no}
+                  className="flex justify-between items-center my-1 w-full"
+                >
                   {" "}
-                  {passanger[i].first_name} {passanger[i].last_name}{" "}
-                </span>{" "}
-                <span className="bg-gray-200 p-1 rounded-md"> {s} </span>
-              </li>
-            ))}
+                  <span>
+                    {" "}
+                    {passanger[i].first_name} {passanger[i].last_name}{" "}
+                  </span>{" "}
+                  <span className="bg-gray-200 p-1 rounded-md w-max  font-bold">
+                    {" "}
+                    {s.seat_no} &#8377; {s.price}
+                  </span>
+                </li>
+              );
+            })}
+            <p className="flex justify-between font-bold text-base mt-2 border-t py-1">
+              {" "}
+              <span> Total </span> <span> &#8377; {add_on}</span>
+            </p>
             {selectedSeat.length == passanger.length ? (
               <Button className="my-2" onClick={() => confirmSeat()}>
                 Confirm Seat

@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 export default function TravellerDetails() {
   const selector = useSelector((state: RootState) => state.SearchParms);
 
-  const UserData = useSelector((state: RootState) => state.User);
+  const userData = useSelector((state: RootState) => state.User);
 
   const adultSpelling = selector.pepoles.adults > 1 ? "Adults" : "Adult";
   const childSpelling =
@@ -30,9 +30,9 @@ export default function TravellerDetails() {
         people: [],
         infants: [],
         email: "",
-        address: UserData.billing_address ?? "",
-        state: UserData.state ?? "",
-        pincode: UserData.pincode ?? 0,
+        address: userData.billing_address ?? "",
+        state: userData.state ?? "",
+        pincode: userData.pincode ?? 0,
       },
     });
 
@@ -83,7 +83,7 @@ export default function TravellerDetails() {
         setMessage("");
         TravellerDetails.payment = bookingDetails.payment;
         dispatch(BookingActions.addBasic(TravellerDetails));
-        dispatch(trackingActions.activeSeat());
+        dispatch(trackingActions.activeDepSeat());
         navigate(
           `/flight/seat_selection/?dep_flight_no=${bookingFlight.dep?.flight_no}`
         );
@@ -105,7 +105,10 @@ export default function TravellerDetails() {
     <div className="my-2">
       <div className="bg-white shadow-md w-[48rem] rounded-md py-4 mx-8 h-max font-arial">
         <div className="p-4 border-b">
-          <h1 className="font-bold font-qs text-lg"> Traveller Details </h1>
+          <h1 className="font-bold font-qs text-lg uppercase">
+            {" "}
+            Traveller Details{" "}
+          </h1>
         </div>
         <div className="mx-4 text-xs my-2">
           <Alert className="bg-blue-50 text-blue-800 border-l-4  p-2 border-blue-800 rounded-none text-xs">

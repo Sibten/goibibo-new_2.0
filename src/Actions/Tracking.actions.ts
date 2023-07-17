@@ -8,7 +8,7 @@ const initialState: {
 } = {
   booking: false,
   dep_seat_selection: false,
-
+  rtn_seat_selection: false,
   payment: false,
 };
 
@@ -19,11 +19,20 @@ const trackingSlice = createSlice({
     activeBookig: (state) => {
       state.booking = true;
     },
-    activeSeat: (state) => {
+    activeDepSeat: (state) => {
       state.dep_seat_selection = true;
+    },
+    activeRtnSeat: (state) => {
+      state.rtn_seat_selection = true;
     },
     activePayment: (state) => {
       state.payment = true;
+    },
+    disableAll: (state) => {
+      state.booking = false;
+      state.dep_seat_selection = false;
+      state.payment = false;
+      state.rtn_seat_selection = false;
     },
   },
 });

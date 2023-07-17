@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
   APICallType,
+  AddonBase,
   OfferBase,
   People,
+  SearchType,
   TotalPaymentDetails,
   TravellerIndiPayment,
 } from "../../Types";
@@ -48,9 +50,11 @@ const getPeopleType = (peopleType: number, peopleNumber: number) => {
 export default function PaymentDetails({
   appliedOffer,
   callback,
+  addons,
 }: {
   appliedOffer: OfferBase | null;
   callback: Function;
+  addons: { data: AddonBase; type: number } | undefined;
 }) {
   const bookingParams = useSelector((state: RootState) => state.SearchParms);
   const bookingFlight = useSelector((state: RootState) => state.BookingFlight);
@@ -70,6 +74,7 @@ export default function PaymentDetails({
     original_total: 0,
     discount: 0,
     promotion: 0,
+    total_add_on: 0,
   });
   let fare = { basic: 0, tax: 0 };
   let rtnFare = { basic: 0, tax: 0 };
@@ -191,6 +196,8 @@ export default function PaymentDetails({
   const [active, setActive] = useState<boolean>(false);
   const [payLock, setPayLock] = useState<boolean>(false);
   const [promoError, setPromoError] = useState("");
+  const [depAddon, setDepAddon] = useState<AddonBase>();
+  const [rtnAddon, setRtnAddon] = useState<AddonBase>();
 
   const dispatch = useDispatch();
 
@@ -202,8 +209,7 @@ export default function PaymentDetails({
         token: Cookies.get("token"),
       },
     };
-    try{
-
+    try {
       const res = await axios(config);
       if (res.status == 200 && res.data.reedme) {
         setPromoError("");
@@ -218,17 +224,28 @@ export default function PaymentDetails({
           setPromoError("");
         }, 2000);
       }
-    }
-    catch(e){
-      setPromoError("Offer is not valid!")
+    } catch (e) {
+      setPromoError("Offer is not valid!");
       setTimeout(() => {
-        setPromoError("")
-      },2000)
+        setPromoError("");
+      }, 2000);
     }
   };
 
+  useEffect(() => {
+    if (addons && addons.type == SearchType.From) {
+      setDepAddon(addons.data);
+    } else {
+      setRtnAddon(addons?.data);
+    }
+  }, [addons]);
+
   const lockPayment = () => {
+    TotalPayment.total_add_on = TotalPayment.total_add_on + (depAddon?.price ?? 0) +  (rtnAddon?.price ?? 0)
+    setTotalPayment({...TotalPayment})
     dispatch(BookingActions.addPayment(TotalPayment));
+    dispatch(BookingActions.addAddon({type : SearchType.From, data : depAddon}))
+    dispatch(BookingActions.addAddon({type : SearchType.To, data : rtnAddon}))
     setActive(true);
     setPayLock(true);
     callback();
@@ -294,6 +311,28 @@ export default function PaymentDetails({
           <h1>Tax & Surcharges </h1>
           <p>&#8377; {TotalPayment.tax_total}</p>
         </div>
+        {depAddon ? (
+          <div className="flex justify-between my-2">
+            <h1>Departure Addon </h1>
+            <p className="text-blue-600">
+              {" "}
+              <span> + &#8377; {depAddon.price}</span>:
+            </p>
+          </div>
+        ) : (
+          ""
+        )}
+        {rtnAddon ? (
+          <div className="flex justify-between my-2">
+            <h1>Return Addon </h1>
+            <p className="text-blue-600">
+              {" "}
+              <span> + &#8377; {rtnAddon.price}</span>:
+            </p>
+          </div>
+        ) : (
+          ""
+        )}
         {TotalPayment.discount > 0 ? (
           <div className="flex justify-between my-2">
             <h1>Discount</h1>
@@ -314,7 +353,9 @@ export default function PaymentDetails({
           <h1>Grand Total</h1>
           <p className="text-xl">
             &#8377;{" "}
-            {TotalPayment.original_total -
+            {TotalPayment.original_total +
+              (depAddon?.price ?? 0) +
+              (rtnAddon?.price ?? 0) -
               TotalPayment.discount -
               TotalPayment.promotion}
           </p>

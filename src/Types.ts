@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 export interface MyProps {
   label?: string;
   Start?: boolean;
@@ -242,6 +241,20 @@ export interface TotalPaymentDetails {
   original_total: number;
   discount: number;
   promotion: number;
+  total_add_on: number;
+}
+export enum AddonType {
+  Baggage,
+  Seat,
+  Insurance,
+}
+
+export interface AddonBase {
+  type: number;
+  name: string;
+  icon?: string;
+  limit?: number;
+  price: number;
 }
 
 export interface OfferBase {
@@ -251,13 +264,24 @@ export interface OfferBase {
   valid_till: Date;
   description: string;
 }
-
+export enum SeatType {
+  Booked,
+  Window,
+  Middle,
+  Aisle,
+}
+export interface SeatBase {
+  seat_no: string;
+  type: number;
+  price: number | null;
+}
 export interface Traveller {
   type: number;
   first_name: string;
   last_name: string;
   age: number;
-  seat_no?: string;
+  seat_no?: SeatBase;
+  rtn_seat_no?: SeatBase;
   gender: string;
 }
 
@@ -272,6 +296,8 @@ export interface TravellerDetailsBase {
   };
   payment?: TotalPaymentDetails;
   info?: SearchParamsType;
+  addOnDep?: Array<AddonBase>;
+  addOnRtn?: Array<AddonBase>;
 }
 
 export interface SeatLayout {
