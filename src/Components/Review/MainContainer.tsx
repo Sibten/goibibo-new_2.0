@@ -2,16 +2,26 @@ import React, { useState } from "react";
 import FlightDetails from "./FlightDetails";
 import PaymentDetails from "./PaymentDetails";
 import Offers from "./Offers";
-import { OfferBase } from "../../Types";
+import { AddonBase, OfferBase } from "../../Types";
 import TravellerDetails from "./TravellerDetails";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import AddOns from "./AddOns";
 
 export default function MainContainer({ isReturn }: { isReturn: boolean }) {
   const [selectedOffer, setSelectedOffer] = useState<OfferBase>();
 
+  const [selectedAddOn, setSelectedAddon] = useState<{
+    data: AddonBase;
+    type: number;
+  }>();
+
   const handleCallBack = (data: OfferBase) => {
     setSelectedOffer(data);
+  };
+
+  const handleAddonCallback = (data: { data: AddonBase; type: number }) => {
+    setSelectedAddon(data);
   };
 
   const selector = useSelector((state: RootState) => state.BookingFlight);
@@ -50,10 +60,12 @@ export default function MainContainer({ isReturn }: { isReturn: boolean }) {
             ""
           )}
         </div>
+        <AddOns callback={handleAddonCallback} />
         <TravellerDetails />
       </div>
       <div>
         <PaymentDetails
+          addons={selectedAddOn}
           appliedOffer={selectedOffer ?? null}
           callback={() => setLocked(true)}
         />
