@@ -3,12 +3,19 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   AddonBase,
   SearchType,
+  Timing,
   TotalPaymentDetails,
   Traveller,
   TravellerDetailsBase,
 } from "../Types";
 
 const initialState: TravellerDetailsBase = {
+  timing: {
+    dep: {
+      source_time: new Date().toISOString(),
+      destination_time: new Date().toISOString(),
+    },
+  },
   basic: {
     people: [],
     infants: [],
@@ -33,6 +40,16 @@ const BookingSlice = createSlice({
   name: "Booking Details",
   initialState: initialState,
   reducers: {
+    addTiming: (
+      state,
+      action: PayloadAction<{ data: Timing; type: number }>
+    ) => {
+      if (action.payload.type == SearchType.From) {
+        Object.assign(state.timing!.dep, action.payload.data);
+      } else {
+        Object.assign(state.timing!.rtn!, action.payload.data);
+      }
+    },
     addBasic: (state, action: PayloadAction<TravellerDetailsBase>) => {
       state.basic = action.payload.basic;
     },

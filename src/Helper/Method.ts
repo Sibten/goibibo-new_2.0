@@ -127,3 +127,15 @@ export const getFlightClass = (class_number: number) => {
       return "Premium Economy";
   }
 };
+
+
+export const getPeopleType = (type: number) => {
+  switch (type) {
+    case People.Adult:
+      return "Adult";
+    case People.Child:
+      return "Child";
+    case People.Infant:
+      return "Infants";
+  }
+};

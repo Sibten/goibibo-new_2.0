@@ -72,10 +72,13 @@ export default function FlightData({
             <img
               src={data.airline_id.airline_icon}
               alt="airline"
-              className="w-16 h-10"
+              className="w-12 h-12"
             />{" "}
           </div>
-          <p className="mx-4">{data.flight_no}</p>
+          <div className="mx-4">
+            <p className="font-bold">{data.flight_no}</p>
+            <p>{data.airline_id.airline_name}</p>
+          </div>
         </div>
         <div className="text-sm text-center">
           <p className="font-bold">

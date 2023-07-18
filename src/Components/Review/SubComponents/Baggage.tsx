@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { Button, Radio } from "@material-tailwind/react";
@@ -7,16 +7,26 @@ import { AddonBase, SearchType } from "../../../Types";
 export default function Baggage({
   callback,
   type,
-  cdisable,
+  addOnDisable,
 }: {
   callback: Function;
   type: number;
-  cdisable: boolean;
+  addOnDisable: boolean;
 }) {
   const selector = useSelector((state: RootState) => state.Addons);
 
   const [selectAddon, setAddon] = useState<AddonBase>();
-  const [disable, setDisable] = useState<boolean>(cdisable);
+  const [disable, setDisable] = useState<boolean>(addOnDisable);
+
+  const [radioDisable, setRadioDisable] = useState(false);
+
+  useEffect(() => {
+    if (addOnDisable) {
+      setDisable(addOnDisable);
+      setRadioDisable(true);
+    }
+  }, [addOnDisable]);
+
   return (
     <div>
       <form>
@@ -43,6 +53,7 @@ export default function Baggage({
                     setAddon(s);
                     setDisable(false);
                   }}
+                  disabled={radioDisable}
                 />
               </div>
             </div>

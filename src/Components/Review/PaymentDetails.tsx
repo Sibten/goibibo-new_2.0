@@ -314,9 +314,9 @@ export default function PaymentDetails({
         {depAddon ? (
           <div className="flex justify-between my-2">
             <h1>Departure Addon </h1>
-            <p className="text-blue-600">
+            <p className="text-blue-800">
               {" "}
-              <span> + &#8377; {depAddon.price}</span>:
+              <span> + &#8377; {depAddon.price}</span>
             </p>
           </div>
         ) : (
@@ -325,9 +325,9 @@ export default function PaymentDetails({
         {rtnAddon ? (
           <div className="flex justify-between my-2">
             <h1>Return Addon </h1>
-            <p className="text-blue-600">
+            <p className="text-blue-800">
               {" "}
-              <span> + &#8377; {rtnAddon.price}</span>:
+              <span> + &#8377; {rtnAddon.price}</span>
             </p>
           </div>
         ) : (

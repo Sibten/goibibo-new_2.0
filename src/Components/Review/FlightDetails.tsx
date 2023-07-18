@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useLocation } from "react-router-dom";
-import { Flighclass, ResultBase } from "../../Types";
+import { Flighclass, ResultBase, SearchType } from "../../Types";
 import { LuBaggageClaim } from "react-icons/lu";
 import {
   getFlightClass,
@@ -12,6 +12,7 @@ import {
 } from "../../Helper/Method";
 
 import { MdOutlineAirlineSeatReclineNormal } from "react-icons/md";
+import { BookingActions } from "../../Actions/ConfirmBookingDetails.action";
 
 export default function FlightDetails({
   data,
@@ -32,6 +33,32 @@ export default function FlightDetails({
 
   const source_time = new Date(flightTimingData?.source_time!);
   const destn_time = new Date(flightTimingData?.destination_time!);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isReturn) {
+      dispatch(
+        BookingActions.addTiming({
+          type: SearchType.To,
+          data: {
+            source_time: source_time.toISOString(),
+            destination_time: destn_time.toISOString(),
+          },
+        })
+      );
+    } else {
+      dispatch(
+        BookingActions.addTiming({
+          type: SearchType.From,
+          data: {
+            source_time: source_time.toISOString(),
+            destination_time: destn_time.toISOString(),
+          },
+        })
+      );
+    }
+  }, []);
 
   return (
     <div className="my-4">
@@ -62,7 +89,7 @@ export default function FlightDetails({
             <img
               src={data?.airline_id.airline_icon}
               alt="airline"
-              className="w-20 h-10"
+              className="w-12 h-12 -mt-2"
             />
             <h1 className="my-2 mx-2">
               {data?.airline_id.airline_name} | {data?.flight_no}

@@ -12,7 +12,13 @@ import {
   TabsHeader,
 } from "@material-tailwind/react";
 
-export default function AddOns({ callback }: { callback: Function }) {
+export default function AddOns({
+  callback,
+  addOnDisable,
+}: {
+  callback: Function;
+  addOnDisable: boolean;
+}) {
   const selector = useSelector((state: RootState) => state.BookingFlight);
 
   return (
@@ -50,14 +56,14 @@ export default function AddOns({ callback }: { callback: Function }) {
               <Baggage
                 callback={callback}
                 type={SearchType.From}
-                cdisable={true}
+                addOnDisable={addOnDisable}
               />
             </TabPanel>
             <TabPanel value={"rtn"} key={"rtn"}>
               <Baggage
                 callback={callback}
                 type={SearchType.To}
-                cdisable={true}
+                addOnDisable={addOnDisable}
               />
             </TabPanel>
           </TabsBody>

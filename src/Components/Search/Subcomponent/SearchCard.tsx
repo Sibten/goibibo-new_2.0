@@ -61,7 +61,7 @@ export default function SearchCard({
             <img
               src={value.airline_id.airline_icon}
               alt="airline"
-              className="w-16 h-10"
+              className="w-10 h-10"
             />
             <span className="mt-2 mx-2">{value.airline_id.airline_name}</span>
           </div>

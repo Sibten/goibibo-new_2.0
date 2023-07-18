@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../../Components/Utility/Title";
 import PaymentDetails from "../../Components/Payment/PaymentDetails";
 import { useSelector } from "react-redux";
@@ -6,6 +6,11 @@ import { RootState } from "../../store";
 
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "@material-tailwind/react";
+import Timer from "../../Helper/Timer";
+import { FaClock } from "react-icons/fa";
+import TicketDetails from "../../Components/Payment/TicketDetails";
+import BillingAddress from "../../Components/Payment/BillingAddress";
+import PaymentAction from "../../Components/Payment/PaymentAction";
 
 export default function PaymentPage() {
   const payment = useSelector(
@@ -28,18 +33,35 @@ export default function PaymentPage() {
     }
   }, []);
 
+  const [start, setStart] = useState(true);
+
   return flight.dep ? (
     <div>
       <Title text="Payment" />
-      <div className="bg-[#e9eef7] flex justify-center p-2">
+      <div className="bg-white flex justify-center p-2">
         <div className="my-4 w-[36rem]">
           <h1 className="text-2xl font-qs font-bold">
             Pay <span className="text-orange-700"> &#8377; {total} /-</span> to
             confirm booking{" "}
           </h1>
+          <TicketDetails />
         </div>
-        <div className="w-[16rem]">
+        <div className="w-[20rem]">
+          <div className="font-bold flex p-2 text-sm rounded-md my-2 w-max text-orange-800  font-qs ">
+            <FaClock className="mx-2 my-[2px]" /> Time Left{" "}
+            {/* <Timer
+              Start={true}
+              Callback={() => {
+                console.log("hell");
+                setStart(false);
+                navigate("/flight");
+              }}
+              InComingMinute={20}
+              InComingSecond={0}
+            /> */}
+          </div>
           <PaymentDetails />
+          <PaymentAction />
         </div>
       </div>
     </div>

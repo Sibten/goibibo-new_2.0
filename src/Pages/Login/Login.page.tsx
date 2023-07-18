@@ -152,7 +152,12 @@ export default function LoginPage() {
                     Some time OTP might be delay
                   </p>
                   {resendOTP ? (
-                    <Timer Start={true} callback={handleTimerComplete} />
+                    <Timer
+                      Start={true}
+                      Callback={handleTimerComplete}
+                      InComingMinute={0}
+                      InComingSecond={30}
+                    />
                   ) : (
                     <p
                       onClick={() => sendOTP()}

@@ -284,8 +284,15 @@ export interface Traveller {
   rtn_seat_no?: SeatBase;
   gender: string;
 }
-
+export interface Timing {
+  source_time: string;
+  destination_time: string;
+}
 export interface TravellerDetailsBase {
+  timing?: {
+    dep: Timing;
+    rtn?: Timing;
+  };
   basic: {
     people: Array<Traveller>;
     infants: Array<Traveller>;
