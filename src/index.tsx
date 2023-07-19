@@ -12,6 +12,7 @@ import Cookies from "js-cookie";
 import { fetchAirports } from "./Actions/Airport.action";
 import { fetchOffers } from "./Actions/Offers.action";
 import { fetchAddons } from "./Actions/Addon.action";
+import { fetchTrips } from "./Actions/Trip.action";
 
 store.subscribe(() => console.log(store.getState()));
 
@@ -20,6 +21,7 @@ if (email) {
   store.dispatch(fetchUser(email));
   store.dispatch(fetchOffers());
   store.dispatch(fetchAddons());
+  store.dispatch(fetchTrips());
 }
   
 

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export default function UserLoginHover() {
   const User = useSelector((state: RootState) => state.User);
   return (
-    <div className="bg-gray-50 rounded-md shadow-lg absolute mt-12 p-4 px-6 -ml-20  w-[14rem]">
+    <div className="bg-gray-50 rounded-md shadow-lg absolute mt-10 p-4 px-6 -ml-20  w-[14rem]">
       <div className="font-qs font-bold tracking-wide text-gray-800 text-base  flex">
         {" "}
         <img
@@ -31,10 +31,13 @@ export default function UserLoginHover() {
 
       <div>
         <ul>
-          <li className="text-gray-700 flex my-2 border-b p-2">
-            <FaSuitcase className="text-xl" />{" "}
-            <p className="mx-4 text-md font-qs font-bold">My Trips </p>{" "}
-          </li>
+          <Link to="/mytrips">
+            {" "}
+            <li className="text-gray-700 flex my-2 border-b p-2">
+              <FaSuitcase className="text-xl" />{" "}
+              <p className="mx-4 text-md font-qs font-bold">My Trips </p>{" "}
+            </li>{" "}
+          </Link>
           <li className="text-gray-700 flex my-2 p-2">
             <TbDiscount2 className="text-xl" />{" "}
             <p className="mx-4 text-md font-qs font-bold"> Offers </p>{" "}

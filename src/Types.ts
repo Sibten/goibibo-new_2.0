@@ -250,6 +250,7 @@ export enum AddonType {
 }
 
 export interface AddonBase {
+  _id?: string;
   type: number;
   name: string;
   icon?: string;
@@ -289,7 +290,8 @@ export interface Timing {
   destination_time: string;
 }
 export interface TravellerDetailsBase {
-  timing?: {
+  jouerny?: {
+    travel_class: number;
     dep: Timing;
     rtn?: Timing;
   };
@@ -302,7 +304,6 @@ export interface TravellerDetailsBase {
     pincode: number;
   };
   payment?: TotalPaymentDetails;
-  info?: SearchParamsType;
   addOnDep?: Array<AddonBase>;
   addOnRtn?: Array<AddonBase>;
 }
@@ -322,4 +323,86 @@ export interface BookedSeat {
   EC: Array<string>;
   PE: Array<string>;
   FC: Array<string>;
+}
+export interface RZPInfo {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+}
+export interface BookingSendingData {
+  rzpinfo: RZPInfo;
+  dep_flight_no: string;
+  rtn_flight_no: string | null;
+  payment: TotalPaymentDetails;
+  travel_class: number;
+  dep_date: string;
+  rtn_date: string | null;
+  dep_booking_seat: Array<SeatBase>;
+  rtn_booking_seat: Array<SeatBase> | null;
+  email: string;
+  destn_city_code: string;
+  source_city_code: string;
+  peoples: Array<Traveller>;
+  infants: Array<Traveller>;
+  addons: {
+    departure_addons: Array<AddonBase>;
+    return_addons?: Array<AddonBase> | null;
+  };
+}
+
+export interface TripData {
+  
+    jouerny_info: {
+      departure_date: string,
+      return_date: string | null,
+      destination_city: {
+        city_id: number,
+        city_name: string,
+        airport_name: string,
+        airport_code: string,
+      },
+      source_city: {
+        city_id: number,
+        city_name: string,
+        airport_name: string,
+        airport_code: string,
+      },
+      departure_flight: {
+        flight_no: string,
+        airline_id: {
+          airline_id: string,
+          airline_name: string,
+          airline_location: string,
+          airline_code: string,
+          airline_icon: string
+        },
+      },
+      return_flight: {
+        flight_no: string,
+        airline_id: {
+          airline_id: string,
+          airline_name: string,
+          airline_location: string,
+          airline_code: string,
+          airline_icon: string
+        },
+      } |null,
+      peoples: Array<Traveller>,
+      infants: Array<Traveller>,
+    },
+    addons: {
+      departure_addons: Array<AddonBase>,
+      return_addons: Array<AddonBase>,
+    },
+    booking_stamp: string,
+    PNR_no: number,
+    class_type: 0,
+    status: 0,
+    payment: {
+      payment_amount: TotalPaymentDetails,
+      order_id: string,
+      razor_pay_id: string,
+      transaction_stamp: string,
+      status: 1,
+    },
 }

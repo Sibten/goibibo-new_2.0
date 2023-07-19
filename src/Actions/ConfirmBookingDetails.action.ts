@@ -10,7 +10,8 @@ import {
 } from "../Types";
 
 const initialState: TravellerDetailsBase = {
-  timing: {
+  jouerny: {
+    travel_class: 0,
     dep: {
       source_time: new Date().toISOString(),
       destination_time: new Date().toISOString(),
@@ -42,12 +43,13 @@ const BookingSlice = createSlice({
   reducers: {
     addTiming: (
       state,
-      action: PayloadAction<{ data: Timing; type: number }>
+      action: PayloadAction<{ data: Timing; type: number; class: number }>
     ) => {
+      Object.assign(state.jouerny!.travel_class, action.payload.class);
       if (action.payload.type == SearchType.From) {
-        Object.assign(state.timing!.dep, action.payload.data);
+        Object.assign(state.jouerny!.dep, action.payload.data);
       } else {
-        Object.assign(state.timing!.rtn!, action.payload.data);
+        Object.assign(state.jouerny!.rtn!, action.payload.data);
       }
     },
     addBasic: (state, action: PayloadAction<TravellerDetailsBase>) => {

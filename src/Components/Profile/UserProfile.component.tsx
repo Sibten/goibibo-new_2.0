@@ -38,6 +38,7 @@ export default function UserProfile() {
       .post("http://localhost:5050/user/updateprofile/uploadphoto", formdata, {
         headers: {
           "Content-Type": "multipart/form-data",
+          token: Cookies.get("token"),
         },
       })
       .then((d) => {
@@ -63,6 +64,7 @@ export default function UserProfile() {
       url: "http://localhost:5050/user/updateprofile",
       headers: {
         "Content-Type": "application/json",
+        token: Cookies.get("token"),
       },
       data: data,
     };

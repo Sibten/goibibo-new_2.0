@@ -8,6 +8,7 @@ import OfferReducer from "./Actions/Offers.action";
 import TrackingReducer from "./Actions/Tracking.actions";
 import BookingReducer from "./Actions/ConfirmBookingDetails.action";
 import AddonReducer from "./Actions/Addon.action";
+import TripReducer from "./Actions/Trip.action";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     Tracking: TrackingReducer,
     BookingDetails: BookingReducer,
     Addons: AddonReducer,
+    Trips: TripReducer,
   },
 });
 

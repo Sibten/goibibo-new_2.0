@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Roles, UserType } from "../Types";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const initalState: UserType = {
   role: {
@@ -16,7 +17,9 @@ export const fetchUser = createAsyncThunk(
     const config = {
       method: "get",
       url: `http://localhost:5050/user/mydetails?email=${email}`,
-      headers: {},
+      headers: {
+        token: Cookies.get("token"),
+      },
     };
 
     const data = await axios(config);

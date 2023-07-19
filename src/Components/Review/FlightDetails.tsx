@@ -25,6 +25,8 @@ export default function FlightDetails({
 }) {
   const bookingParams = useSelector((state: RootState) => state.SearchParms);
 
+
+
   const flightTimingData = data?.timing.find(
     (s) =>
       new Date(s.source_time).toDateString() ==
@@ -45,6 +47,7 @@ export default function FlightDetails({
             source_time: source_time.toISOString(),
             destination_time: destn_time.toISOString(),
           },
+          class: bookingParams.class,
         })
       );
     } else {
@@ -55,6 +58,7 @@ export default function FlightDetails({
             source_time: source_time.toISOString(),
             destination_time: destn_time.toISOString(),
           },
+          class: bookingParams.class,
         })
       );
     }

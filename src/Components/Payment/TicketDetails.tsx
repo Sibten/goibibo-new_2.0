@@ -45,14 +45,14 @@ export default function TicketDetails() {
                   <BsClock className="mr-2 my-1" />{" "}
                   <span>
                     {" "}
-                    {date(bookingDetails.timing?.dep.destination_time!)} &nbsp;
-                    {time(bookingDetails.timing?.dep.destination_time!)}
+                    {date(bookingDetails.jouerny?.dep.destination_time!)} &nbsp;
+                    {time(bookingDetails.jouerny?.dep.destination_time!)}
                   </span>
                   <BsArrowRight className="my-1 mx-2 text-orange-700" />
                   <span>
                     {" "}
-                    {date(bookingDetails.timing?.dep.source_time!)} &nbsp;
-                    {time(bookingDetails.timing?.dep.source_time!)}
+                    {date(bookingDetails.jouerny?.dep.source_time!)} &nbsp;
+                    {time(bookingDetails.jouerny?.dep.source_time!)}
                   </span>
                 </p>
               </div>
