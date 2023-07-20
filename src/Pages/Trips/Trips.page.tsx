@@ -1,21 +1,49 @@
 import React, { useState } from "react";
 import Title from "../../Components/Utility/Title";
-import { Tab, Tabs, TabsHeader } from "@material-tailwind/react";
+import {
+  Tab,
+  TabPanel,
+  Tabs,
+  TabsBody,
+  TabsHeader,
+} from "@material-tailwind/react";
 import { FaSuitcase } from "react-icons/fa";
 import {
   MdDoneOutline,
   MdFreeCancellation,
   MdOutlineDone,
 } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { AppThunkDispatch, RootState } from "../../store";
+import UpcomingTrips from "../../Components/Trips/Upcoming.components";
+import { BookingStatus } from "../../Types";
+import { BiReset } from "react-icons/bi";
+import { fetchTrips } from "../../Actions/Trip.action";
+import CancelTrip from "../../Components/Trips/Cancel.components";
+import Completedtrip from "../../Components/Trips/Completed.component";
 
 export default function Tripspage() {
-  const [currentTab, setCurrentTab] = useState<number>();
+  const [currentTab, setCurrentTab] = useState<number>(1);
+
+  const selector = useSelector((state: RootState) => state.Trips);
+  const dispatch = useDispatch<AppThunkDispatch>();
+
+  const upcoming = selector.filter((s) => s.status == BookingStatus.Upcoming);
+  const cancel = selector.filter((s) => s.status == BookingStatus.Closed);
+  const completed = selector.filter(
+    (s) => new Date(s.jouerny_info.departure_date) < new Date()
+  );
 
   return (
     <div>
       <div className="bg-[#e9eef7]">
         <Title text="My Trips" />
-        <div className="w-[60rem] mx-auto">
+
+        <div className="w-[60rem] mx-auto relative">
+          <BiReset
+            onClick={() => dispatch(fetchTrips())}
+            className="absolute -mt-8 text-2xl text-white"
+          />
           <Tabs value="upcoming">
             <TabsHeader>
               <Tab
@@ -63,6 +91,17 @@ export default function Tripspage() {
                 </p>
               </Tab>
             </TabsHeader>
+            <TabsBody>
+              <TabPanel key={"upcoming"} value={"upcoming"}>
+                <UpcomingTrips data={upcoming} />
+              </TabPanel>
+              <TabPanel key={"cancelled"} value={"cancelled"}>
+                <CancelTrip data={upcoming} />
+              </TabPanel>
+              <TabPanel key={"completed"} value={"completed"}>
+                <Completedtrip data={upcoming} />
+              </TabPanel>
+            </TabsBody>
           </Tabs>
         </div>
       </div>

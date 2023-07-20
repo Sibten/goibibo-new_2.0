@@ -49,7 +49,7 @@ export default function PaymentPage() {
         <div className="w-[20rem]">
           <div className="font-bold flex p-2 text-sm rounded-md my-2 w-max text-orange-800  font-qs ">
             <FaClock className="mx-2 my-[2px]" /> Time Left{" "}
-            {/* <Timer
+            <Timer
               Start={true}
               Callback={() => {
                 console.log("hell");
@@ -58,7 +58,7 @@ export default function PaymentPage() {
               }}
               InComingMinute={20}
               InComingSecond={0}
-            /> */}
+            />
           </div>
           <PaymentDetails />
           <PaymentAction />

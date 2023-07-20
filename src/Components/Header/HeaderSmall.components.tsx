@@ -13,7 +13,7 @@ export default function HeaderSmall() {
           className="mx-4 w-28  h-max"
         />
       </div>
-      <div className="h-max fixed bottom-0 bg-[#201f23] z-50  w-full text-white font-arial text-sm rounded-t-xl">
+      <div className="h-max fixed bottom-0 bg-[#201f23] z-50  w-full text-white font-arial text-sm rounded-t-xl print:hidden">
         <ul className="flex my-2 w-max mx-auto">
           <Link to="/">
             {" "}

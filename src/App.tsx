@@ -11,9 +11,8 @@ import Protected from "./Protected";
 import DepSeatSelectionPage from "./Pages/SeatSelection/DepSeatSelection.page";
 import RtnSeatSelectionPage from "./Pages/SeatSelection/RtnSeatSelection.page";
 import PaymentPage from "./Pages/Payment/Payment.page";
-import Success from "./Components/Payment/Success";
-import Fail from "./Components/Payment/Fail";
 import Tripspage from "./Pages/Trips/Trips.page";
+import TripMorepage from "./Pages/Trips/TripMoreinfo.page";
 
 function App() {
   return (
@@ -32,13 +31,12 @@ function App() {
               element={<RtnSeatSelectionPage />}
             />
             <Route path="payment" element={<PaymentPage />} />
-            <Route path="payment/success" element={<Success />} />
-            <Route path="payment/fail" element={<Fail />} />
           </Route>
         </Route>
         <Route path="/profile" element={<Profilepage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/mytrips" element={<Tripspage />} />
+        <Route path="/mytrip/:pnr" element={<TripMorepage />} />
         <Route path="*" element={<Pagenotfound />} />
       </Routes>
     </div>

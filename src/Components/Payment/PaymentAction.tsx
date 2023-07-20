@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import axios, { AxiosRequestConfig } from "axios";
@@ -13,6 +13,13 @@ import {
   TotalPaymentDetails,
   TravellerDetailsBase,
 } from "../../Types";
+import { Spinner } from "@material-tailwind/react";
+import Faildialog from "../Dialog/Fail.dialog";
+import Successdialog from "../Dialog/Sucess.dialog";
+import Statusdialog from "../Dialog/Status.dialog";
+import { MdDone } from "react-icons/md";
+import Loaderdialog from "../Dialog/Loader.dialog";
+import Timer from "../../Helper/Timer";
 
 export const createPaymentOrder = async (amount: number) => {
   let config = {
@@ -54,8 +61,8 @@ const verifyPayment = async (
     dep_booking_seat: dep_seat,
     rtn_booking_seat: rtn_seat.length > 0 ? rtn_seat : null,
     email: bookingDetails.basic.email,
-    destn_city_code: dep_flight.route_id.destination_city.city_name,
-    source_city_code: dep_flight.route_id.source_city.city_name,
+    destn_city_code: dep_flight.route_id.destination_city.airport_code,
+    source_city_code: dep_flight.route_id.source_city.airport_code,
     peoples: bookingDetails.basic.people,
     infants: bookingDetails.basic.infants,
     addons: {
@@ -64,24 +71,27 @@ const verifyPayment = async (
     },
   };
   console.log(sendingData);
+  const data = JSON.stringify(sendingData);
 
   const config: AxiosRequestConfig = {
     method: "post",
     url: "http://localhost:5050/payment/validate",
-    data: JSON.stringify(sendingData),
     headers: {
       token: Cookies.get("token"),
+      "Content-Type": "application/json",
     },
+    data: data,
   };
-
 
   try {
     const data = await axios(config);
-    console.log(data);
+    return { data: data, status: true };
   } catch (e) {
-    console.log("Error: ",e);
+    return { data: null, status: false };
   }
 };
+
+const IssueRefund = (paymentId: string) => {};
 
 export default function PaymentAction() {
   const selector = useSelector((state: RootState) => state.BookingDetails);
@@ -97,78 +107,110 @@ export default function PaymentAction() {
 
   const navigate = useNavigate();
 
-  const rzp = {
-    razorpay_payment_id: "pay_MFbq6DjajmzBED",
-    razorpay_order_id: "order_MFboAxdLXg2Swj",
-    razorpay_signature:
-      "8aa28e3f183050083e57be8228df6e9bea3b5dba356d6c2f85a96df700e734f8",
-  };
-  const payamout = () => {
-    verifyPayment(
-      rzp,
-      selector,
-      flight.dep!,
-      flight.rtn ?? null,
-      selector.payment!
-    );
-  };
+  const [loading, setLoading] = useState<boolean>(false);
 
-  // const payamount = useCallback(async () => {
-  //   const order = await createPaymentOrder(payableAmount);
+  const [transaction, setTransaction] = useState<{
+    status: boolean;
+    orderId?: string;
+    rzpId?: string;
+  }>({ status: false, orderId: undefined });
 
-  //   const paymentKeyId = process.env.REACT_APP_RZP_KEY ?? "";
-  //   console.log(paymentKeyId);
-  //   const paymentOptions = {
-  //     key: paymentKeyId, // Enter the Key ID generated from the Dashboard
-  //     amount: (payableAmount * 100).toString(),
-  //     currency: "INR",
-  //     name: "Goibibo",
-  //     description: `Ticket Booking of ${selector.info?.from.city_name} - ${selector.info?.to.city_name} `,
-  //     image:
-  //       "https://res.cloudinary.com/dgsqarold/image/upload/v1685613732/Goibibo/OIP_l87euo.jpg",
-  //     order_id: order.data.id,
-  //     handler: async (res: any) => {
-  //       console.log(res);
-  //       const response = await verifyPayment(
-  //         res,
-  //         selector,
-  //         flight.dep!,
-  //         flight.rtn ?? null,
-  //         selector.payment!
-  //       );
-  //       console.log(response);
-  //     },
-  //     prefill: {
-  //       name: `${user.first_name} ${user.last_name}`,
-  //       email: `${selector.basic.email}`,
-  //     },
-  //     notes: {
-  //       address: "Goibibo Corporate Office , Ahmedabad",
-  //     },
-  //     theme: {
-  //       color: "#2176e3",
-  //     },
-  //   };
+  const payamount = useCallback(async () => {
+    setLoading(true);
+    const order = await createPaymentOrder(payableAmount);
+    const paymentKeyId = process.env.REACT_APP_RZP_KEY ?? "";
+    const paymentOptions = {
+      key: paymentKeyId, // Enter the Key ID generated from the Dashboard
+      amount: (payableAmount * 100).toString(),
+      currency: "INR",
+      name: "Goibibo",
+      description: `Ticket Booking of ${flight.dep?.route_id.source_city.city_name} - ${flight.dep?.route_id.destination_city.city_name} `,
+      image:
+        "https://res.cloudinary.com/dgsqarold/image/upload/v1685613732/Goibibo/OIP_l87euo.jpg",
+      order_id: order.data.id,
+      handler: async (res: any) => {
+        const response = await verifyPayment(
+          res,
+          selector,
+          flight.dep!,
+          flight.rtn ?? null,
+          selector.payment!
+        );
+        if (response.data?.data.payment)
+          setTransaction({
+            status: true,
+            orderId: res.razorpay_order_id,
+            rzpId: res.razorpay_payment_id,
+          });
+        else {
+          setTransaction({
+            status: false,
+            orderId: res.razorpay_order_id,
+          });
 
-  //   const rzp_payment = new razorPay(paymentOptions);
-  //   rzp_payment.open();
-  //   rzp_payment.on("payment.failed", (res: any) => {
-  //     console.log(res);
-  //     navigate("/flight/payment/fail");
-  //   });
-  // }, [razorPay]);
+        }
+      },
+      prefill: {
+        name: `${user.first_name} ${user.last_name}`,
+        email: `${selector.basic.email}`,
+      },
+      notes: {
+        address: "Goibibo Corporate Office , Ahmedabad",
+      },
+      theme: {
+        color: "#2176e3",
+      },
+    };
+
+    const rzp_payment = new razorPay(paymentOptions);
+    rzp_payment.open();
+    setLoading(false);
+    rzp_payment.on("payment.failed", (res: any) => {
+      setTransaction({ status: false, orderId: res.error.metadata.payment_id });
+    });
+  }, [razorPay]);
 
   return (
     <div className="mx-4 w-full">
-      <div>
-        <button
-          className="bg-orange-800 text-white w-full p-2 rounded-md font-qs font-bold"
-          onClick={() => payamout()}
-        >
-          {" "}
-          Pay Now{" "}
-        </button>
-      </div>
+      {loading ? <Loaderdialog /> : ""}
+
+      {transaction.orderId ? (
+        <>
+          <Statusdialog
+            status={transaction.status}
+            orderId={transaction.orderId}
+            rzpId={transaction.rzpId}
+          />
+        </>
+      ) : (
+        ""
+      )}
+      {transaction.status ? (
+        <>
+          <div className="bg-orange-800 text-white w-full p-2 rounded-md font-qs font-bold flex">
+            <MdDone className="mt-1 mx-2" /> Payment Done
+          </div>
+          <div>
+            Redirecting in{" "}
+            <Timer
+              Start={true}
+              Callback={() => navigate("/flight")}
+              InComingMinute={0}
+              InComingSecond={30}
+            />
+          </div>
+        </>
+      ) : (
+        <div>
+          <button
+            className="bg-orange-800 text-white w-full p-2 rounded-md font-qs font-bold"
+            onClick={() => payamount()}
+          >
+            {" "}
+            Pay Now{" "}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

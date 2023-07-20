@@ -9,6 +9,7 @@ import { AppThunkDispatch, RootState } from "../../store";
 import { fetchUser, userActions } from "../../Actions/User.action";
 import Cookies from "js-cookie";
 import { fetchOffers } from "../../Actions/Offers.action";
+import { fetchTrips } from "../../Actions/Trip.action";
 const makeSecrete = (data: string) => {
   let part = data.slice(2, data.length - 4);
   part = part.replaceAll(/\w/g, "*");
@@ -104,6 +105,7 @@ export default function LoginPage() {
         Cookies.set("email", email);
         dispatch(fetchUser(email));
         dispatch(fetchOffers());
+        dispatch(fetchTrips());
         navigate("/profile");
         console.log(response.data);
       })
