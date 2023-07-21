@@ -22,7 +22,11 @@ export const fetchTrips = createAsyncThunk("Trips", async () => {
 const TripSlice = createSlice({
   name: "Trip",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    remove: (state) => {
+      Object.assign(state, initialState);
+    },
+  },
   extraReducers: (build) => {
     build.addCase(
       fetchTrips.fulfilled,

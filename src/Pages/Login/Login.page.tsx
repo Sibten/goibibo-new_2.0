@@ -1,4 +1,4 @@
-import { Button, Input } from "@material-tailwind/react";
+import { Alert, Button, Input } from "@material-tailwind/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
@@ -10,6 +10,7 @@ import { fetchUser, userActions } from "../../Actions/User.action";
 import Cookies from "js-cookie";
 import { fetchOffers } from "../../Actions/Offers.action";
 import { fetchTrips } from "../../Actions/Trip.action";
+import { Roles } from "../../Types";
 const makeSecrete = (data: string) => {
   let part = data.slice(2, data.length - 4);
   part = part.replaceAll(/\w/g, "*");
@@ -83,7 +84,7 @@ export default function LoginPage() {
     setResendOTP(0);
     console.log("Timer Complete");
   };
-
+  const [error, setError] = useState("");
   const verifyOTP = () => {
     const data = JSON.stringify({
       email: email,
@@ -101,15 +102,25 @@ export default function LoginPage() {
 
     axios(config)
       .then(function (response) {
-        Cookies.set("token", response.data.token);
-        Cookies.set("email", email);
-        dispatch(fetchUser(email));
-        dispatch(fetchOffers());
-        dispatch(fetchTrips());
-        navigate("/profile");
-        console.log(response.data);
+        if (response.data.login) {
+          Cookies.set("token", response.data.token);
+          Cookies.set("email", email);
+          dispatch(fetchUser(email));
+          dispatch(fetchOffers());
+          dispatch(fetchTrips());
+          navigate("/profile");
+        } else {
+          setError("Verification failed");
+          setTimeout(() => {
+            setError("");
+          }, 3000);
+        }
       })
       .catch(function (error) {
+        setError("Verification failed");
+        setTimeout(() => {
+          setError("");
+        }, 3000);
         console.log(error);
       });
   };
@@ -121,7 +132,7 @@ export default function LoginPage() {
         src="https://res.cloudinary.com/dgsqarold/image/upload/v1687350557/Goibibo/landscape-159294_1280_veiwja.png"
         alt=""
       />
-      <div className="sm:bg-gray-50 sm:shadow-lg mx-4 w-full sm:w-96 h-96 sm:mx-auto p-4 rounded-lg relative">
+      <div className="sm:bg-gray-50 sm:shadow-lg mx-4 w-full sm:w-96  sm:mx-auto p-4 rounded-lg relative">
         <Link to="/">
           {" "}
           <div className="flex">
@@ -141,7 +152,7 @@ export default function LoginPage() {
                 {OTPSendingMessage}{" "}
               </p>
               <Input label="OTP" onChange={(e) => checkOTP(e.target.value)} />{" "}
-              <div className="my-4">
+              <div className="my-4">                
                 <Button
                   className="w-full bg-orange-700"
                   disabled={deactive}
@@ -170,6 +181,15 @@ export default function LoginPage() {
                   )}
                 </div>
               </div>
+              <div>
+                {error ? (
+                  <Alert className="bg-red-50 text-red-500 text-sm font-arial">
+                    {error}
+                  </Alert>
+                ) : (
+                  ""
+                )}
+              </div>
             </>
           ) : (
             <>
@@ -189,7 +209,7 @@ export default function LoginPage() {
             </>
           )}
         </div>
-        <div className="font-arial text-sm absolute bottom-4 mr-4">
+        <div className="font-arial text-sm mt-4 bottom-4 mr-4">
           By proceeding, you agree to GoIbibo's Privacy Policy, User Agreement
           and Terms of Service
         </div>

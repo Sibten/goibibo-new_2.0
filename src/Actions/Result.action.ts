@@ -20,6 +20,9 @@ const ResultSlice = createSlice({
     setLoader: (state) => {
       state.loader = true;
     },
+    reset: (state) => {
+      Object.assign(state, initalState);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(

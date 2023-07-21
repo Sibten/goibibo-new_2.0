@@ -44,9 +44,9 @@ export interface UserType {
 }
 
 export enum Roles {
-  SuperAdmin,
-  Admin,
-  User,
+  User, // 0
+  Admin, // 1
+  SuperAdmin, // 2
   Default,
 }
 
@@ -415,4 +415,13 @@ export enum payment {
   Pending,
   Rejected,
   Refunded,
+}
+
+// Admins
+export interface Airline {
+  airline_id: string;
+  airline_name: string;
+  airline_location: string;
+  airline_code: string;
+  airline_icon: string;
 }

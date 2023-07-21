@@ -13,6 +13,8 @@ import { fetchAirports } from "./Actions/Airport.action";
 import { fetchOffers } from "./Actions/Offers.action";
 import { fetchAddons } from "./Actions/Addon.action";
 import { fetchTrips } from "./Actions/Trip.action";
+import { Roles } from "./Types";
+import { fetchAirlineDetails } from "./Actions/Airline.action";
 
 store.subscribe(() => console.log(store.getState()));
 
@@ -22,6 +24,10 @@ if (email) {
   store.dispatch(fetchOffers());
   store.dispatch(fetchAddons());
   store.dispatch(fetchTrips());
+}
+
+if (store.getState().User.role?.role_id == Roles.Admin) {
+  store.dispatch(fetchAirlineDetails());
 }
   
 

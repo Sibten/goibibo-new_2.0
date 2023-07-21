@@ -14,6 +14,11 @@ import PaymentPage from "./Pages/Payment/Payment.page";
 import Tripspage from "./Pages/Trips/Trips.page";
 import TripMorepage from "./Pages/Trips/TripMoreinfo.page";
 
+
+import AdminProtection from "./AdminProtection";
+import Admindashpage from "./Pages/Admin/Admin-dashboard.page";
+import AdminRouter from "./Components/Admin/AdminRouter";
+
 function App() {
   return (
     <div className="App">
@@ -23,7 +28,7 @@ function App() {
         <Route path="/flight">
           <Route path="" element={<Homepage />} />
           <Route path="search" element={<Flightspage />} />
-          <Route element={<Protected />}>
+          <Route element={<Protected head={true} />}>
             <Route path="review" element={<Reviewpage />} />
             <Route path="seat_selection" element={<DepSeatSelectionPage />} />
             <Route
@@ -33,10 +38,15 @@ function App() {
             <Route path="payment" element={<PaymentPage />} />
           </Route>
         </Route>
-        <Route path="/profile" element={<Profilepage />} />
+        <Route element={<Protected head={false} />}>
+          <Route path="/profile" element={<Profilepage />} />
+          <Route path="/mytrips" element={<Tripspage />} />
+          <Route path="/mytrip/:pnr" element={<TripMorepage />} />
+        </Route>
+        <Route element={<AdminProtection />}>
+          <Route path="/admin" element={<AdminRouter />} />
+        </Route>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/mytrips" element={<Tripspage />} />
-        <Route path="/mytrip/:pnr" element={<TripMorepage />} />
         <Route path="*" element={<Pagenotfound />} />
       </Routes>
     </div>
