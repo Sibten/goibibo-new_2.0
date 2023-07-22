@@ -293,7 +293,7 @@ export interface TravellerDetailsBase {
   jouerny?: {
     travel_class: number;
     dep: Timing;
-    rtn?: Timing;
+    rtn: Timing | null;
   };
   basic: {
     people: Array<Traveller>;

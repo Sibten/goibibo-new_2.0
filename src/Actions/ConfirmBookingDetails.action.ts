@@ -16,6 +16,10 @@ const initialState: TravellerDetailsBase = {
       source_time: new Date().toISOString(),
       destination_time: new Date().toISOString(),
     },
+    rtn: {
+      source_time: new Date().toISOString(),
+      destination_time: new Date().toISOString(),
+    },
   },
   basic: {
     people: [],
@@ -49,7 +53,7 @@ const BookingSlice = createSlice({
       if (action.payload.type == SearchType.From) {
         Object.assign(state.jouerny!.dep, action.payload.data);
       } else {
-        Object.assign(state.jouerny!.rtn!, action.payload.data);
+        Object.assign(state.jouerny!.rtn as any, action.payload.data);
       }
     },
     addBasic: (state, action: PayloadAction<TravellerDetailsBase>) => {

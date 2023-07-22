@@ -15,6 +15,7 @@ import { fetchAddons } from "./Actions/Addon.action";
 import { fetchTrips } from "./Actions/Trip.action";
 import { Roles } from "./Types";
 import { fetchAirlineDetails } from "./Actions/Airline.action";
+import { fetchAirlineFlights } from "./Actions/AirlineFlights.action";
 
 store.subscribe(() => console.log(store.getState()));
 
@@ -25,11 +26,6 @@ if (email) {
   store.dispatch(fetchAddons());
   store.dispatch(fetchTrips());
 }
-
-if (store.getState().User.role?.role_id == Roles.Admin) {
-  store.dispatch(fetchAirlineDetails());
-}
-  
 
 store.dispatch(fetchAirports());
 

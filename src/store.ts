@@ -10,6 +10,7 @@ import BookingReducer from "./Actions/ConfirmBookingDetails.action";
 import AddonReducer from "./Actions/Addon.action";
 import TripReducer from "./Actions/Trip.action";
 import AirlineReducer from "./Actions/Airline.action";
+import AirlineFlightReducer from "./Actions/AirlineFlights.action";
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     Addons: AddonReducer,
     Trips: TripReducer,
     Airline: AirlineReducer,
+    AirlineFlight: AirlineFlightReducer,
   },
 });
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Tab,
   TabPanel,
@@ -7,15 +7,21 @@ import {
   TabsHeader,
 } from "@material-tailwind/react";
 import Admindashpage from "../../Pages/Admin/Admin-dashboard.page";
-import AdminManagementPage from "../../Pages/Admin/Admin-management.page";
 import { MdDashboard } from "react-icons/md";
-import { BsTools } from "react-icons/bs";
-import { FaPlane, FaUser } from "react-icons/fa";
+import { FaPlane } from "react-icons/fa";
 import AirlineProfilePage from "../../Pages/Admin/Airline-Profile.page";
-import { GrSettingsOption } from "react-icons/gr";
-import { AiFillSetting } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppThunkDispatch } from "../../store";
+import { fetchAirlineDetails } from "../../Actions/Airline.action";
+import { fetchAirlineFlights } from "../../Actions/AirlineFlights.action";
 export default function AdminRouter() {
   const [activeTab, setActiveTab] = useState<number>(1);
+
+  const user = useSelector((state: RootState) => state.User);
+  const airline = useSelector((state: RootState) => state.Airline);
+  const flight = useSelector((state: RootState) => state.AirlineFlight);
+
+  const dispatch = useDispatch<AppThunkDispatch>();
   return (
     <div className="h-screen">
       <Tabs value="dashboard" orientation="vertical">

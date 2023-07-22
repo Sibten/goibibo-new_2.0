@@ -10,7 +10,7 @@ import { MdCancel } from "react-icons/md";
 export default function AirlineProfilePage() {
   const selector = useSelector((state: RootState) => state.Airline);
 
-  const [visibleForm, setVisibleForm] = useState(false);
+  const [visibleForm, setVisibleForm] = useState(true);
   return (
     <div>
       <Title text="Airline Profile" />
