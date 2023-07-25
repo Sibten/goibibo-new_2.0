@@ -19,16 +19,25 @@ export default function Flightscomponent({
   data: Array<ResultBase>;
 }) {
   const [active, setActive] = React.useState(0);
-  let pageData: Array<Array<ResultBase>> = [];
-  let pageLength = 10;
+  let [mainData, setMainData] = useState<Array<ResultBase>>([]);
+  let [pageData, setPageData] = useState<Array<Array<ResultBase>>>([[]]);
+  let pageLength = 5;
+  useEffect(() => {
+    mainData.splice(0, mainData.length);
+    mainData.push(...data);
+    setMainData([...mainData]);
+  }, [data]);
 
-  const [mainData, setMainData] = useState<Array<ResultBase>>([...data]);
-
-  for (let i = 0; i < mainData.length; i += pageLength) {
-    let pgData = mainData.slice(i, i + pageLength);
-    pageData.push(pgData);
-  }
-
+  useEffect(() => {
+    if (mainData.length > 0) {
+      pageData.splice(0, pageData.length);
+      for (let i = 0; i < mainData.length; i += pageLength) {
+        let pgData = mainData.slice(i, i + pageLength);
+        pageData.push(pgData);
+      }
+      setPageData([...pageData]);
+    }
+  }, [mainData]);
   const next = () => {
     if (active === Math.floor(pageData.length / pageLength)) return;
 
@@ -46,12 +55,17 @@ export default function Flightscomponent({
         <div className="mx-2">
           <Input
             type="search"
-            label="Search By ID"
+            label="Source City"
             onChange={(e) => {
               if (e.target.value == "") setMainData([...data]);
-              setMainData(
-                data.filter((s) => s.flight_no.includes(e.target.value))
-              );
+              else {
+                let opdata = data.filter((s) =>
+                  s.route_id.source_city.city_name
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase())
+                );
+                setMainData([...opdata]);
+              }
             }}
           />
         </div>
@@ -59,7 +73,7 @@ export default function Flightscomponent({
       <div className="my-1">
         <h1 className="font-bold"> Flights </h1>
         <small>
-          Showing {pageData[active] ? pageData[active].length : 0} out of{" "}
+          Showing {pageData[active] ? pageData[active].length : 0} out of
           {data.length ?? 0} Flights
         </small>
       </div>
@@ -79,17 +93,17 @@ export default function Flightscomponent({
               <th> Info</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="">
             {pageData[active]
               ? pageData[active].map((s) => (
                   <tr key={s.flight_no}>
-                    <td> {s.flight_no} </td>
-                    <td> {s.airbus_id.airbus_code} </td>
-                    <td> {s.airline_id.airline_name} </td>
-                    <td> {s.route_id.route_id}</td>
-                    <td> {s.route_id.source_city.city_name}</td>
+                    <td>{s.flight_no}</td>
+                    <td>{s.airbus_id.airbus_code}</td>
+                    <td>{s.airline_id.airline_name}</td>
+                    <td>{s.route_id.route_id}</td>
+                    <td>{s.route_id.source_city.city_name}</td>
                     <td>{s.route_id.source_city.airport_name}</td>
-                    <td> {s.route_id.destination_city.city_name}</td>
+                    <td>{s.route_id.destination_city.city_name}</td>
                     <td>{s.route_id.destination_city.airport_name}</td>
                     <td>{Math.floor(s.route_id.distance)} km</td>
                     <td>
@@ -113,7 +127,7 @@ export default function Flightscomponent({
           <BiLeftArrow strokeWidth={2} className="h-4 w-4" />
         </IconButton>
         <Typography color="gray" className="font-normal">
-          Page <strong className="text-blue-gray-900">{active + 1}</strong> of{" "}
+          Page <strong className="text-blue-gray-900">{active + 1}</strong> of
           <strong className="text-blue-gray-900">{pageData.length}</strong>
         </Typography>
         <IconButton

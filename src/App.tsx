@@ -18,6 +18,8 @@ import TripMorepage from "./Pages/Trips/TripMoreinfo.page";
 import AdminProtection from "./AdminProtection";
 import Admindashpage from "./Pages/Admin/Admin-dashboard.page";
 import AdminRouter from "./Components/Admin/AdminRouter";
+import Managementpage from "./Pages/Admin/Management/Managment.page";
+import ScheduleFlightpage from "./Pages/Admin/Management/Menus/ScheduleFlight.page";
 
 function App() {
   return (
@@ -43,9 +45,15 @@ function App() {
           <Route path="/mytrips" element={<Tripspage />} />
           <Route path="/mytrip/:pnr" element={<TripMorepage />} />
         </Route>
-        <Route element={<AdminProtection />}>
-          <Route path="/admin" element={<AdminRouter />} />
+
+        <Route path="/admin" element={<AdminProtection />}>
+          <Route path="" element={<AdminRouter />} />
+          <Route path="management">
+            <Route path="" element={<Managementpage />} />
+            <Route path="scheduleflight" element={<ScheduleFlightpage />} />
+          </Route>
         </Route>
+
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<Pagenotfound />} />
       </Routes>

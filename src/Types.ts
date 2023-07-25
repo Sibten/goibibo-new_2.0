@@ -173,6 +173,22 @@ export interface AvaliableSeat {
   PE: number;
   FC: number;
 }
+
+export interface AvaliableClass {
+  BC: boolean;
+  EC: boolean;
+  PE: boolean;
+  FC: boolean;
+}
+
+export interface Route {
+  route_id: string;
+  source_city: AirportType;
+  destination_city: AirportType;
+  stops: Array<AirportType>;
+  distance: number;
+}
+
 export interface ResultBase {
   timing: [
     {
@@ -192,20 +208,9 @@ export interface ResultBase {
   ];
   flight_no: string;
   airline_id: Airline;
-  route_id: {
-    route_id: string;
-    source_city: AirportType;
-    destination_city: AirportType;
-    stops: Array<AirportType>;
-    distance: number;
-  };
+  route_id: Route;
   airbus_id: {
-    available_class?: {
-      BC: true;
-      EC: true;
-      PE: false;
-      FC: false;
-    };
+    available_class?: AvaliableClass;
     airbus_code: string;
     seat_map: Array<SeatLayout>;
   };
@@ -425,3 +430,10 @@ export interface Airline {
   airline_code: string;
   airline_icon: string;
 }
+
+export interface Airbus {
+  available_class: AvaliableClass;
+  airbus_code: string;
+  seat_map: Array<SeatLayout>;
+}
+

@@ -12,8 +12,8 @@ import { FaPlane } from "react-icons/fa";
 import AirlineProfilePage from "../../Pages/Admin/Airline-Profile.page";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppThunkDispatch } from "../../store";
-import { fetchAirlineDetails } from "../../Actions/Airline.action";
-import { fetchAirlineFlights } from "../../Actions/AirlineFlights.action";
+import { fetchAirlineDetails } from "../../Actions/Admin/Airline.action";
+import { fetchAirlineFlights } from "../../Actions/Admin/AirlineFlights.action";
 export default function AdminRouter() {
   const [activeTab, setActiveTab] = useState<number>(1);
 

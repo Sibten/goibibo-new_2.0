@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { AppThunkDispatch } from "../../../store";
-import { fetchAirlineDetails } from "../../../Actions/Airline.action";
+import { fetchAirlineDetails } from "../../../Actions/Admin/Airline.action";
 
 export default function Editcomponent({ data }: { data: Airline }) {
   const [airlineData, setAirlineData] = useState<Airline>(data);

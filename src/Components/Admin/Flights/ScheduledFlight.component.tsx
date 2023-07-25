@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ResultBase } from "../../../Types";
+import { ResultBase, Timing } from "../../../Types";
 import {
   Dialog,
   DialogHeader,
@@ -10,6 +10,7 @@ import {
 import { FaInfo } from "react-icons/fa";
 import { HiOutlineArrowLongRight, HiOutlineArrowRight } from "react-icons/hi2";
 import { date, time } from "../../../Helper/Method";
+import { RxReset } from "react-icons/rx";
 
 export default function ScheduledFlightComponent({
   data,
@@ -18,16 +19,21 @@ export default function ScheduledFlightComponent({
 }) {
   const [open, setOpen] = useState<boolean>(false);
 
-  const [printData, setPrintData] = useState<ResultBase>(data);
+  const [printData, setPrintData] = useState<Array<Timing>>([...data.timing]);
 
   return (
-    <div>
-      <IconButton variant="outlined" color="gray" onClick={() => setOpen(true)}>
+    <div className="m-1">
+      <IconButton
+        variant="outlined"
+        size="sm"
+        color="gray"
+        onClick={() => setOpen(true)}
+      >
         <FaInfo />
       </IconButton>
       <Dialog handler={setOpen} open={open}>
         <DialogHeader className="block border-b">
-          <h1 className="text-xl text-indigo-700"> {printData.flight_no}</h1>
+          <h1 className="text-xl text-indigo-700"> {data.flight_no}</h1>
           <p className="text-base  -mt-1 font-bold">Schedule</p>
         </DialogHeader>
         <DialogBody>
@@ -38,26 +44,36 @@ export default function ScheduledFlightComponent({
               {data.route_id.destination_city.city_name}{" "}
             </p>
           </div>
-          <div className="w-48 mx-auto my-2">
-            <Input
-              label="Search"
-              type="date"
-              onChange={(e) =>
-                setPrintData(
-                  s.timing.filter(
-                    (t) => new Date(t.date).toDateString() == e.target.value
-                  )
-                )
-              }
-            />
-          </div>
+          <form>
+            <div className="w-48 mx-auto my-2 flex">
+              <Input
+                label="Search"
+                type="date"
+                onChange={(e) => {
+                  let opData = data.timing.filter(
+                    (s) =>
+                      new Date(s.source_time).toDateString() ==
+                      new Date(e.target.value).toDateString()
+                  );
+                  setPrintData([...opData]);
+                }}
+              />
+              <button
+                type="reset"
+                onClick={() => setPrintData([...data.timing])}
+                className="mx-2 border h-max w-max p-2 rounded-full my-1"
+              >
+                <RxReset />
+              </button>
+            </div>
+          </form>
           <div className="h-[24rem] overflow-auto my-2">
             <ul>
               <li className="flex justify-around border-b font-bold">
                 {" "}
                 <p>Source</p> <p className="ml-8">Destination </p>{" "}
               </li>
-              {data.timing.map((s, i) => (
+              {printData.map((s, i) => (
                 <li
                   className="flex justify-between border-b"
                   key={`${s.source_time}-${s.destination_time}`}

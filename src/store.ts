@@ -9,8 +9,10 @@ import TrackingReducer from "./Actions/Tracking.actions";
 import BookingReducer from "./Actions/ConfirmBookingDetails.action";
 import AddonReducer from "./Actions/Addon.action";
 import TripReducer from "./Actions/Trip.action";
-import AirlineReducer from "./Actions/Airline.action";
-import AirlineFlightReducer from "./Actions/AirlineFlights.action";
+import AirlineReducer from "./Actions/Admin/Airline.action";
+import AirlineFlightReducer from "./Actions/Admin/AirlineFlights.action";
+import AirbusReducer from "./Actions/Admin/Airbuses.action";
+import RouteReducer from "./Actions/Admin/Route.action";
 
 const store = configureStore({
   reducer: {
@@ -26,6 +28,8 @@ const store = configureStore({
     Trips: TripReducer,
     Airline: AirlineReducer,
     AirlineFlight: AirlineFlightReducer,
+    Airbuses: AirbusReducer,
+    Routes: RouteReducer,
   },
 });
 

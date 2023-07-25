@@ -10,7 +10,7 @@ import { Alert, Button, Input, Radio, Select } from "@material-tailwind/react";
 import { BiLogOut } from "react-icons/bi";
 import { UserType, indianStates } from "../../Types";
 import axios from "axios";
-import { airlineActions } from "../../Actions/Airline.action";
+import { airlineActions } from "../../Actions/Admin/Airline.action";
 import { BookingFlightActions } from "../../Actions/BookingFlight.action";
 import { BookingActions } from "../../Actions/ConfirmBookingDetails.action";
 import { ResultActions } from "../../Actions/Result.action";

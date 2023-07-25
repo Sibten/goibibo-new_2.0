@@ -218,6 +218,7 @@ export default function FlightSearchHead() {
                   label="To"
                   callback={clickCallback}
                   type={SearchType.To}
+                  callType={callTypes.JustReturn}
                 />{" "}
               </>
             </MenuList>

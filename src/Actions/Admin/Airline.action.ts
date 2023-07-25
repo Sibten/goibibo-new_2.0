@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Airline } from "../Types";
+import { Airline } from "../../Types";
 import axios, { AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
 

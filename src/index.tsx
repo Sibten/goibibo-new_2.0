@@ -13,13 +13,11 @@ import { fetchAirports } from "./Actions/Airport.action";
 import { fetchOffers } from "./Actions/Offers.action";
 import { fetchAddons } from "./Actions/Addon.action";
 import { fetchTrips } from "./Actions/Trip.action";
-import { Roles } from "./Types";
-import { fetchAirlineDetails } from "./Actions/Airline.action";
-import { fetchAirlineFlights } from "./Actions/AirlineFlights.action";
 
 store.subscribe(() => console.log(store.getState()));
 
 const email = Cookies.get("email");
+store.dispatch(fetchAirports());
 if (email) {
   store.dispatch(fetchUser(email));
   store.dispatch(fetchOffers());
@@ -27,7 +25,6 @@ if (email) {
   store.dispatch(fetchTrips());
 }
 
-store.dispatch(fetchAirports());
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
