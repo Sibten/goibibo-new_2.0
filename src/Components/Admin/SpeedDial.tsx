@@ -23,11 +23,13 @@ export default function AdminManagementSpeedDial() {
   return (
     <div className="fixed bottom-8 right-8">
       <SpeedDial>
-        <SpeedDialHandler color="indigo">
-          <IconButton size="lg" className="rounded-full">
-            <FaPlus className="h-5 w-5 transition-transform group-hover:rotate-45" />
-          </IconButton>
-        </SpeedDialHandler>
+        <Link to="/admin/management">
+          <SpeedDialHandler className="bg-[#2176e3]">
+            <IconButton size="lg" className="rounded-full">
+              <FaPlus className="h-5 w-5 transition-transform group-hover:rotate-45" />
+            </IconButton>
+          </SpeedDialHandler>
+        </Link>
         <SpeedDialContent>
           <Link to="management/scheduleflight">
             {" "}
@@ -36,10 +38,7 @@ export default function AdminManagementSpeedDial() {
               <Typography {...labelProps}>Schedule Flight</Typography>
             </SpeedDialAction>
           </Link>
-          <SpeedDialAction className="relative">
-            <RxUpdate className="h-5 w-5" />
-            <Typography {...labelProps}>Update Flight</Typography>
-          </SpeedDialAction>
+
           <Link to="/admin/management">
             <SpeedDialAction className="relative">
               <MdSettings className="h-5 w-5" />

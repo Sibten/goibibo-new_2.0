@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ResultBase, Timing } from "../../../Types";
 import {
   Dialog,
@@ -20,6 +20,14 @@ export default function ScheduledFlightComponent({
   const [open, setOpen] = useState<boolean>(false);
 
   const [printData, setPrintData] = useState<Array<Timing>>([...data.timing]);
+
+  useEffect(() => {
+    printData.sort(
+      (a, b) =>
+        new Date(a.destination_time).getTime() -
+        new Date(b.destination_time).getTime()
+    );
+  }, [printData]);
 
   return (
     <div className="m-1">

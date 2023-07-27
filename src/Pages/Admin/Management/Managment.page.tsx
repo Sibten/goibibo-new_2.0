@@ -16,31 +16,26 @@ const MenusList = [
     Name: "Fare",
     Img: "https://res.cloudinary.com/dgsqarold/image/upload/v1690266508/Goibibo/8587881_vvb7mt.png",
     Alter: "Fare",
-    Link: "",
+    Link: "fare",
   },
-  {
-    Name: "Reschedule Flight",
-    Img: "https://res.cloudinary.com/dgsqarold/image/upload/v1690264551/Goibibo/6485220_vjoill.png",
-    Alter: "reschedule",
-    Link: "",
-  },
+
   {
     Name: "Create Airbus",
     Img: "https://res.cloudinary.com/dgsqarold/image/upload/v1690264849/Goibibo/1085493_sdkcpr.png",
     Alter: "Airbus",
-    Link: "",
+    Link: "airbus",
   },
   {
     Name: "Luggage Rule",
     Img: "https://res.cloudinary.com/dgsqarold/image/upload/v1690266615/Goibibo/2995991_meij2m.png",
     Alter: "Luggage",
-    Link: "",
+    Link: "luggage",
   },
   {
     Name: "Add Route",
     Img: "https://res.cloudinary.com/dgsqarold/image/upload/v1690271640/Goibibo/3061732_nktdzo.png",
     Alter: "Route",
-    Link: "",
+    Link: "route",
   },
 ];
 

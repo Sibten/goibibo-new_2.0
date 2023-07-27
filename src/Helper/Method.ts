@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import FlightClass from "../Components/Flight/MainSubcomponents/FlightClass";
 import {
   Flighclass,
@@ -127,7 +128,6 @@ export const getFlightClass = (class_number: number) => {
       return "Premium Economy";
   }
 };
-
 
 export const getPeopleType = (type: number) => {
   switch (type) {

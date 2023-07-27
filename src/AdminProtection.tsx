@@ -11,18 +11,6 @@ import { fetchRoutes } from "./Actions/Admin/Route.action";
 
 export default function AdminProtection() {
   const user = useSelector((state: RootState) => state.User);
-  const airline = useSelector((state: RootState) => state.Airline);
-
-  const dispatch = useDispatch<AppThunkDispatch>();
-  useEffect(() => {
-    if (user.role?.role_id == Roles.Admin && airline.airline_code == "") {
-      console.log("first");
-      dispatch(fetchAirlineDetails());
-      dispatch(fetchAirlineFlights());
-      dispatch(fetchAirbus());
-      dispatch(fetchRoutes());
-    }
-  }, []);
 
   return user.email && user.role?.role_id == Roles.Admin ? (
     <>

@@ -6,11 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppThunkDispatch, RootState } from "../../../../store";
 import { Route } from "../../../../Types";
 import { fetchRoutes } from "../../../../Actions/Admin/Route.action";
+import { fetchAirbus } from "../../../../Actions/Admin/Airbuses.action";
+import { ToastContainer, toast } from "react-toastify";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 export default function ScheduleFlightpage() {
   const dispatch = useDispatch<AppThunkDispatch>();
   useEffect(() => {
-    if (routes.length == 0) dispatch(fetchRoutes());
+    if (routes.length == 0) {
+      dispatch(fetchRoutes());
+      dispatch(fetchAirbus());
+    }
   }, []);
 
   const city = useSelector((state: RootState) => state.Airports);
@@ -33,10 +40,37 @@ export default function ScheduleFlightpage() {
     destination_time: string;
   }>({ route_id: "", airbus_code: "", source_time: "", destination_time: "" });
 
+  const scheduleFlight = async () => {
+    console.log(scheduleFlightData);
+    const data = JSON.stringify(scheduleFlightData);
+    let config = {
+      method: "post",
+      url: "http://localhost:5050/flight/schedule",
+      headers: {
+        token: Cookies.get("token"),
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+    console.log(config);
+
+    try {
+      const res = await axios(config);
+      if (res.status == 200) {
+        toast.success("Flight Scheduleded!", { position: "bottom-right" });
+        setAvaliableRoutes([]);
+      } else {
+        toast.error("Unable to Schedule Flight", { position: "bottom-right" });
+      }
+    } catch (e) {
+      toast.error("Something bad happen!", { position: "bottom-right" });
+    }
+  };
+
   return (
     <div>
       <Title text="Schedule Flight" />
-      <div className="border p-2  w-96 m-4 mx-auto font-arial">
+      <div className="bg-gray-50 rounded-md shadow-md p-2 w-[36rem] mx-auto m-2">
         <BackToMenu />
         <div className="my-8 font-arial">
           <Select
@@ -94,8 +128,8 @@ export default function ScheduleFlightpage() {
               } else {
                 let data = routes.filter(
                   (s) =>
-                    s.destination_city.airport_code == routeSearchParams.from &&
-                    s.source_city.airport_code == routeSearchParams.to
+                    s.destination_city.airport_code == routeSearchParams.to &&
+                    s.source_city.airport_code == routeSearchParams.from
                 );
                 console.log(data);
                 if (data.length == 0) {
@@ -114,19 +148,7 @@ export default function ScheduleFlightpage() {
             Find Route
           </Button>
         </div>
-        {message?.message ? (
-          <Alert
-            className={`${
-              message.type == 0
-                ? "bg-red-50 text-red-500"
-                : "bg-green-50 text-green-600 "
-            }  text-xs font-arial p-2 my-2`}
-          >
-            {message.message}
-          </Alert>
-        ) : (
-          ""
-        )}
+
         {avaliableRoutes.length > 0 ? (
           <>
             {" "}
@@ -144,7 +166,7 @@ export default function ScheduleFlightpage() {
               >
                 {avaliableRoutes.map((s) => (
                   <Option key={s.route_id} value={s.route_id}>
-                    {s.route_id}
+                    {s.route_id}&nbsp;[{s.stops.length} stop(s)]
                   </Option>
                 ))}
               </Select>
@@ -157,7 +179,7 @@ export default function ScheduleFlightpage() {
                 onChange={(e) =>
                   setScheduleFlightData({
                     ...scheduleFlightData,
-                    route_id: e.target.value,
+                    source_time: e.target.value,
                   })
                 }
               />
@@ -168,21 +190,31 @@ export default function ScheduleFlightpage() {
                 label="Destination Time"
                 min={
                   scheduleFlightData.source_time
-                    ? new Date(scheduleFlightData.source_time).toISOString()
-                    : new Date().toISOString().split("T")[0]
+                    ? new Date(scheduleFlightData.source_time)
+                        .toISOString()
+                        .slice(0, -8)
+                    : new Date().toISOString().slice(0, -8)
                 }
                 onChange={(e) =>
                   setScheduleFlightData({
                     ...scheduleFlightData,
-                    route_id: e.target.value,
+                    destination_time: e.target.value,
                   })
                 }
               />
             </div>
             <div className="my-8">
-              <Select label="Select Airbus">
+              <Select
+                label="Select Airbus"
+                onChange={(e) =>
+                  setScheduleFlightData({
+                    ...scheduleFlightData,
+                    airbus_code: e ?? "",
+                  })
+                }
+              >
                 {airbus.map((s) => (
-                  <Option key={s.airbus_code}>
+                  <Option key={s.airbus_code} value={s.airbus_code}>
                     {" "}
                     <p> {s.airbus_code} </p>
                   </Option>
@@ -190,13 +222,52 @@ export default function ScheduleFlightpage() {
               </Select>
             </div>
             <div>
-              <Button color="indigo">Schedule Flight</Button>
+              <Button
+                color="indigo"
+                onClick={() => {
+                  const d = Object.values(scheduleFlightData).every(
+                    (s) => s != ""
+                  );
+                  if (
+                    d &&
+                    new Date(scheduleFlightData.destination_time) >
+                      new Date(scheduleFlightData.source_time)
+                  ) {
+                    scheduleFlight();
+                  } else {
+                    setMessage({
+                      type: 0,
+                      message: "Value can't be empty or provide proper value",
+                    });
+                    setTimeout(
+                      () => setMessage({ type: null, message: null }),
+                      2000
+                    );
+                  }
+                }}
+              >
+                Schedule Flight
+              </Button>
             </div>
           </>
         ) : (
           ""
         )}
+        {message?.message ? (
+          <Alert
+            className={`${
+              message.type == 0
+                ? "bg-red-50 text-red-500"
+                : "bg-green-50 text-green-600 "
+            }  text-xs font-arial p-2 my-2`}
+          >
+            {message.message}
+          </Alert>
+        ) : (
+          ""
+        )}
       </div>
+      <ToastContainer />
     </div>
   );
 }

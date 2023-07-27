@@ -49,7 +49,7 @@ export default function ExtraInfo({
   return (
     <div>
       <div>
-        <Tabs value="">
+        <Tabs value="finfo">
           <TabsHeader>
             <Tab key="info" value="finfo">
               Flight Information{" "}
@@ -68,7 +68,7 @@ export default function ExtraInfo({
                   <img
                     src={value.airline_id.airline_icon}
                     alt="airline"
-                    className="w-16 h-10 mx-auto"
+                    className="w-10 h-10 mx-auto"
                   />{" "}
                   <p className="text-xs"> {value.flight_no}</p>
                 </div>

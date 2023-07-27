@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ResultBase } from "../../../Types";
 import {
   Dialog,
@@ -17,6 +17,11 @@ export default function SeatFlightComponent({ data }: { data: ResultBase }) {
   const [open, setOpen] = useState<boolean>(false);
 
   const [printData, setPrintData] = useState([...data.available_seats]);
+  useEffect(() => {
+    printData.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+  }, [printData]);
 
   return (
     <div className="m-1">

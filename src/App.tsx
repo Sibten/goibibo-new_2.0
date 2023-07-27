@@ -20,6 +20,10 @@ import Admindashpage from "./Pages/Admin/Admin-dashboard.page";
 import AdminRouter from "./Components/Admin/AdminRouter";
 import Managementpage from "./Pages/Admin/Management/Managment.page";
 import ScheduleFlightpage from "./Pages/Admin/Management/Menus/ScheduleFlight.page";
+import Farepage from "./Pages/Admin/Management/Menus/Fare.page";
+import LuggagePage from "./Pages/Admin/Management/Menus/Luggage.page";
+import Routepage from "./Pages/Admin/Management/Menus/Route.page";
+import Airbuspage from "./Pages/Admin/Management/Menus/Airbus.page";
 
 function App() {
   return (
@@ -51,6 +55,10 @@ function App() {
           <Route path="management">
             <Route path="" element={<Managementpage />} />
             <Route path="scheduleflight" element={<ScheduleFlightpage />} />
+            <Route path="fare" element={<Farepage />} />
+            <Route path="luggage" element={<LuggagePage />} />
+            <Route path="route" element={<Routepage />} />
+            <Route path="airbus" element={<Airbuspage />} />
           </Route>
         </Route>
 

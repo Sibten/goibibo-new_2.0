@@ -436,4 +436,29 @@ export interface Airbus {
   airbus_code: string;
   seat_map: Array<SeatLayout>;
 }
-
+export interface Fare {
+  airline_id: Airline;
+  fare: Array<ClassFare>;
+  tax: number;
+}
+export interface Luggage {
+  airline_id: Airline;
+  luggage: Array<LuggageType>;
+}
+export interface Utility {
+  fare: Fare | null;
+  luggage: Luggage | null;
+}
+export interface FareUpdate {
+  EC_fare: number;
+  BC_fare: number;
+  PE_fare: number;
+  FC_fare: number;
+  tax: number;
+}
+export interface LuggageUpdate {
+  EC: number;
+  BC: number;
+  PE: number;
+  FC: number;
+}
