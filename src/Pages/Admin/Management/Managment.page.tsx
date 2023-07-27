@@ -18,13 +18,6 @@ const MenusList = [
     Alter: "Fare",
     Link: "fare",
   },
-
-  {
-    Name: "Create Airbus",
-    Img: "https://res.cloudinary.com/dgsqarold/image/upload/v1690264849/Goibibo/1085493_sdkcpr.png",
-    Alter: "Airbus",
-    Link: "airbus",
-  },
   {
     Name: "Luggage Rule",
     Img: "https://res.cloudinary.com/dgsqarold/image/upload/v1690266615/Goibibo/2995991_meij2m.png",

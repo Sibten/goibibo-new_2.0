@@ -7,6 +7,7 @@ import {
   People,
   AvaliableSeat,
 } from "../Types";
+import store from "../store";
 
 export const time = (time: string) => {
   return new Date(time).toLocaleTimeString(undefined, {
@@ -50,11 +51,20 @@ export const calFare = (
     tax = tax + 0.02;
   }
 
+  let incFare = 100;
+
+  let btnDay = Math.ceil(
+    (new Date(store.getState().SearchParms.dept_date).getTime() -
+      new Date().getTime()) /
+      (1000 * 86400)
+  );
+
   switch (fclass) {
     case Flighclass.Economy:
       bfare =
         totalkm *
         basicfare.find((s) => s.class_type == Flighclass.Economy)?.basic_fare!;
+      bfare = bfare + (1 / btnDay) * incFare;
       if (people == People.Infant) {
         bfare = bfare * 0.8;
         return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * tax) };
@@ -64,6 +74,7 @@ export const calFare = (
       bfare =
         totalkm *
         basicfare.find((s) => s.class_type == Flighclass.Business)?.basic_fare!;
+      bfare = bfare + (1 / btnDay) * incFare;
       if (people == People.Infant) {
         bfare = bfare * 0.8;
         return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * tax) };
@@ -74,6 +85,7 @@ export const calFare = (
         totalkm *
         basicfare.find((s) => s.class_type == Flighclass.FirstClass)
           ?.basic_fare!;
+      bfare = bfare + (1 / btnDay) * incFare;
       if (people == People.Infant) {
         bfare = bfare * 0.8;
         return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * tax) };
@@ -84,6 +96,7 @@ export const calFare = (
         totalkm *
         basicfare.find((s) => s.class_type == Flighclass.PremiumEconomy)
           ?.basic_fare!;
+      bfare = bfare + (1 / btnDay) * incFare;
       if (people == People.Infant) {
         bfare = bfare * 0.8;
         return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * tax) };

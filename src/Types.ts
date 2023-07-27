@@ -186,6 +186,7 @@ export interface Route {
   source_city: AirportType;
   destination_city: AirportType;
   stops: Array<AirportType>;
+  added_by?: Airline;
   distance: number;
 }
 

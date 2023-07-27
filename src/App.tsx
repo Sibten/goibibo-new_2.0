@@ -23,7 +23,6 @@ import ScheduleFlightpage from "./Pages/Admin/Management/Menus/ScheduleFlight.pa
 import Farepage from "./Pages/Admin/Management/Menus/Fare.page";
 import LuggagePage from "./Pages/Admin/Management/Menus/Luggage.page";
 import Routepage from "./Pages/Admin/Management/Menus/Route.page";
-import Airbuspage from "./Pages/Admin/Management/Menus/Airbus.page";
 
 function App() {
   return (
@@ -58,7 +57,6 @@ function App() {
             <Route path="fare" element={<Farepage />} />
             <Route path="luggage" element={<LuggagePage />} />
             <Route path="route" element={<Routepage />} />
-            <Route path="airbus" element={<Airbuspage />} />
           </Route>
         </Route>
 

@@ -28,7 +28,11 @@ export default function Tripspage() {
   const selector = useSelector((state: RootState) => state.Trips);
   const dispatch = useDispatch<AppThunkDispatch>();
 
-  const upcoming = selector.filter((s) => s.status == BookingStatus.Upcoming);
+  const upcoming = selector.filter(
+    (s) =>
+      s.status == BookingStatus.Upcoming &&
+      new Date(s.jouerny_info.departure_date) >= new Date()
+  );
   const cancel = selector.filter((s) => s.status == BookingStatus.Closed);
   const completed = selector.filter(
     (s) => new Date(s.jouerny_info.departure_date) < new Date()
