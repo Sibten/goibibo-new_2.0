@@ -1,8 +1,15 @@
 import React from "react";
 import { TripData } from "../../Types";
+import Card from "./SubComponent/Card";
 
 export default function Completedtrip({ data }: { data: Array<TripData> }) {
-  return (
+  return data.length > 0 ? (
+    <div>
+      {data.map((s) => (
+        <Card key={s.PNR_no} data={s} />
+      ))}
+    </div>
+  ) : (
     <div className="bg-white rounded-md p-2 flex items-center">
       <div className="mx-2">
         <img

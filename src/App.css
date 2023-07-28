@@ -2,7 +2,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+.App{
+	background-color: #eef2f8;
+	background-size: cover;
+	background-attachment: fixed;
+	
+}
 table,tr,td{
 	border: 1px solid rgb(195, 195, 195);
 	border-collapse: collapse;

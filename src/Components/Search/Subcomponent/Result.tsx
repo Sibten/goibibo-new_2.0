@@ -28,7 +28,8 @@ export default function Result({ filter }: { filter: Filter }) {
           s.fare.fare,
           s.fare.tax,
           SearchParms.class,
-          s.route_id.stops.length
+          s.route_id.stops.length,
+          s.available_seats
         );
         let total = fare.basic + fare.tax;
         if (
@@ -62,7 +63,8 @@ export default function Result({ filter }: { filter: Filter }) {
           s.fare.fare,
           s.fare.tax,
           SearchParms.class,
-          s.route_id.stops.length
+          s.route_id.stops.length,
+          s.available_seats
         );
         let total = fare.basic + fare.tax;
         if (
@@ -106,45 +108,55 @@ export default function Result({ filter }: { filter: Filter }) {
   useEffect(() => {
     console.log(selectedFlight);
   }, [selectedFlight]);
+
+  const rtnRslt = selector.rtn ? <NotFound /> : "";
+
   return (
-    <div>
+    <div className="bg-fixed h-[42.5rem]">
       {selectedFlight ? <SelectionCard data={selectedFlight} /> : ""}
-      <div className="grid grid-cols-2">
-        <div>
+      <div className={`grid ${selector.rtn ? "grid-cols-2" : "grid-cols-3"}`}>
+        <div className={`${selector.rtn ? "" : "col-span-2"}`}>
+          <div className="mx-4">
+            <h1 className="flex font-bold text-sm font-qs">
+              {SearchParms.from.city_name}{" "}
+              <HiOutlineArrowNarrowRight className="my-1 mx-2" />
+              {SearchParms.to.city_name}
+            </h1>
+            <p className="text-xs">Showing {result.length} Flights</p>
+          </div>
           {result.length > 0 ? (
             <>
-              <div className="mx-4">
-                <h1 className="flex font-bold text-sm font-qs">
-                  {SearchParms.from.city_name}{" "}
-                  <HiOutlineArrowNarrowRight className="my-1 mx-2" />
-                  {SearchParms.to.city_name}
-                </h1>
-                <p className="text-xs">Showing {result.length} Flights</p>
-              </div>
-              {result.map((res) => (
-                <SearchCard
-                  type={SearchType.From}
-                  value={res}
-                  callBack={handleCallBack}
-                  key={`${res.flight_no}-${res.timing[0].source_time}`}
-                />
-              ))}{" "}
+              {result.map((res) => {
+                return (
+                  <SearchCard
+                    seat={res.available_seats}
+                    type={SearchType.From}
+                    value={res}
+                    callBack={handleCallBack}
+                    key={`${res.flight_no}-${res.timing[0].source_time}`}
+                  />
+                );
+              })}{" "}
             </>
           ) : (
             <NotFound />
           )}
         </div>
         <div>
+          {selector.rtn ? (
+            <div className="mx-4">
+              <h1 className="flex font-bold text-sm font-qs">
+                {SearchParms.to.city_name}{" "}
+                <HiOutlineArrowNarrowRight className="my-1 mx-2" />
+                {SearchParms.from.city_name}
+              </h1>
+              <p className="text-xs">Showing {returnResult.length} Flights</p>
+            </div>
+          ) : (
+            ""
+          )}
           {returnResult.length > 0 ? (
             <>
-              <div className="mx-4">
-                <h1 className="flex font-bold text-sm font-qs">
-                  {SearchParms.to.city_name}{" "}
-                  <HiOutlineArrowNarrowRight className="my-1 mx-2" />
-                  {SearchParms.from.city_name}
-                </h1>
-                <p className="text-xs">Showing {returnResult.length} Flights</p>
-              </div>
               {returnResult.map((res) => (
                 <SearchCard
                   value={res}
@@ -155,7 +167,7 @@ export default function Result({ filter }: { filter: Filter }) {
               ))}
             </>
           ) : (
-            <NotFound />
+            rtnRslt
           )}
         </div>
       </div>

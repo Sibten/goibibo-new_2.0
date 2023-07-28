@@ -7,13 +7,14 @@ import {
   TabsHeader,
 } from "@material-tailwind/react";
 import Admindashpage from "../../Pages/Admin/Admin-dashboard.page";
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdSettings } from "react-icons/md";
 import { FaPlane } from "react-icons/fa";
 import AirlineProfilePage from "../../Pages/Admin/Airline-Profile.page";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppThunkDispatch } from "../../store";
 import { fetchAirlineDetails } from "../../Actions/Admin/Airline.action";
 import { fetchAirlineFlights } from "../../Actions/Admin/AirlineFlights.action";
+import { Link } from "react-router-dom";
 export default function AdminRouter() {
   const [activeTab, setActiveTab] = useState<number>(1);
 
@@ -52,6 +53,22 @@ export default function AdminRouter() {
               <FaPlane className="mx-2 my-1" /> Airline Profile{" "}
             </p>
           </Tab>
+          <Link to="management">
+            {" "}
+            <Tab
+              value={"settings"}
+              key={"settings"}
+              className={`h-max my-2 font-qs font-bold  flex justify-start ${
+                activeTab == 3 ? "text-blue-800" : "text-gray-700"
+              }`}
+              onClick={() => setActiveTab(3)}
+            >
+              <p className="flex justify-between ">
+                {" "}
+                <MdSettings className="mx-2 my-1" /> Management
+              </p>
+            </Tab>{" "}
+          </Link>
         </TabsHeader>
         <TabsBody>
           <TabPanel value={"dashboard"} className="p-0">

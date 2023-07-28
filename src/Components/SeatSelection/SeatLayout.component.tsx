@@ -230,7 +230,7 @@ export default function SeatLayoutCompo({
   };
 
   return (
-    <div className="  my-1 flex ">
+    <div className="bg-white  my-1 flex ">
       <div className="h-[39rem] overflow-y-auto overflow-x-hidden p-2 border rounded-md shadow-sm">
         <table className=" w-max mx-auto">
           <tbody className="border-2 rounded-lg">

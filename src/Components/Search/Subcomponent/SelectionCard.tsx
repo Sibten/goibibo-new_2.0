@@ -23,14 +23,16 @@ export default function SelectionCard({
       data.from.fare.fare,
       data.from.fare.tax,
       selector.class,
-      data.from.route_id.stops.length
+      data.from.route_id.stops.length,
+      data.from.available_seats
     );
     rtnFare = calFare(
       data.to.route_id.distance,
       data.to.fare.fare,
       data.to.fare.tax,
       selector.class,
-      data.to.route_id.stops.length
+      data.to.route_id.stops.length,
+      data.to.available_seats
     );
   }
 

@@ -1,16 +1,18 @@
 import React from "react";
 import Title from "../../Components/Utility/Title";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import { payment } from "../../Types";
 import { Button } from "@material-tailwind/react";
 import { FaPrint } from "react-icons/fa";
+import { URL } from "url";
 
 export default function TripMorepage() {
   const params = useParams();
 
   const selector = useSelector((state: RootState) => state.Trips);
+  const location = useLocation();
 
   const data = selector.find((s) => s.PNR_no == parseInt(params.pnr!));
 
@@ -26,6 +28,15 @@ export default function TripMorepage() {
         >
           Print <FaPrint className="mx-2" />
         </Button>
+        {/* <a
+          className="print:hidden flex"
+          // variant="outlined"
+          color="indigo"
+          download
+          // onClick={() => window.print()}
+        >
+          Print <FaPrint className="mx-2" />
+        </a> */}
       </div>
       <div className="font-arial w-[48rem] mx-auto flex p-4 justify-between">
         <div className="w-[24rem] mx-4">

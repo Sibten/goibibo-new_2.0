@@ -11,6 +11,7 @@ import SeatMap from "../../Components/SeatSelection/SeatLayout.component";
 import Legend from "../../Components/SeatSelection/Legend";
 import { trackingActions } from "../../Actions/Tracking.actions";
 import { BookingActions } from "../../Actions/ConfirmBookingDetails.action";
+import LostData from "../../Components/Errors/LostData";
 const getBookedSeat = (bclass: number, bookedSeat: BookedSeat | undefined) => {
   switch (bclass) {
     case Flighclass.Business:
@@ -102,13 +103,6 @@ export default function DepSeatSelectionPage() {
       </div>
     </div>
   ) : (
-    <div className="font-qs font-bold p-2">
-      <Title text="Seat Selection" />{" "}
-      <p> oops! you have lost your booking data </p>{" "}
-      <p className="flex">
-        {" "}
-        <Spinner className="mx-2" /> Redirecting...{" "}
-      </p>
-    </div>
+    <LostData />
   );
 }

@@ -11,43 +11,93 @@ import {
 } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ReactSelect from "react-select";
-import { RootState } from "../../../store";
+import { AppThunkDispatch, RootState } from "../../../store";
 import { AirportType } from "../../../Types";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import { getStops } from "../../../Helper/Method";
+import { fetchRoutes } from "../../../Actions/Admin/Route.action";
 
 export default function AddRouteComponent() {
   const [open, setOpen] = useState<boolean>(false);
   const city = useSelector((state: RootState) => state.Airports);
 
   const [options, setOptions] = useState<
-    Array<{ id: number; value: number; label: string }>
-  >([{ id: 0, value: 0, label: "Default" }]);
+    Array<{ value: number; label: string }>
+  >([{ value: 0, label: "Default" }]);
   const [selectedOptions, setSelectedOptions] = useState<
     Array<{ value: number; label: string }>
   >([{ value: 0, label: "Default" }]);
 
   useEffect(() => {
     options.splice(0, options.length);
-    city.forEach((s) =>
-      options.push({ id: s.city_id, value: s.city_id, label: s.city_name })
-    );
+    city.forEach((s) => options.push({ value: s.city_id, label: s.city_name }));
     setOptions([...options]);
   }, []);
 
   const [newRouteData, setNewRouteData] = useState<{
-    source_city: string | null;
+    source_city: string;
     destination_city: string;
     stops: Array<string>;
   }>({ source_city: "", destination_city: "", stops: [] });
 
+  const [message, setMessage] = useState("");
+  const dispatch = useDispatch<AppThunkDispatch>();
+
   const addRoute = () => {
-    console.log(selectedOptions);
+    newRouteData.stops.splice(0, newRouteData.stops.length);
     selectedOptions.forEach((s) =>
       newRouteData.stops.push(
         city.find((d) => d.city_id == s.value)?.airport_code ?? ""
       )
     );
+    if (newRouteData.stops[0] == "")
+      newRouteData.stops.splice(0, newRouteData.stops.length);
+    setNewRouteData({ ...newRouteData });
+    selectedOptions.splice(0, selectedOptions.length);
+    setSelectedOptions([...selectedOptions]);
+
+    if (
+      newRouteData.destination_city != newRouteData.source_city &&
+      !newRouteData.stops.includes(
+        newRouteData.destination_city || newRouteData.source_city
+      )
+    ) {
+      confirmRoute();
+      setOpen(false);
+      dispatch(fetchRoutes());
+    } else {
+      setMessage("Please Check Route Source or destination with stops!");
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+    }
+  };
+
+  const confirmRoute = async () => {
+    const data = JSON.stringify(newRouteData);
+
+    let config = {
+      method: "post",
+      url: "http://localhost:5050/route/addroute",
+      headers: {
+        token: Cookies.get("token"),
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    try {
+      const res = await axios(config);
+      if (res.status == 200) {
+        toast.success("Route Added Successfully", { position: "bottom-right" });
+      } else toast.error("Unable to add Route!");
+    } catch (e) {
+      toast.error("Something bad happen!", { position: "bottom-right" });
+    }
   };
 
   return (
@@ -114,6 +164,13 @@ export default function AddRouteComponent() {
             </Alert>
           </DialogBody>
           <DialogFooter>
+            {message ? (
+              <Alert className="bg-red-50 text-red-500 p-1 my-2 text-sm">
+                {message}
+              </Alert>
+            ) : (
+              ""
+            )}
             <Button
               variant="outlined"
               color="gray"
@@ -128,6 +185,8 @@ export default function AddRouteComponent() {
           </DialogFooter>
         </Dialog>
       </div>
+
+      <ToastContainer />
     </div>
   );
 }

@@ -91,7 +91,7 @@ const verifyPayment = async (
   }
 };
 
-const IssueRefund = (paymentId: string) => {};
+// const IssueRefund = (paymentId: string) => {};
 
 export default function PaymentAction() {
   const selector = useSelector((state: RootState) => state.BookingDetails);
@@ -129,6 +129,7 @@ export default function PaymentAction() {
         "https://res.cloudinary.com/dgsqarold/image/upload/v1685613732/Goibibo/OIP_l87euo.jpg",
       order_id: order.data.id,
       handler: async (res: any) => {
+        setLoading(true);
         const response = await verifyPayment(
           res,
           selector,
@@ -136,6 +137,7 @@ export default function PaymentAction() {
           flight.rtn ?? null,
           selector.payment!
         );
+        setLoading(false);
         if (response.data?.data.payment)
           setTransaction({
             status: true,

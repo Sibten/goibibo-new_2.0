@@ -126,6 +126,7 @@ export default function ScheduleFlightpage() {
                   2000
                 );
               } else {
+                console.log(routes);
                 let data = routes.filter(
                   (s) =>
                     s.destination_city.airport_code == routeSearchParams.to &&

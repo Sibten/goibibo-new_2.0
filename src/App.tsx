@@ -23,6 +23,8 @@ import ScheduleFlightpage from "./Pages/Admin/Management/Menus/ScheduleFlight.pa
 import Farepage from "./Pages/Admin/Management/Menus/Fare.page";
 import LuggagePage from "./Pages/Admin/Management/Menus/Luggage.page";
 import Routepage from "./Pages/Admin/Management/Menus/Route.page";
+import UnderConstruction from "./Components/Errors/UnderConstruction";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   return (
@@ -61,8 +63,13 @@ function App() {
         </Route>
 
         <Route path="/login" element={<LoginPage />} />
+
+        <Route path="/hotels" element={<UnderConstruction />} />
+        <Route path="/trains" element={<UnderConstruction />} />
+        <Route path="/bus" element={<UnderConstruction />} />
         <Route path="*" element={<Pagenotfound />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

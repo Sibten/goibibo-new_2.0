@@ -44,7 +44,8 @@ export default function FliterCard({ callback }: { callback: Function }) {
         s.fare.fare,
         s.fare.tax,
         SearchParams.class,
-        s.route_id.stops.length
+        s.route_id.stops.length,
+        s.available_seats
       );
       max = Math.max(max, fare.basic + fare.tax);
       min = Math.min(min, fare.basic + fare.tax);
@@ -59,7 +60,8 @@ export default function FliterCard({ callback }: { callback: Function }) {
         s.fare.fare,
         s.fare.tax,
         SearchParams.class,
-        s.route_id.stops.length
+        s.route_id.stops.length,
+        s.available_seats
       );
       rtnmax = Math.max(rtnmax, fare.basic + fare.tax);
       rtnmin = Math.min(rtnmin, fare.basic + fare.tax);
@@ -88,7 +90,7 @@ export default function FliterCard({ callback }: { callback: Function }) {
   }, [filter]);
 
   return (
-    <div className="py-2 pl-2">
+    <div className="py-2 pl-2 w-[24rem] mx-auto">
       <div className="bg-white rounded-md p-2 shadow-md font-arial">
         <form>
           <div className="border-b">
@@ -106,7 +108,8 @@ export default function FliterCard({ callback }: { callback: Function }) {
               </div>
             </div>
             <small className="text-gray-500 mx-2 -mt-2">
-              Showing {selector.dep.length + selector.rtn?.length!} flights
+              Showing out of {selector.dep.length + (selector.rtn?.length ?? 0)}{" "}
+              flights
             </small>
           </div>
 
@@ -418,55 +421,59 @@ export default function FliterCard({ callback }: { callback: Function }) {
               </div>
             </div>
           </div>
-          <div className="my-2 border-b">
-            <h1 className="font-bold"> Return Price </h1>
-            <div className="w-full">
-              <div>
-                <label className="text-sm">
-                  {" "}
-                  Minimum (&#8377; {filter.rtn.min}){" "}
-                </label>
-                <input
-                  type="range"
-                  className="w-full transparent  border-2 cursor-pointer rounded-lg border-transparent bg-neutral-200"
-                  name="rtn_min_range"
-                  id="rtn_minRange"
-                  step={100}
-                  min={defFilter.rtn.min}
-                  max={defFilter.rtn.max}
-                  value={filter.rtn.min}
-                  onChange={(e) =>
-                    setFilter({
-                      ...filter,
-                      rtn: { ...filter.rtn, min: parseInt(e.target.value) },
-                    })
-                  }
-                />
-              </div>
-              <div>
-                <label className="text-sm">
-                  {" "}
-                  Maximum (&#8377; {filter.rtn.max})
-                </label>
-                <input
-                  type="range"
-                  className="w-full transparent  border-2 cursor-pointer rounded-lg border-transparent bg-neutral-200"
-                  name="rtn_mx_range"
-                  id="rtn_maxRange"
-                  step={100}
-                  value={filter.rtn.max}
-                  min={defFilter.rtn.min}
-                  max={defFilter.rtn.max + 100}
-                  onChange={(e) =>
-                    setFilter({
-                      ...filter,
-                      rtn: { ...filter.rtn, max: parseInt(e.target.value) },
-                    })
-                  }
-                />
+          {selector.rtn ? (
+            <div className="my-2 border-b">
+              <h1 className="font-bold"> Return Price </h1>
+              <div className="w-full">
+                <div>
+                  <label className="text-sm">
+                    {" "}
+                    Minimum (&#8377; {filter.rtn.min}){" "}
+                  </label>
+                  <input
+                    type="range"
+                    className="w-full transparent  border-2 cursor-pointer rounded-lg border-transparent bg-neutral-200"
+                    name="rtn_min_range"
+                    id="rtn_minRange"
+                    step={100}
+                    min={defFilter.rtn.min}
+                    max={defFilter.rtn.max}
+                    value={filter.rtn.min}
+                    onChange={(e) =>
+                      setFilter({
+                        ...filter,
+                        rtn: { ...filter.rtn, min: parseInt(e.target.value) },
+                      })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="text-sm">
+                    {" "}
+                    Maximum (&#8377; {filter.rtn.max})
+                  </label>
+                  <input
+                    type="range"
+                    className="w-full transparent  border-2 cursor-pointer rounded-lg border-transparent bg-neutral-200"
+                    name="rtn_mx_range"
+                    id="rtn_maxRange"
+                    step={100}
+                    value={filter.rtn.max}
+                    min={defFilter.rtn.min}
+                    max={defFilter.rtn.max + 100}
+                    onChange={(e) =>
+                      setFilter({
+                        ...filter,
+                        rtn: { ...filter.rtn, max: parseInt(e.target.value) },
+                      })
+                    }
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            ""
+          )}
           <div className="my-2 ">
             <h1 className="font-bold"> Airlines </h1>
             <div className="my-2">
@@ -480,12 +487,14 @@ export default function FliterCard({ callback }: { callback: Function }) {
                     onChange={(e) => {
                       if (e.target.checked) {
                         filter.dep.airline.push(e.target.id);
+                        filter.rtn.airline.push(e.target.id);
                         setFilter({ ...filter });
                       } else {
                         let find = filter.dep.airline.findIndex(
                           (s) => s == e.target.id
                         );
                         filter.dep.airline.splice(find, 1);
+                        filter.rtn.airline.splice(find, 1);
                         setFilter({ ...filter });
                       }
                     }}

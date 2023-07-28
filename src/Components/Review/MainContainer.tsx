@@ -7,6 +7,8 @@ import TravellerDetails from "./TravellerDetails";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import AddOns from "./AddOns";
+import ExtraInfo from "../Search/Subcomponent/ExtraInfo";
+import ImportantInfo from "./ImportantInfo";
 
 export default function MainContainer({ isReturn }: { isReturn: boolean }) {
   const [selectedOffer, setSelectedOffer] = useState<OfferBase>();
@@ -62,6 +64,7 @@ export default function MainContainer({ isReturn }: { isReturn: boolean }) {
           )}
         </div>
         <AddOns callback={handleAddonCallback} addOnDisable={addOnDisable} />
+        <ImportantInfo />
         <TravellerDetails />
       </div>
       <div>

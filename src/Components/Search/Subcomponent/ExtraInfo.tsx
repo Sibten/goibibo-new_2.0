@@ -42,7 +42,8 @@ export default function ExtraInfo({
     value.fare.fare,
     value.fare.tax,
     fclass,
-    value.route_id.stops.length
+    value.route_id.stops.length,
+    value.available_seats
   );
 
   const findLuggage = findLuggaeInfo(value.rule.luggage, fclass);

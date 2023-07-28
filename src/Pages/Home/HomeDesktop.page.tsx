@@ -1,5 +1,6 @@
 import React from "react";
 import Flightsearch from "../../Components/Flight/Flightsearch.components";
+import FAQs from "../../Components/Home/FAQs";
 
 export default function HomeDesktop() {
   return (
@@ -13,6 +14,7 @@ export default function HomeDesktop() {
         </div>
         <Flightsearch />
       </div>
+      <FAQs />
     </div>
   );
 }

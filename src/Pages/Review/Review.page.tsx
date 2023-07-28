@@ -12,6 +12,7 @@ import Offers from "../../Components/Review/Offers";
 import Tracking from "../../Components/Tracking/Tracking";
 import MainContainer from "../../Components/Review/MainContainer";
 import Title from "../../Components/Utility/Title";
+import LostData from "../../Components/Errors/LostData";
 
 export default function Reviewpage() {
   const result = useSelector((state: RootState) => state.Result);
@@ -59,12 +60,6 @@ export default function Reviewpage() {
       </div>
     </div>
   ) : (
-    <div className="font-qs font-bold p-4">
-      {" "}
-      <h1> Oops! You have lost your booking data </h1>
-      <div className="flex my-4">
-        <Spinner color="indigo" className="mx-2" /> Redirecting...{" "}
-      </div>
-    </div>
+    <LostData />
   );
 }

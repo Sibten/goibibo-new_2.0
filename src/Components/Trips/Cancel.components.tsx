@@ -6,7 +6,7 @@ export default function CancelTrip({ data }: { data: Array<TripData> }) {
     <div className="bg-white rounded-md p-2 flex items-center">
       <div className="mx-2">
         <img
-          src="https://res.cloudinary.com/dgsqarold/image/upload/v1689850970/Goibibo/10041082_igv81p.png"
+          src="https://res.cloudinary.com/dgsqarold/image/upload/v1690534836/Goibibo/11565677_a9j2y3.png"
           alt="no_trip"
           className="w-48 h-48"
         />

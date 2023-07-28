@@ -28,7 +28,8 @@ export default function HeaderDesktop() {
               {" "}
               <li
                 className={`first-letter:border mx-2 p-1 px-4 rounded-full font-qs font-bold  hover:bg-blue-600 hover:text-white flex cursor-pointer ${
-                  location.pathname.includes("/flight") || location.pathname == "/"
+                  location.pathname.includes("/flight") ||
+                  location.pathname == "/"
                     ? "text-white bg-blue-800"
                     : "text-gray-600 bg-white border"
                 }`}
@@ -36,15 +37,22 @@ export default function HeaderDesktop() {
                 <GiCommercialAirplane className="mx-2 my-1" /> Flights{" "}
               </li>{" "}
             </Link>
-            <li className="border mx-2 p-1 px-4 rounded-full font-qs font-bold text-gray-600 hover:bg-blue-600 hover:text-white flex cursor-pointer">
-              <FaHotel className="mx-2 my-1" /> Hotels{" "}
-            </li>
-            <li className="border mx-2 p-1 px-4 rounded-full font-qs font-bold text-gray-600 hover:bg-blue-600 hover:text-white flex cursor-pointer">
-              <FaTrain className="mx-2 my-1" /> Trains{" "}
-            </li>
-            <li className="border mx-2 p-1 px-4 rounded-full font-qs font-bold text-gray-600 hover:bg-blue-600 hover:text-white flex cursor-pointer">
-              <FaBus className="mx-2 my-1" /> Bus{" "}
-            </li>
+            <Link to="/hotels">
+              <li className="border mx-2 p-1 px-4 rounded-full font-qs font-bold text-gray-600 hover:bg-blue-600 hover:text-white flex cursor-pointer">
+                <FaHotel className="mx-2 my-1" /> Hotels{" "}
+              </li>{" "}
+            </Link>
+            <Link to="/trains">
+              {" "}
+              <li className="border mx-2 p-1 px-4 rounded-full font-qs font-bold text-gray-600 hover:bg-blue-600 hover:text-white flex cursor-pointer">
+                <FaTrain className="mx-2 my-1" /> Trains{" "}
+              </li>{" "}
+            </Link>
+            <Link to="/bus">
+              <li className="border mx-2 p-1 px-4 rounded-full font-qs font-bold text-gray-600 hover:bg-blue-600 hover:text-white flex cursor-pointer">
+                <FaBus className="mx-2 my-1" /> Bus{" "}
+              </li>
+            </Link>
           </ul>
         </div>
       </div>

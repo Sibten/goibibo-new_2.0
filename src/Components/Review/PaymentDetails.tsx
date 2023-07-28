@@ -89,7 +89,8 @@ export default function PaymentDetails({
         bookingFlight.dep?.fare.fare,
         bookingFlight.dep?.fare.tax,
         bookingParams.class,
-        bookingFlight.dep?.route_id.stops.length
+        bookingFlight.dep?.route_id.stops.length,
+        bookingFlight.dep?.available_seats
       );
       infantsFare = calFare(
         bookingFlight.dep?.route_id.distance,
@@ -97,6 +98,7 @@ export default function PaymentDetails({
         bookingFlight.dep?.fare.tax,
         bookingParams.class,
         bookingFlight.dep?.route_id.stops.length,
+        bookingFlight.dep.available_seats,
         People.Infant
       );
     }
@@ -106,7 +108,8 @@ export default function PaymentDetails({
         bookingFlight.rtn?.fare.fare,
         bookingFlight.rtn?.fare.tax,
         bookingParams.class,
-        bookingFlight.rtn?.route_id.stops.length
+        bookingFlight.rtn?.route_id.stops.length,
+        bookingFlight.rtn?.available_seats
       );
       rtnInfantFare = calFare(
         bookingFlight.rtn?.route_id.distance,
@@ -114,6 +117,7 @@ export default function PaymentDetails({
         bookingFlight.rtn?.fare.tax,
         bookingParams.class,
         bookingFlight.rtn?.route_id.stops.length,
+        bookingFlight.rtn?.available_seats,
         People.Infant
       );
     }

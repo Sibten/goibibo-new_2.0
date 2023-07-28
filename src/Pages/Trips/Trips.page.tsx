@@ -39,15 +39,14 @@ export default function Tripspage() {
   );
 
   return (
-    <div>
-      <div className="bg-[#e9eef7]">
+    <div className="bg-[#e9eef7] bg-fixed h-[51rem]">
+      <div>
         <Title text="My Trips" />
-
         <div className="w-[60rem] mx-auto relative">
-          <BiReset
-            onClick={() => dispatch(fetchTrips())}
-            className="absolute -mt-8 text-2xl text-white"
-          />
+          <div className=" flex absolute -mt-8 font-arial text-white">
+            <BiReset onClick={() => dispatch(fetchTrips())} className="mt-1" />
+            <span className="mx-2">Refresh</span>
+          </div>
           <Tabs value="upcoming">
             <TabsHeader>
               <Tab
@@ -100,10 +99,10 @@ export default function Tripspage() {
                 <UpcomingTrips data={upcoming} />
               </TabPanel>
               <TabPanel key={"cancelled"} value={"cancelled"}>
-                <CancelTrip data={upcoming} />
+                <CancelTrip data={cancel} />
               </TabPanel>
               <TabPanel key={"completed"} value={"completed"}>
-                <Completedtrip data={upcoming} />
+                <Completedtrip data={completed} />
               </TabPanel>
             </TabsBody>
           </Tabs>

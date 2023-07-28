@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { ResultBase, SearchParamsType, SearchType } from "../../../Types";
+import {
+  AvaliableSeat,
+  ResultBase,
+  SearchParamsType,
+  SearchType,
+  SeatBase,
+} from "../../../Types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import ExtraInfo from "./ExtraInfo";
@@ -20,10 +26,12 @@ export default function SearchCard({
   value,
   type,
   callBack,
+  seat,
 }: {
   value: ResultBase;
   type: number;
   callBack: Function;
+  seat?: Array<AvaliableSeat>;
 }) {
   const [openDetails, setOpenDetails] = useState(false);
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
@@ -39,7 +47,8 @@ export default function SearchCard({
       value.fare.fare,
       value.fare.tax,
       SearchParams.class,
-      value.route_id.stops.length
+      value.route_id.stops.length,
+      value.available_seats
     );
     return (
       <div className="">
@@ -84,9 +93,7 @@ export default function SearchCard({
             <div>
               <p className="text-gray-500 text-xs">
                 {" "}
-                {value.route_id.stops.length > 0
-                  ? getStops(value.route_id.stops)
-                  : "- Non Stop -"}{" "}
+                {getStops(value.route_id.stops)}
               </p>
               <h3 className="font-bold text-xl mt-2">
                 {" "}

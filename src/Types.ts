@@ -3,7 +3,7 @@ export interface MyProps {
   Start?: boolean;
   callback?: Function;
   type?: number;
-  callType?: Number;
+  callType?: number;
 }
 
 export enum APICallType {

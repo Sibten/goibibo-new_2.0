@@ -37,9 +37,15 @@ export default function Flightscomponent({
       }
       setPageData([...pageData]);
     }
+    console.log(
+      active,
+      pageData.length,
+      pageLength
+      // Math.floor(pageData.length / pageLength)
+    );
   }, [mainData]);
   const next = () => {
-    if (active === Math.floor(pageData.length / pageLength)) return;
+    if (active === Math.floor(pageData.length)) return;
 
     setActive(active + 1);
   };
@@ -77,7 +83,7 @@ export default function Flightscomponent({
           {data.length ?? 0} Flights
         </small>
       </div>
-      <div className="overflow-x-auto w-full max-h-[24rem]">
+      <div className="overflow-x-auto w-full max-h-[30rem] px-8">
         <table className="table-auto w-full text-gray-800">
           <thead>
             <tr>
@@ -127,7 +133,8 @@ export default function Flightscomponent({
           <BiLeftArrow strokeWidth={2} className="h-4 w-4" />
         </IconButton>
         <Typography color="gray" className="font-normal">
-          Page <strong className="text-blue-gray-900">{active + 1}</strong> of
+          Page <strong className="text-blue-gray-900">{active + 1}</strong>{" "}
+          of&nbsp;
           <strong className="text-blue-gray-900">{pageData.length}</strong>
         </Typography>
         <IconButton
@@ -135,7 +142,7 @@ export default function Flightscomponent({
           variant="outlined"
           color="blue-gray"
           onClick={next}
-          disabled={active === Math.floor(pageData.length / pageLength)}
+          disabled={active + 1 === Math.floor(pageData.length)}
         >
           <BiRightArrow strokeWidth={2} className="h-4 w-4" />
         </IconButton>
