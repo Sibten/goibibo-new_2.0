@@ -12,14 +12,8 @@ import {
 const initialState: TravellerDetailsBase = {
   jouerny: {
     travel_class: 0,
-    dep: {
-      source_time: new Date().toISOString(),
-      destination_time: new Date().toISOString(),
-    },
-    rtn: {
-      source_time: new Date().toISOString(),
-      destination_time: new Date().toISOString(),
-    },
+    dep: { source_time : null, destination_time : null},   
+    rtn : { source_time : null, destination_time : null}
   },
   basic: {
     people: [],
@@ -53,7 +47,7 @@ const BookingSlice = createSlice({
       if (action.payload.type == SearchType.From) {
         Object.assign(state.jouerny!.dep, action.payload.data);
       } else {
-        Object.assign(state.jouerny!.rtn as any, action.payload.data);
+        Object.assign(state.jouerny.rtn as any, action.payload.data);
       }
     },
     addBasic: (state, action: PayloadAction<TravellerDetailsBase>) => {

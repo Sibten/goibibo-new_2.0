@@ -292,14 +292,14 @@ export interface Traveller {
   gender: string;
 }
 export interface Timing {
-  source_time: string;
-  destination_time: string;
+  source_time: string | null;
+  destination_time: string | null;
 }
 export interface TravellerDetailsBase {
-  jouerny?: {
+  jouerny: {
     travel_class: number;
     dep: Timing;
-    rtn: Timing | null;
+    rtn: Timing;
   };
   basic: {
     people: Array<Traveller>;
@@ -335,6 +335,28 @@ export interface RZPInfo {
   razorpay_payment_id: string;
   razorpay_signature: string;
 }
+
+interface Flight {
+  flight_no: string;
+  airline_id: {
+    airline_id: string;
+    airline_name: string;
+    airline_location: string;
+    airline_code: string;
+    airline_icon: string;
+  };
+}
+
+interface PeopleBase {
+  type: number;
+  first_name: string;
+  last_name: string;
+  gender: string;
+  age: number;
+  seat_no?: SeatBase;
+  rtn_seat_no?: SeatBase;
+}
+
 export interface BookingSendingData {
   rzpinfo: RZPInfo;
   dep_flight_no: string;
@@ -361,39 +383,26 @@ export interface TripData {
     departure_date: string;
     return_date: string | null;
     destination_city: {
+      airport_code: string;
       city_id: number;
       city_name: string;
+      country_name: string;
       airport_name: string;
-      airport_code: string;
     };
     source_city: {
+      airport_code: string;
       city_id: number;
       city_name: string;
+      country_name: string;
       airport_name: string;
-      airport_code: string;
     };
-    departure_flight: {
-      flight_no: string;
-      airline_id: {
-        airline_id: string;
-        airline_name: string;
-        airline_location: string;
-        airline_code: string;
-        airline_icon: string;
-      };
-    };
-    return_flight: {
-      flight_no: string;
-      airline_id: {
-        airline_id: string;
-        airline_name: string;
-        airline_location: string;
-        airline_code: string;
-        airline_icon: string;
-      };
-    } | null;
-    peoples: Array<Traveller>;
-    infants: Array<Traveller>;
+    departure_flight: Flight;
+    return_flight: Flight | null;
+    peoples: Array<PeopleBase>;
+    address: string;
+    pincode: number;
+    state: string;
+    infants: Array<PeopleBase>;
   };
   addons: {
     departure_addons: Array<AddonBase>;
@@ -402,6 +411,7 @@ export interface TripData {
   booking_stamp: string;
   PNR_no: number;
   class_type: number;
+  ticket_email: string;
   status: number;
   payment: {
     payment_amount: TotalPaymentDetails;
@@ -411,6 +421,7 @@ export interface TripData {
     status: number;
   };
 }
+
 export enum BookingStatus {
   Upcoming,
   Completed,

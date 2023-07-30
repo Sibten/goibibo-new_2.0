@@ -24,8 +24,8 @@ export default function ScheduledFlightComponent({
   useEffect(() => {
     printData.sort(
       (a, b) =>
-        new Date(a.destination_time).getTime() -
-        new Date(b.destination_time).getTime()
+        new Date(a.destination_time!).getTime() -
+        new Date(b.destination_time!).getTime()
     );
   }, [printData]);
 
@@ -81,18 +81,22 @@ export default function ScheduledFlightComponent({
                 {" "}
                 <p>Source</p> <p className="ml-8">Destination </p>{" "}
               </li>
-              {printData.map((s, i) => (
-                <li
-                  className="flex justify-between border-b"
-                  key={`${s.source_time}-${s.destination_time}`}
-                >
-                  {" "}
-                  <span>{date(s.source_time)}</span>{" "}
-                  <span>{time(s.source_time)}</span>{" "}
-                  <span>{date(s.destination_time)}</span>{" "}
-                  <span>{time(s.destination_time)}</span>{" "}
-                </li>
-              ))}
+              {printData.map((s, i) =>
+                s.source_time && s.destination_time ? (
+                  <li
+                    className="flex justify-between border-b"
+                    key={`${s.source_time}-${s.destination_time}`}
+                  >
+                    {" "}
+                    <span>{date(s.source_time)}</span>{" "}
+                    <span>{time(s.source_time)}</span>{" "}
+                    <span>{date(s.destination_time)}</span>{" "}
+                    <span>{time(s.destination_time)}</span>{" "}
+                  </li>
+                ) : (
+                  ""
+                )
+              )}
             </ul>
           </div>
         </DialogBody>

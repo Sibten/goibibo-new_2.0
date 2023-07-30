@@ -34,6 +34,11 @@ export default function TravellerDetails() {
         state: userData.state ?? "",
         pincode: userData.pincode ?? 0,
       },
+      jouerny: {
+        dep: { source_time: null, destination_time: null },
+        rtn: { source_time: null, destination_time: null },
+        travel_class: selector.class,
+      },
     });
 
   useEffect(() => {

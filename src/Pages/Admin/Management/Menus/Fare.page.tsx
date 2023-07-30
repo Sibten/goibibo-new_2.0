@@ -42,26 +42,29 @@ export default function Farepage() {
                 <span>Class Name</span>
                 <span>Price</span>
               </li>
-              {fareSelector?.fare.map((s) => (
-                <li
-                  key={s.class_type}
-                  className="flex justify-between my-2 border-b border-bottom"
-                >
-                  <span>{getFlightClass(s.class_type)}</span>
-                  <span>
-                    <span className="text-xl font-bold">
-                      &#8377; {s.basic_fare}{" "}
-                    </span>
-                    <small>&nbsp; per km</small>
-                  </span>
-                </li>
-              ))}
+
+              {fareSelector?.fare
+                ? fareSelector.fare.map((s) => (
+                    <li
+                      key={s.class_type}
+                      className="flex justify-between my-2 border-b border-bottom"
+                    >
+                      <span>{getFlightClass(s.class_type)}</span>
+                      <span>
+                        <span className="text-xl font-bold">
+                          &#8377; {s.basic_fare}{" "}
+                        </span>
+                        <small>&nbsp; per km</small>
+                      </span>
+                    </li>
+                  ))
+                : "N/A"}
               <li className="flex justify-between my-2 border-b border-bottom">
                 {" "}
                 <span> Taxes (Inc. 18% GST + Surcharge )</span>
                 <span>
                   <span className="text-xl font-bold">
-                    {Math.ceil(fareSelector?.tax! * 100)}%
+                    {Math.ceil(fareSelector?.tax! * 100 ?? 0)}%
                   </span>
                   <small>&nbsp; on total amt</small>
                 </span>

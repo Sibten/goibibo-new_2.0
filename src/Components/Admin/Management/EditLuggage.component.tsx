@@ -56,6 +56,7 @@ export default function EditLuggageComponent({
   }, []);
 
   const updateLuggage = async () => {
+    console.log(updateData);
     const data = JSON.stringify(updateData);
     let config = {
       method: "post",

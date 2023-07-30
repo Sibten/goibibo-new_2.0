@@ -31,17 +31,22 @@ export default function LuggagePage() {
         </div>
         <div>
           <ul>
-            {lugSelector?.luggage.map((s) => {
-              return (
-                <li key={s.type} className="flex justify-between border-b my-2">
-                  <span>{getFlightClass(s.type)}</span>{" "}
-                  <span>
-                    <span className="text-xl font-bold"> {s.limit} </span>{" "}
-                    <span>kg</span>
-                  </span>
-                </li>
-              );
-            })}{" "}
+            {lugSelector?.luggage
+              ? lugSelector.luggage?.map((s) => {
+                  return (
+                    <li
+                      key={s.type}
+                      className="flex justify-between border-b my-2"
+                    >
+                      <span>{getFlightClass(s.type)}</span>{" "}
+                      <span>
+                        <span className="text-xl font-bold"> {s.limit} </span>{" "}
+                        <span>kg</span>
+                      </span>
+                    </li>
+                  );
+                })
+              : ""}
           </ul>
           <Alert className="bg-blue-50 text-blue-600 p-1 text-sm">
             Note : This all are showing total capacity at time of Check In.

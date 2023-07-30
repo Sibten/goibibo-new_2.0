@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Title from "../../Components/Utility/Title";
 import { useParams, useLocation } from "react-router-dom";
 import { RootState } from "../../store";
@@ -7,6 +7,7 @@ import { payment } from "../../Types";
 import { Button } from "@material-tailwind/react";
 import { FaPrint } from "react-icons/fa";
 import { URL } from "url";
+import { getFlightClass } from "../../Helper/Method";
 
 export default function TripMorepage() {
   const params = useParams();
@@ -17,9 +18,9 @@ export default function TripMorepage() {
   const data = selector.find((s) => s.PNR_no == parseInt(params.pnr!));
 
   return (
-    <div className="bg-[#e9eef7]">
+    <div className="">
       <Title text="Your Trip" />
-      <div className="mx-auto w-max my-2">
+      <div className="bg-white mx-auto w-max my-2">
         <Button
           className="print:hidden flex"
           variant="outlined"
@@ -95,6 +96,12 @@ export default function TripMorepage() {
               <p className="font-bold text-base w-48">
                 {new Date(data?.jouerny_info.departure_date!).toDateString()}
               </p>
+              <p>
+                {" "}
+                {new Date(
+                  data?.jouerny_info.departure_date!
+                ).toLocaleTimeString()}{" "}
+              </p>
             </div>
             <div className="mx-4 text-right">
               <h1 className="text-gray-700"> Return Date </h1>
@@ -102,6 +109,13 @@ export default function TripMorepage() {
                 {data?.jouerny_info.return_date
                   ? new Date(data?.jouerny_info.return_date).toDateString()
                   : "--"}
+              </p>
+              <p>
+                {data?.jouerny_info.return_date
+                  ? new Date(
+                      data?.jouerny_info.return_date
+                    ).toLocaleTimeString()
+                  : ""}
               </p>
             </div>
           </div>
@@ -144,6 +158,7 @@ export default function TripMorepage() {
                 <th> Name </th>
                 <th> Age </th>
                 <th> Gender </th>
+                <th> Class </th>
                 <th> Seat No </th>
                 <th> Return Seat No </th>
               </tr>
@@ -157,9 +172,10 @@ export default function TripMorepage() {
                   </td>
                   <td>{s.age}</td>
                   <td>{s.gender}</td>
-                  <td>{s.seat_no?.seat_no}</td>
+                  <td>{getFlightClass(data.class_type)}</td>
+                  <td>{s.seat_no?.seat_no ?? "N/A"}</td>
                   <td>
-                    {s.rtn_seat_no?.seat_no ? s.rtn_seat_no.seat_no : "--"}
+                    {s.rtn_seat_no?.seat_no ? s.rtn_seat_no.seat_no : "N/A"}
                   </td>
                 </tr>
               ))}
@@ -175,6 +191,15 @@ export default function TripMorepage() {
             <p>
               {" "}
               {new Date(data?.payment.transaction_stamp!).toLocaleString()}
+            </p>
+          </div>
+          <div>
+            <h1 className="text-gray-700"> Billing Address </h1>
+            <p>
+              {" "}
+              {data?.jouerny_info.address ?? "N/A"}&nbsp;{" "}
+              {data?.jouerny_info.state ?? ""}&nbsp;{" "}
+              {data?.jouerny_info.pincode ?? ""}
             </p>
           </div>
           <div className="border-t border-gray-300 my-2 p-2 ">
@@ -229,6 +254,12 @@ export default function TripMorepage() {
               </li>
             </ul>
           </div>
+        </div>
+        <div className="border-t border-gray-300">
+          <small>
+            This is computer generated invoice cum ticket. Do not required any
+            signature{" "}
+          </small>
         </div>
       </div>
     </div>

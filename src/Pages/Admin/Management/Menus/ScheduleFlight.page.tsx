@@ -4,12 +4,14 @@ import Title from "../../../../Components/Utility/Title";
 import { Input, Select, Option, Button, Alert } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppThunkDispatch, RootState } from "../../../../store";
-import { Route } from "../../../../Types";
+import { Route, SearchType, callTypes } from "../../../../Types";
 import { fetchRoutes } from "../../../../Actions/Admin/Route.action";
 import { fetchAirbus } from "../../../../Actions/Admin/Airbuses.action";
 import { ToastContainer, toast } from "react-toastify";
 import Cookies from "js-cookie";
 import axios from "axios";
+import ReactSelect from "react-select";
+import Loaderdialog from "../../../../Components/Dialog/Loader.dialog";
 
 export default function ScheduleFlightpage() {
   const dispatch = useDispatch<AppThunkDispatch>();
@@ -33,6 +35,7 @@ export default function ScheduleFlightpage() {
     message: string | null;
   }>();
 
+  const [loading, setLoading] = useState(false);
   const [scheduleFlightData, setScheduleFlightData] = useState<{
     route_id: string;
     airbus_code: string;
@@ -43,6 +46,7 @@ export default function ScheduleFlightpage() {
   const scheduleFlight = async () => {
     console.log(scheduleFlightData);
     const data = JSON.stringify(scheduleFlightData);
+    setLoading(true);
     let config = {
       method: "post",
       url: "http://localhost:5050/flight/schedule",
@@ -57,6 +61,7 @@ export default function ScheduleFlightpage() {
     try {
       const res = await axios(config);
       if (res.status == 200) {
+        setLoading(false);
         toast.success("Flight Scheduleded!", { position: "bottom-right" });
         setAvaliableRoutes([]);
       } else {
@@ -69,6 +74,7 @@ export default function ScheduleFlightpage() {
 
   return (
     <div>
+      {loading ? <Loaderdialog /> : ""}
       <Title text="Schedule Flight" />
       <div className="bg-gray-50 rounded-md shadow-md p-2 w-[36rem] mx-auto m-2">
         <BackToMenu />

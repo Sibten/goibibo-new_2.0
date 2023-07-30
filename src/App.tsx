@@ -14,7 +14,6 @@ import PaymentPage from "./Pages/Payment/Payment.page";
 import Tripspage from "./Pages/Trips/Trips.page";
 import TripMorepage from "./Pages/Trips/TripMoreinfo.page";
 
-
 import AdminProtection from "./AdminProtection";
 import Admindashpage from "./Pages/Admin/Admin-dashboard.page";
 import AdminRouter from "./Components/Admin/AdminRouter";
@@ -69,7 +68,7 @@ function App() {
         <Route path="/bus" element={<UnderConstruction />} />
         <Route path="*" element={<Pagenotfound />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

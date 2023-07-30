@@ -6,7 +6,11 @@
 	background-color: #eef2f8;
 	background-size: cover;
 	background-attachment: fixed;
-	
+}
+@media print{
+	.App{
+		background-color: white;
+	}
 }
 table,tr,td{
 	border: 1px solid rgb(195, 195, 195);
