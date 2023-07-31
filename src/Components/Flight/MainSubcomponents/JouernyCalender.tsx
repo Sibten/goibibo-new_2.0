@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
-import { Button } from "@material-tailwind/react";
+import { Button, Alert } from "@material-tailwind/react";
 import {
   SearchParamsType,
   MyProps,
@@ -43,6 +43,7 @@ export default function JouernyCalender({
           .toISOString()
           .split("T")[0];
   };
+  const [message, setMessage] = useState<string>("");
   return (
     <div className="flex flex-col">
       <label
@@ -53,6 +54,7 @@ export default function JouernyCalender({
       </label>
       <input
         type="date"
+        onKeyDown={(e) => e.preventDefault()}
         min={
           type == SearchType.From
             ? new Date().toISOString().split("T")[0]
@@ -69,11 +71,18 @@ export default function JouernyCalender({
             ? new Date(clickParams.dept_date).toISOString().split("T")[0]
             : getRetnVal()
         }
-        onChange={(e) =>
-          type == 0
-            ? setClickParams({ ...clickParams, dept_date: e.target.value })
-            : setClickParams({ ...clickParams, return_date: e.target.value })
-        }
+        onChange={(e) => {
+          try {
+            type == 0
+              ? setClickParams({ ...clickParams, dept_date: e.target.value })
+              : setClickParams({ ...clickParams, return_date: e.target.value });
+          } catch (e) {
+            setMessage("Invalid date");
+            setTimeout(() => {
+              setMessage("");
+            }, 2000);
+          }
+        }}
       />
       <h2 className="mx-1 my-1">
         {" "}
@@ -82,6 +91,11 @@ export default function JouernyCalender({
           ? clickParams.dept_date.split("T")[0]
           : clickParams.return_date?.split("T")[0]}
       </h2>
+      {message ? (
+        <Alert className="bg-red-50 text-xs text-red-500 p-1">{message}</Alert>
+      ) : (
+        ""
+      )}
       <Button className="my-2" onClick={() => setParams()}>
         Done
       </Button>

@@ -10,12 +10,12 @@ import { MdCancel } from "react-icons/md";
 export default function AirlineProfilePage() {
   const selector = useSelector((state: RootState) => state.Airline);
 
-  const [visibleForm, setVisibleForm] = useState(true);
+  const [visibleForm, setVisibleForm] = useState(false);
   return (
     <div>
       <Title text="Airline Profile" />
       <div className="p-4">
-        <div className="border rounded-md p-1 flex items-center overflow-hidden">
+        <div className="border border-gray-300 rounded-md p-1 flex items-center overflow-hidden">
           <div className="rotate-90 ">
             <h1 className="font-bold  text-gray-300 text-2xl -mt-4 w-max left-1/2 right-1/2">
               {" "}

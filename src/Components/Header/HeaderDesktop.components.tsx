@@ -38,18 +38,36 @@ export default function HeaderDesktop() {
               </li>{" "}
             </Link>
             <Link to="/hotels">
-              <li className="border mx-2 p-1 px-4 rounded-full font-qs font-bold text-gray-600 hover:bg-blue-600 hover:text-white flex cursor-pointer">
+              <li
+                className={`first-letter:border mx-2 p-1 px-4 rounded-full font-qs font-bold  hover:bg-blue-600 hover:text-white flex cursor-pointer ${
+                  location.pathname.includes("/hotels")
+                    ? "text-white bg-blue-800"
+                    : "text-gray-600 bg-white border"
+                }`}
+              >
                 <FaHotel className="mx-2 my-1" /> Hotels{" "}
               </li>{" "}
             </Link>
             <Link to="/trains">
               {" "}
-              <li className="border mx-2 p-1 px-4 rounded-full font-qs font-bold text-gray-600 hover:bg-blue-600 hover:text-white flex cursor-pointer">
+              <li
+                className={`first-letter:border mx-2 p-1 px-4 rounded-full font-qs font-bold  hover:bg-blue-600 hover:text-white flex cursor-pointer ${
+                  location.pathname.includes("/trains")
+                    ? "text-white bg-blue-800"
+                    : "text-gray-600 bg-white border"
+                }`}
+              >
                 <FaTrain className="mx-2 my-1" /> Trains{" "}
               </li>{" "}
             </Link>
             <Link to="/bus">
-              <li className="border mx-2 p-1 px-4 rounded-full font-qs font-bold text-gray-600 hover:bg-blue-600 hover:text-white flex cursor-pointer">
+              <li
+                className={`first-letter:border mx-2 p-1 px-4 rounded-full font-qs font-bold  hover:bg-blue-600 hover:text-white flex cursor-pointer ${
+                  location.pathname.includes("/bus")
+                    ? "text-white bg-blue-800"
+                    : "text-gray-600 bg-white border"
+                }`}
+              >
                 <FaBus className="mx-2 my-1" /> Bus{" "}
               </li>
             </Link>

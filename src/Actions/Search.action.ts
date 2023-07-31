@@ -35,6 +35,9 @@ const searchSlice = createSlice({
     setParams: (state, action: PayloadAction<SearchParamsType>) => {
       Object.assign(state, action.payload);
     },
+    swap: (state) => {
+      [state.from, state.to] = [state.to, state.from];
+    },
   },
 });
 

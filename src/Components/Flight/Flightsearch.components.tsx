@@ -1,4 +1,5 @@
 import {
+  Alert,
   Input,
   Menu,
   MenuHandler,
@@ -62,7 +63,16 @@ export default function Flightsearch() {
     );
   };
 
+  const [message, setMessage] = useState<string>("");
+
   const searchFlight = () => {
+    if (SearchParams.from.airport_code == SearchParams.to.airport_code) {
+      setMessage("Source City and Destination City can't be same!");
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+      return;
+    }
     let url = "";
     if (!clickSearchParams.return_date) {
       clickSearchParams.return_date = retnDateDef().toISOString().split("T")[0];
@@ -151,7 +161,10 @@ export default function Flightsearch() {
             </Menu>
           </div>
           <div className="relative rounded-lg border p-2 px-4 w-60 h-16 font-qs mr-2 font-bold my-2">
-            <BsArrowLeftRight className="absolute -mx-10 my-1 rounded-full bg-white border p-2 w-max h-max" />
+            <BsArrowLeftRight
+              className="absolute -mx-10 my-1 rounded-full bg-white border p-2 w-max h-max"
+              onClick={() => dispatch(searchActions.swap())}
+            />
             <Menu open={openMenuTo} handler={setOpenMenuTo}>
               <MenuHandler>
                 <div className="text-lg " onClick={() => setOpenMenuTo(true)}>
@@ -312,9 +325,18 @@ export default function Flightsearch() {
           </Menu>
         </div>
       </div>
+      {message ? (
+        <Alert className="bg-red-50 text-red-500 text-sm font-arial">
+          {message}
+        </Alert>
+      ) : (
+        ""
+      )}
       <div className="w-max mx-auto ">
         <button
-          onClick={() => searchFlight()}
+          onClick={() => {
+            searchFlight();
+          }}
           className="rounded-full p-4 w-max mt-2 uppercase tracking-widest font-bold font-arial text-white bg-orange-700"
         >
           Search Flights

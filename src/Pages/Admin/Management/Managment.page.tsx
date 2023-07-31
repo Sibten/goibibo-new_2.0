@@ -39,7 +39,7 @@ export default function Managementpage() {
     "w-40 border p-4 m-4 rounded-md h-40 hover:bg-gray-50 hover:cursor-pointer";
 
   return (
-    <div className="relative font-arial">
+    <div className="relative font-arial bg-white">
       <Title text="Management" />
       <div className="w-max rounded-md border mx-auto my-4 p-4">
         <Link to="/admin">

@@ -6,6 +6,7 @@ import { TbDiscount2 } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { Roles } from "../../../Types";
 import { RiAdminFill } from "react-icons/ri";
+import { MdSupportAgent } from "react-icons/md";
 export default function UserLoginHover() {
   const User = useSelector((state: RootState) => state.User);
   return (
@@ -36,6 +37,16 @@ export default function UserLoginHover() {
             <TbDiscount2 className="text-xl" />
             <p className="mx-4 text-md font-qs font-bold"> Offers </p>
           </li>
+          <Link to="/support">
+            {" "}
+            <li className="text-gray-700 flex my-2 p-2 w-max">
+              <MdSupportAgent className="text-xl" />{" "}
+              <p className="mx-4 text-md font-qs font-bold w-max">
+                {" "}
+                Help & Support{" "}
+              </p>{" "}
+            </li>
+          </Link>
           {User.role?.role_id == Roles.Admin ? (
             <Link to="/admin">
               {" "}

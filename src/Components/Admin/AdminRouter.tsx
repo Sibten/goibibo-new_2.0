@@ -70,7 +70,7 @@ export default function AdminRouter() {
             </Tab>{" "}
           </Link>
         </TabsHeader>
-        <TabsBody>
+        <TabsBody className="bg-white">
           <TabPanel value={"dashboard"} className="p-0">
             <Admindashpage />
           </TabPanel>

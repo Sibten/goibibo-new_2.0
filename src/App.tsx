@@ -24,6 +24,8 @@ import LuggagePage from "./Pages/Admin/Management/Menus/Luggage.page";
 import Routepage from "./Pages/Admin/Management/Menus/Route.page";
 import UnderConstruction from "./Components/Errors/UnderConstruction";
 import Footer from "./Components/Footer/Footer";
+import Support from "./Pages/Support/Support";
+import AboutPage from "./Pages/About/About.page";
 
 function App() {
   return (
@@ -61,14 +63,15 @@ function App() {
           </Route>
         </Route>
 
+        <Route path="/support" element={<Support />} />
+        <Route path="/about" element={<AboutPage/>}/>
         <Route path="/login" element={<LoginPage />} />
-
         <Route path="/hotels" element={<UnderConstruction />} />
         <Route path="/trains" element={<UnderConstruction />} />
         <Route path="/bus" element={<UnderConstruction />} />
         <Route path="*" element={<Pagenotfound />} />
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

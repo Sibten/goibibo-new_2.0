@@ -1,5 +1,6 @@
 import React from "react";
 import { FaSuitcase } from "react-icons/fa";
+import { MdSupportAgent } from "react-icons/md";
 import { TbDiscount2 } from "react-icons/tb";
 import { Link } from "react-router-dom";
 
@@ -28,6 +29,10 @@ export default function DefaultLoginHover() {
           <li className="text-gray-700 flex my-2 p-2">
             <TbDiscount2 className="text-xl" />{" "}
             <p className="mx-4 text-md font-qs font-bold"> Offers </p>{" "}
+          </li>
+          <li className="text-gray-700 flex my-2 p-2">
+            <MdSupportAgent className="text-xl" />{" "}
+            <p className="mx-4 text-md font-qs font-bold"> Help & Support </p>{" "}
           </li>
         </ul>
       </div>

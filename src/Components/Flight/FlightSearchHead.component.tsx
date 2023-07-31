@@ -188,7 +188,16 @@ export default function FlightSearchHead() {
             </MenuList>
           </Menu>
         </div>
-        <div className="mt-4 text-xl">
+        <div
+          className="mt-4 text-xl"
+          onClick={() => {
+            [URLSearchParamsData.from, URLSearchParamsData.to] = [
+              URLSearchParamsData.to,
+              URLSearchParamsData.from,
+            ];
+            setURLSearchParamsData({ ...URLSearchParamsData });
+          }}
+        >
           <HiOutlineArrowsRightLeft />
         </div>
         <div className="mx-2">
@@ -235,6 +244,7 @@ export default function FlightSearchHead() {
             type="date"
             name="dep_date"
             id="dep_date"
+            onKeyDown={(e) => e.preventDefault()}
             min={new Date().toISOString().split("T")[0]}
             className="block bg-indigo-500 p-2 w-30 rounded-lg font-qs font-bold"
             defaultValue={
@@ -267,6 +277,8 @@ export default function FlightSearchHead() {
                   .toISOString()
                   .split("T")[0]
               }
+              onKeyDown={(e) => e.preventDefault()}
+              value={URLSearchParamsData.return_date?.split("T")[0]}
               defaultValue={returnDateDef()}
               className="block bg-indigo-500 p-2 w-30 rounded-lg font-qs font-bold"
               onChange={(e) => {

@@ -21,6 +21,7 @@ import { MdDone } from "react-icons/md";
 import Loaderdialog from "../Dialog/Loader.dialog";
 import Timer from "../../Helper/Timer";
 import { ToastContainer, toast } from "react-toastify";
+import { payment } from "../../Types";
 
 export const createPaymentOrder = async (amount: number) => {
   let config = {
@@ -73,6 +74,7 @@ const verifyPayment = async (
       return_addons: bookingDetails.addOnRtn,
     },
   };
+  console.log(sendingData);
   const data = JSON.stringify(sendingData);
 
   const config: AxiosRequestConfig = {
