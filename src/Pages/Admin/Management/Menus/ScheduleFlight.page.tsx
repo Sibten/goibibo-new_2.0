@@ -76,8 +76,12 @@ export default function ScheduleFlightpage() {
     <div>
       {loading ? <Loaderdialog /> : ""}
       <Title text="Schedule Flight" />
-      <div className="bg-gray-50 rounded-md shadow-md p-2 w-[36rem] mx-auto m-2">
+      <div className="bg-gray-50 rounded-md shadow-md p-2 w-[36rem] mx-auto m-8 font-arial">
         <BackToMenu />
+        <h1 className="mx-2 font-bold mt-4 text-center">
+          {" "}
+          Flight Information{" "}
+        </h1>
         <div className="my-8 font-arial">
           <Select
             className="h-12 w-full"
