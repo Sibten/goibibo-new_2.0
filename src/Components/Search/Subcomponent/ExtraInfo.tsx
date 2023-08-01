@@ -10,8 +10,10 @@ import { IoIosAirplane } from "react-icons/io";
 import { RxDotFilled } from "react-icons/rx";
 import { LuBaggageClaim } from "react-icons/lu";
 import { MdOutlineAirlineSeatReclineNormal } from "react-icons/md";
-import { ClassFare, Flighclass, LuggageType, ResultBase } from "../../../Types";
+import { ClassFare, Flighclass, LuggageType, ResultBase, SearchType } from "../../../Types";
 import { calDuration, calFare, time } from "../../../Helper/Method";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 
 const findLuggaeInfo = (
   luggage: Array<LuggageType>,
@@ -31,19 +33,22 @@ const findLuggaeInfo = (
   }
 };
 export default function ExtraInfo({
+  type,
   value,
   fclass,
 }: {
+  type: number;
   value: ResultBase;
   fclass: number;
 }) {
+  const searchParams = useSelector((state: RootState) => state.SearchParms);
   const flightfare = calFare(
     value.route_id.distance,
-    value.fare.fare,
-    value.fare.tax,
+    { basicfare: value.fare.fare, tax: value.fare.tax },
     fclass,
     value.route_id.stops.length,
-    value.available_seats
+    value.available_seats,
+    type == SearchType.From ? searchParams.dept_date : searchParams.return_date!
   );
 
   const findLuggage = findLuggaeInfo(value.rule.luggage, fclass);

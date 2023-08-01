@@ -25,11 +25,11 @@ export default function Result({ filter }: { filter: Filter }) {
       selector.dep.filter((s) => {
         let fare = calFare(
           s.route_id.distance,
-          s.fare.fare,
-          s.fare.tax,
+          { basicfare: s.fare.fare, tax: s.fare.tax },
           SearchParms.class,
           s.route_id.stops.length,
-          s.available_seats
+          s.available_seats,
+          SearchParms.dept_date
         );
         let total = fare.basic + fare.tax;
         if (
@@ -60,11 +60,11 @@ export default function Result({ filter }: { filter: Filter }) {
       selector.rtn?.filter((s) => {
         let fare = calFare(
           s.route_id.distance,
-          s.fare.fare,
-          s.fare.tax,
+          { basicfare: s.fare.fare, tax: s.fare.tax },
           SearchParms.class,
           s.route_id.stops.length,
-          s.available_seats
+          s.available_seats,
+          SearchParms.return_date!
         );
         let total = fare.basic + fare.tax;
         if (
@@ -109,10 +109,10 @@ export default function Result({ filter }: { filter: Filter }) {
     console.log(selectedFlight);
   }, [selectedFlight]);
 
-  const rtnRslt = selector.rtn ? <NotFound /> : "";
+  const rtnRslt = selector.rtn && SearchParms.return_date ? <NotFound /> : "";
 
   return (
-    <div className="bg-fixed h-[42.5rem]">
+    <div className="bg-fixed">
       {selectedFlight ? <SelectionCard data={selectedFlight} /> : ""}
       <div className={`grid ${selector.rtn ? "grid-cols-2" : "grid-cols-3"}`}>
         <div className={`${selector.rtn ? "" : "col-span-2"}`}>
@@ -143,7 +143,7 @@ export default function Result({ filter }: { filter: Filter }) {
           )}
         </div>
         <div>
-          {selector.rtn ? (
+          {selector.rtn && SearchParms.return_date ? (
             <div className="mx-4">
               <h1 className="flex font-bold text-sm font-qs">
                 {SearchParms.to.city_name}{" "}
@@ -155,7 +155,7 @@ export default function Result({ filter }: { filter: Filter }) {
           ) : (
             ""
           )}
-          {returnResult.length > 0 ? (
+          {returnResult.length > 0 && SearchParms.return_date ? (
             <>
               {returnResult.map((res) => (
                 <SearchCard

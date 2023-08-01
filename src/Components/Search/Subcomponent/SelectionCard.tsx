@@ -20,19 +20,19 @@ export default function SelectionCard({
   if (data.from && data.to) {
     depFare = calFare(
       data.from.route_id.distance,
-      data.from.fare.fare,
-      data.from.fare.tax,
+      { basicfare: data.from.fare.fare, tax: data.from.fare.tax },
       selector.class,
       data.from.route_id.stops.length,
-      data.from.available_seats
+      data.from.available_seats,
+      selector.dept_date
     );
     rtnFare = calFare(
       data.to.route_id.distance,
-      data.to.fare.fare,
-      data.to.fare.tax,
+      { basicfare: data.to.fare.fare, tax: data.to.fare.tax },
       selector.class,
       data.to.route_id.stops.length,
-      data.to.available_seats
+      data.to.available_seats,
+      selector.return_date!
     );
   }
 

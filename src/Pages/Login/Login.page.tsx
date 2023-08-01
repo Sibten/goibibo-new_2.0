@@ -126,7 +126,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex mt-24">
+    <div className="flex my-32">
       <img
         className="absolute right-0 bottom-0 opacity-10"
         src="https://res.cloudinary.com/dgsqarold/image/upload/v1687350557/Goibibo/landscape-159294_1280_veiwja.png"

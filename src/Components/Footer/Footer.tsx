@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div className="bg-white p-8 font-arial relative">
+    <div className="bg-white p-8 font-arial relative print:hidden">
       <div className="absolute -mt-8 right-0">
         <img
           src="https://res.cloudinary.com/dgsqarold/image/upload/v1690806386/Goibibo/awards_vtycwk.png"

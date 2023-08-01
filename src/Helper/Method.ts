@@ -9,6 +9,7 @@ import {
 } from "../Types";
 import store from "../store";
 
+
 export const time = (time: string) => {
   return new Date(time).toLocaleTimeString(undefined, {
     hourCycle: "h24",
@@ -35,37 +36,27 @@ export const calDuration = (time1: string, time2: string) => {
 };
 export const calFare = (
   totalkm: number,
-  basicfare: Array<ClassFare>,
-  tax: number,
+  fareData: { basicfare: Array<ClassFare>; tax: number },
   fclass: number,
   stops: number,
   seats: Array<AvaliableSeat>,
+  calDate: string,
   people?: number
 ): { basic: number; tax: number } => {
   let bfare: number = 0;
 
-  if (stops == 0) {
-    tax = tax + 0.15;
-  } else if (stops == 1) {
-    tax = tax + 0.05;
-  } else {
-    tax = tax + 0.02;
-  }
+  fareData.tax += 0.15 - stops / 10;
 
-  let incFare = 100;
+  let incFare = 50;
 
   let btnDay = Math.ceil(
-    (new Date(store.getState().SearchParms.dept_date).getTime() -
-      new Date().getTime()) /
-      (1000 * 86400)
+    (new Date(calDate).getTime() - new Date().getTime()) / (1000 * 86400)
   );
 
   const avlSeat = seats.find(
-    (s) =>
-      new Date(s.date).toDateString() ==
-      new Date(store.getState().SearchParms.dept_date).toDateString()
+    (s) => new Date(s.date).toDateString() == new Date(calDate).toDateString()
   );
-
+  console.log(avlSeat);
   if (btnDay != 0) {
     bfare = bfare + (1 / btnDay) * incFare;
   } else bfare = bfare + incFare * 2;
@@ -75,51 +66,52 @@ export const calFare = (
       bfare =
         bfare +
         totalkm *
-          basicfare.find((s) => s.class_type == Flighclass.Economy)
+          fareData.basicfare.find((s) => s.class_type == Flighclass.Economy)
             ?.basic_fare!;
 
       bfare = bfare + (incFare / (avlSeat?.EC ?? 1)) * 50;
       if (people == People.Infant) {
         bfare = bfare * 0.8;
-        return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * tax) };
+        return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * fareData.tax) };
       }
-      return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * tax) };
+      return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * fareData.tax) };
     case Flighclass.Business:
       bfare =
         bfare +
         totalkm *
-          basicfare.find((s) => s.class_type == Flighclass.Business)
+          fareData.basicfare.find((s) => s.class_type == Flighclass.Business)
             ?.basic_fare!;
       bfare = bfare + (incFare / (avlSeat?.BC ?? 1)) * 50;
       if (people == People.Infant) {
         bfare = bfare * 0.8;
-        return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * tax) };
+        return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * fareData.tax) };
       }
-      return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * tax) };
+      return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * fareData.tax) };
     case Flighclass.FirstClass:
       bfare =
         bfare +
         totalkm *
-          basicfare.find((s) => s.class_type == Flighclass.FirstClass)
+          fareData.basicfare.find((s) => s.class_type == Flighclass.FirstClass)
             ?.basic_fare!;
       bfare = bfare + (incFare / (avlSeat?.FC ?? 1)) * 50;
       if (people == People.Infant) {
         bfare = bfare * 0.8;
-        return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * tax) };
+        return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * fareData.tax) };
       }
-      return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * tax) };
+      return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * fareData.tax) };
     case Flighclass.PremiumEconomy:
       bfare =
         bfare +
         totalkm *
-          basicfare.find((s) => s.class_type == Flighclass.PremiumEconomy)
-            ?.basic_fare!;
+          fareData.basicfare.find(
+            (s) => s.class_type == Flighclass.PremiumEconomy
+          )?.basic_fare!;
       bfare = bfare + (incFare / (avlSeat?.PE ?? 1)) * 50;
       if (people == People.Infant) {
         bfare = bfare * 0.8;
-        return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * tax) };
+        return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * fareData.tax) };
       }
-      return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * tax) };
+      return { basic: Math.ceil(bfare), tax: Math.ceil(bfare * fareData.tax) };
     default:
       return { basic: 0, tax: 0 };
   }

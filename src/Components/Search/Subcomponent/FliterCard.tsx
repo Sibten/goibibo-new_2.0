@@ -41,11 +41,11 @@ export default function FliterCard({ callback }: { callback: Function }) {
     selector.dep.forEach((s) => {
       let fare = calFare(
         s.route_id.distance,
-        s.fare.fare,
-        s.fare.tax,
+        { basicfare: s.fare.fare, tax: s.fare.tax },
         SearchParams.class,
         s.route_id.stops.length,
-        s.available_seats
+        s.available_seats,
+        SearchParams.dept_date
       );
       max = Math.max(max, fare.basic + fare.tax);
       min = Math.min(min, fare.basic + fare.tax);
@@ -54,15 +54,17 @@ export default function FliterCard({ callback }: { callback: Function }) {
       }
     });
 
-    selector.rtn?.map((s) => {
-      let fare = calFare(
-        s.route_id.distance,
-        s.fare.fare,
-        s.fare.tax,
-        SearchParams.class,
-        s.route_id.stops.length,
-        s.available_seats
-      );
+    selector.rtn?.forEach((s) => {
+      let fare: { basic: number; tax: number } = { basic :0, tax : 0 };
+      if (SearchParams.return_date)
+        fare = calFare(
+          s.route_id.distance,
+          { basicfare: s.fare.fare, tax: s.fare.tax },
+          SearchParams.class,
+          s.route_id.stops.length,
+          s.available_seats,
+          SearchParams.return_date
+        );
       rtnmax = Math.max(rtnmax, fare.basic + fare.tax);
       rtnmin = Math.min(rtnmin, fare.basic + fare.tax);
       if (

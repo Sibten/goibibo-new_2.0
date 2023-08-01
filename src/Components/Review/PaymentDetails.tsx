@@ -86,38 +86,50 @@ export default function PaymentDetails({
       IndiPayment.splice(0, IndiPayment.length);
       fare = calFare(
         bookingFlight.dep?.route_id.distance,
-        bookingFlight.dep?.fare.fare,
-        bookingFlight.dep?.fare.tax,
+        {
+          basicfare: bookingFlight.dep?.fare.fare,
+          tax: bookingFlight.dep?.fare.tax,
+        },
         bookingParams.class,
         bookingFlight.dep?.route_id.stops.length,
-        bookingFlight.dep?.available_seats
+        bookingFlight.dep?.available_seats,
+        bookingParams.dept_date
       );
       infantsFare = calFare(
         bookingFlight.dep?.route_id.distance,
-        bookingFlight.dep?.fare.fare,
-        bookingFlight.dep?.fare.tax,
+        {
+          basicfare: bookingFlight.dep?.fare.fare,
+          tax: bookingFlight.dep?.fare.tax,
+        },
         bookingParams.class,
         bookingFlight.dep?.route_id.stops.length,
         bookingFlight.dep.available_seats,
+        bookingParams.dept_date,
         People.Infant
       );
     }
-    if (bookingFlight.rtn) {
+    if (bookingFlight.rtn && bookingParams.return_date) {
       rtnFare = calFare(
         bookingFlight.rtn?.route_id.distance,
-        bookingFlight.rtn?.fare.fare,
-        bookingFlight.rtn?.fare.tax,
-        bookingParams.class,
-        bookingFlight.rtn?.route_id.stops.length,
-        bookingFlight.rtn?.available_seats
-      );
-      rtnInfantFare = calFare(
-        bookingFlight.rtn?.route_id.distance,
-        bookingFlight.rtn?.fare.fare,
-        bookingFlight.rtn?.fare.tax,
+        {
+          basicfare: bookingFlight.rtn?.fare.fare,
+          tax: bookingFlight.rtn?.fare.tax,
+        },
         bookingParams.class,
         bookingFlight.rtn?.route_id.stops.length,
         bookingFlight.rtn?.available_seats,
+        bookingParams.return_date
+      );
+      rtnInfantFare = calFare(
+        bookingFlight.rtn?.route_id.distance,
+        {
+          basicfare: bookingFlight.rtn?.fare.fare,
+          tax: bookingFlight.rtn?.fare.tax,
+        },
+        bookingParams.class,
+        bookingFlight.rtn?.route_id.stops.length,
+        bookingFlight.rtn?.available_seats,
+        bookingParams.return_date,
         People.Infant
       );
     }

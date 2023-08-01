@@ -21,6 +21,7 @@ import { defFilter } from "./FliterCard";
 import { Radio } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { trackingActions } from "../../../Actions/Tracking.actions";
+import { type } from "os";
 
 export default function SearchCard({
   value,
@@ -41,15 +42,21 @@ export default function SearchCard({
 
   const dispatch = useDispatch();
 
-  if (value) {
+  if (value && SearchParams.dept_date) {
     const Flightfare = calFare(
       value.route_id.distance,
-      value.fare.fare,
-      value.fare.tax,
+      { basicfare: value.fare.fare, tax: value.fare.tax },
       SearchParams.class,
       value.route_id.stops.length,
-      value.available_seats
+      value.available_seats,
+      type == SearchType.From
+        ? SearchParams.dept_date
+        : SearchParams.return_date!
     );
+    console.log(
+      type == 1 ? value.route_id.distance * value.fare.fare[0].basic_fare : ""
+    );
+
     return (
       <div className="">
         <div className="bg-white my-4 p-2 mx-4 rounded-md shadow-md transition-all duration-200 relative overflow-hidden z-0">
@@ -164,7 +171,7 @@ export default function SearchCard({
             </button>
           </div>
           {openDetails ? (
-            <ExtraInfo value={value} fclass={SearchParams.class} />
+            <ExtraInfo type={type} value={value} fclass={SearchParams.class} />
           ) : (
             ""
           )}
