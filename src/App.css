@@ -7,6 +7,11 @@
 	background-size: cover;
 	background-attachment: fixed;
 }
+
+.title-bg{
+	background-image: radial-gradient( circle 975px at 2.6% 48.3%,  rgb(81, 88, 195) 0%, rgb(26, 81, 105) 99.7% );
+}
+
 @media print{
 	.App{
 		background-color: white;

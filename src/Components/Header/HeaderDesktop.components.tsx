@@ -30,7 +30,7 @@ export default function HeaderDesktop() {
                 className={`first-letter:border mx-2 p-1 px-4 rounded-full font-qs font-bold  hover:bg-blue-600 hover:text-white flex cursor-pointer ${
                   location.pathname.includes("/flight") ||
                   location.pathname == "/"
-                    ? "text-white bg-blue-800"
+                    ? "text-white title-bg"
                     : "text-gray-600 bg-white border"
                 }`}
               >
@@ -41,7 +41,7 @@ export default function HeaderDesktop() {
               <li
                 className={`first-letter:border mx-2 p-1 px-4 rounded-full font-qs font-bold  hover:bg-blue-600 hover:text-white flex cursor-pointer ${
                   location.pathname.includes("/hotels")
-                    ? "text-white bg-blue-800"
+                    ? "text-white title-bg"
                     : "text-gray-600 bg-white border"
                 }`}
               >
@@ -53,7 +53,7 @@ export default function HeaderDesktop() {
               <li
                 className={`first-letter:border mx-2 p-1 px-4 rounded-full font-qs font-bold  hover:bg-blue-600 hover:text-white flex cursor-pointer ${
                   location.pathname.includes("/trains")
-                    ? "text-white bg-blue-800"
+                    ? "text-white title-bg"
                     : "text-gray-600 bg-white border"
                 }`}
               >
@@ -64,7 +64,7 @@ export default function HeaderDesktop() {
               <li
                 className={`first-letter:border mx-2 p-1 px-4 rounded-full font-qs font-bold  hover:bg-blue-600 hover:text-white flex cursor-pointer ${
                   location.pathname.includes("/bus")
-                    ? "text-white bg-blue-800"
+                    ? "text-white title-bg"
                     : "text-gray-600 bg-white border"
                 }`}
               >
