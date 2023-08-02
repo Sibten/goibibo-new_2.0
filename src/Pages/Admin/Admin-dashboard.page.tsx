@@ -44,7 +44,7 @@ export default function Admindashpage() {
   });
 
   return (
-    <div>
+    <div className="h-max">
       <Title text="Dashboard" />
       <Greeting />
       <div className="flex m-2 border-b p-2 w-max">
@@ -68,7 +68,7 @@ export default function Admindashpage() {
           <h1 className="text-gray-300"> Today's Booking </h1>
         </div>
       </div>
-      <div>
+      <div className="mx-4">
         <Flightscomponent data={selector} />
       </div>
       <AdminManagementSpeedDial />

@@ -60,7 +60,7 @@ export default function LoginPage() {
     };
     axios(config)
       .then(function (response) {
-        if (response.data.found) {
+        if (response.status == 200) {
           let email = makeSecrete(response.data.email);
           setOTPSendingMessage(`OTP sent to ${email}`);
         }
@@ -126,7 +126,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex my-32">
+    <div className="flex my-32 ">
       <img
         className="absolute right-0 bottom-0 opacity-10"
         src="https://res.cloudinary.com/dgsqarold/image/upload/v1687350557/Goibibo/landscape-159294_1280_veiwja.png"

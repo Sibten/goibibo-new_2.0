@@ -20,7 +20,10 @@ export default function TripMorepage() {
   return (
     <div className="">
       <Title text="Your Trip" />
-      <div className="bg-white mx-auto w-max my-2">
+      <div className="w-max mx-auto">
+        <img src="https://res.cloudinary.com/dgsqarold/image/upload/v1690998775/Goibibo/gbo_gstxd2.png" />
+      </div>
+      <div className=" mx-auto w-max my-2">
         <Button
           className="print:hidden flex"
           variant="outlined"

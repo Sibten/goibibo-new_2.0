@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 export default function AdminRouter() {
   const [activeTab, setActiveTab] = useState<number>(1);
   return (
-    <div className="h-screen ">
+    <div className="h-max">
       <Tabs value="dashboard" orientation="vertical">
         <TabsHeader className="w-48 h-screen sticky top-0">
           <Tab
@@ -62,10 +62,10 @@ export default function AdminRouter() {
           </Link>
         </TabsHeader>
         <TabsBody className="bg-white">
-          <TabPanel value={"dashboard"} className="p-0">
+          <TabPanel value={"dashboard"} className="p-0 h-max pb-8">
             <Admindashpage />
           </TabPanel>
-          <TabPanel value={"profile"} className="p-0">
+          <TabPanel value={"profile"} className="p-0 h-max">
             <AirlineProfilePage />
           </TabPanel>
         </TabsBody>

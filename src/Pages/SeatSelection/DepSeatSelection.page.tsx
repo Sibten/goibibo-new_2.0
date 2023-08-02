@@ -77,7 +77,7 @@ export default function DepSeatSelectionPage() {
       <div className="">
         <Title text="Seat Selection" />
       </div>
-      <div>
+      <div className="p-8">
         <div className="flex flex-wrap justify-center font-arial text-gray-800">
           <div>
             <FlightData data={flight.dep} date={travellingParams.dept_date} />

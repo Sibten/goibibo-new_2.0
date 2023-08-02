@@ -110,13 +110,13 @@ export default function UserProfile() {
             alt="User_img"
             className="w-24 h-24"
           />
-          {/* <input
+          <input
             type="file"
             name="profilePhoto"
             className="text-xs w-max my-1 font-arial"
             id="pf"
             onChange={(e) => uploadPhoto(e)}
-          /> */}
+          />
         </div>
 
         <div className="mx-4 my-2">
