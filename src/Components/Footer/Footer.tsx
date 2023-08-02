@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div className="bg-white p-8 font-arial relative print:hidden">
+    <div className="hidden lg:block bg-gray-50 p-8 font-arial relative print:hidden w-full">
       <div className="absolute -mt-8 right-0">
         <img
           src="https://res.cloudinary.com/dgsqarold/image/upload/v1690806386/Goibibo/awards_vtycwk.png"
@@ -17,7 +17,7 @@ export default function Footer() {
         />
       </div>
       <div className="w-max mx-auto">
-        <div className="grid grid-cols-3 gap-[16rem] font-arial">
+        <div className="grid grid-cols-3 font-arial">
           <div>
             <h1 className="font-bold uppercase text-sm"> Our Products</h1>
             <ul className="my-2 text-sm text-gray-600">
@@ -72,7 +72,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-400 w-max grid grid-cols-3 gap-[14rem] my-4 py-2">
+        <div className="border-t border-gray-400 w-max grid grid-cols-3  my-4 py-2">
           <div>
             <h1 className="text-sm font-bold uppercase"> Follow Us</h1>
             <div className="flex my-2">
@@ -88,7 +88,7 @@ export default function Footer() {
               <img
                 src="https://res.cloudinary.com/dgsqarold/image/upload/v1690804040/Goibibo/PlayStore_em9auu.png"
                 alt="gp"
-                className="w-24 h-8"
+                className="hidden lg:block w-24 h-8"
               />
               <img
                 src="https://res.cloudinary.com/dgsqarold/image/upload/v1690804031/Goibibo/App_Store_ofpgfl.png"
@@ -111,7 +111,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="border-t border-gray-400 w-full flex justify-between gap-[14rem] my-4 py-2 text-xs">
+        <div className="border-t border-gray-400 w-full flex justify-between my-4 py-2 text-xs">
           <span>
             <img
               src="https://res.cloudinary.com/dgsqarold/image/upload/v1690806628/Goibibo/Logo_100x75_transparent_erayr8.png"

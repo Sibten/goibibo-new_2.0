@@ -14,11 +14,11 @@ export default function SearchResult() {
     setFilter(data);
   };
   return (
-    <div className="grid grid-cols-4 bg-[#e1e7ee]">
+    <div className="flex bg-[#e1e7ee]">
       <div>
         <FilterCard callback={handlecallBack} />
       </div>
-      <div className="col-span-3 p-2">
+      <div className="w-full p-2">
         <div className="font-arial">
           <SearchFlights data={filter} />
         </div>

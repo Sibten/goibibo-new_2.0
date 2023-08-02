@@ -19,10 +19,10 @@ export default function Farepage() {
     }
   }, []);
   return (
-    <div>
+    <div className="bg-white pb-8">
       <Title text="Fare Management" />
       <div className="font-arial">
-        <div className="bg-gray-50 rounded-md shadow-md p-2 w-[36rem] mx-auto m-2">
+        <div className="border rounded-md  p-4 w-[36rem] mx-auto m-2">
           <BackToMenu />
           <div className="flex justify-between items-center">
             <AirlineData />

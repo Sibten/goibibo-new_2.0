@@ -69,7 +69,7 @@ export default function FlightInput({
   };
 
   return (
-    <div className="w-96 overflow-hidden px-2 pt-2 bg-white rounded-lg">
+    <div className="w-full h-72 lg:h-full lg:w-96 overflow-hidden px-2 pt-2 bg-white rounded-lg">
       <div>
         <label className="absolute bg-white mx-4 -mt-2 px-2 text-blue-500 font-qs font-bold capitalize">
           {" "}

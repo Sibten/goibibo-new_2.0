@@ -216,7 +216,7 @@ export default function PaymentAction() {
       ) : (
         <div>
           <button
-            className="bg-orange-800 text-white w-full p-2 rounded-md font-qs font-bold"
+            className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white w-full p-2 rounded-md font-qs font-bold"
             onClick={() => payamount()}
           >
             {" "}

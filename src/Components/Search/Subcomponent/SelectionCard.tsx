@@ -41,14 +41,14 @@ export default function SelectionCard({
   const dispatch = useDispatch();
 
   return (
-    <div className="mx-4 grid grid-cols-3 bg-white p-2 my-4 sticky top-auto rounded-md shadow-sm">
+    <div className="mx-4 grid grid-cols-3 justify-between bg-white p-2 my-4 sticky top-auto rounded-md shadow-sm">
       <div className="my-2 border-r">
         {data.from ? (
           <div className="flex justify-around items-center">
             <img
               src={data.from?.airline_id.airline_icon}
               alt="airline"
-              className="w-16 h-10"
+              className="w-10 h-10"
             />
             <div className="text-xs">
               <p>{new Date(data.from.timing[0].source_time).toDateString()}</p>
@@ -90,7 +90,7 @@ export default function SelectionCard({
             <img
               src={data.to?.airline_id.airline_icon}
               alt="airline"
-              className="w-16 h-10"
+              className="w-10 h-10"
             />
             <div className="text-xs">
               <p>{new Date(data.to.timing[0].source_time).toDateString()}</p>
@@ -135,12 +135,16 @@ export default function SelectionCard({
               {rtnFare.basic + rtnFare.tax + (depFare.basic + depFare.tax)}{" "}
             </h1>
 
-            <Button className="my-2 mx-4" color="indigo" onClick={() => {
-                    dispatch(trackingActions.activeBookig());
-                    navigate(
-                      `/flight/review/?dep_flight_no=${data.from?.flight_no}&rtn_flight_no=${data.to?.flight_no}`
-                    );
-                  }}>
+            <Button
+              className="my-2 mx-4"
+              color="indigo"
+              onClick={() => {
+                dispatch(trackingActions.activeBookig());
+                navigate(
+                  `/flight/review/?dep_flight_no=${data.from?.flight_no}&rtn_flight_no=${data.to?.flight_no}`
+                );
+              }}
+            >
               {" "}
               Book{" "}
             </Button>

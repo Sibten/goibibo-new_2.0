@@ -73,10 +73,10 @@ export default function ScheduleFlightpage() {
   };
 
   return (
-    <div>
+    <div className="bg-white pb-8">
       {loading ? <Loaderdialog /> : ""}
       <Title text="Schedule Flight" />
-      <div className="bg-gray-50 rounded-md shadow-md p-2 w-[36rem] mx-auto m-8 font-arial">
+      <div className="bg-white rounded-md border p-4 w-[36rem] mx-auto m-8 font-arial">
         <BackToMenu />
         <h1 className="mx-2 font-bold mt-4 text-center">
           {" "}
@@ -153,7 +153,7 @@ export default function ScheduleFlightpage() {
                 setAvaliableRoutes([...data]);
               }
             }}
-            className="text-xs w-max mx-1"
+            className="bg-pink-600 text-xs w-max mx-1"
           >
             {" "}
             Find Route

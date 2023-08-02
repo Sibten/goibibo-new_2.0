@@ -18,9 +18,9 @@ export default function LuggagePage() {
     }
   }, []);
   return (
-    <div className="font-arial">
+    <div className="font-arial bg-white pb-8">
       <Title text="Luggage Management" />
-      <div className="bg-gray-50 rounded-md shadow-md p-2 w-[36rem] mx-auto m-2">
+      <div className="border rounded-md  p-4 w-[36rem] mx-auto m-2">
         <BackToMenu />
         <div className="flex items-center justify-between">
           <AirlineData />

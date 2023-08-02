@@ -94,18 +94,17 @@ export default function Flightsearch() {
   };
 
   return (
-    <div className="bg-white shadow-md  lg:w-[60%] rounded-lg p-8 mx-auto -mt-8 relative">
-      <div className="font-qs font-bold text-gray-600">
+    <div className="bg-white shadow-md w-full lg:w-[60%] rounded-lg lg:p-8 py-4 mx-auto lg:-mt-8 relative">
+      <div className="font-qs font-bold text-gray-600 w-max lg:mx-2 mx-auto">
         <span>
           {" "}
           <Radio
             id="blue"
             name="color"
-            color="blue"
+            color="pink"
             defaultChecked={SearchParams.return_date ? false : true}
             onChange={() => {
               clickSearchParams.return_date = undefined;
-
               setReturnDate(false);
             }}
           />{" "}
@@ -116,7 +115,7 @@ export default function Flightsearch() {
           <Radio
             id="blue"
             name="color"
-            color="blue"
+            color="pink"
             defaultChecked={SearchParams.return_date ? true : false}
             onChange={() => {
               setReturnDate(true);
@@ -132,9 +131,9 @@ export default function Flightsearch() {
           <label className="text-lg">Round Trip</label>
         </span>
       </div>
-      <div className="flex my-4 flex-wrap">
-        <div className="w-max flex">
-          <div className="rounded-lg border p-2 px-4 w-60 h-16 font-qs font-bold mx-4 my-2">
+      <div className="lg:flex my-4 flex-wrap w-max lg:w-full mx-auto">
+        <div className="w-max lg:flex lg:mx-1">
+          <div className=" rounded-lg border p-2 px-4 lg:w-60 h-16 font-qs font-bold mx-0 my-2">
             <Menu open={openMenuFrom} handler={setOpenMenuFrom}>
               <MenuHandler>
                 <div className="text-lg" onClick={() => setOpenMenuFrom(true)}>
@@ -160,9 +159,9 @@ export default function Flightsearch() {
               </MenuList>
             </Menu>
           </div>
-          <div className="relative rounded-lg border p-2 px-4 w-60 h-16 font-qs mr-2 font-bold my-2">
+          <div className="  relative rounded-lg border p-2 px-4 lg:w-60 h-16 font-qs mx-0 lg:mx-0 font-bold my-2">
             <BsArrowLeftRight
-              className="absolute -mx-10 my-1 rounded-full bg-white border p-2 w-max h-max"
+              className=" lg:block hidden absolute -mx-10 my-1 rounded-full bg-white border p-2 w-max h-max"
               onClick={() => dispatch(searchActions.swap())}
             />
             <Menu open={openMenuTo} handler={setOpenMenuTo}>
@@ -192,7 +191,7 @@ export default function Flightsearch() {
           </div>
         </div>
 
-        <div className="mx-2 rounded-lg border p-2 px-4 w-36 h-16 font-qs font-bold my-2">
+        <div className="lg:mx-2 rounded-lg border p-2 px-4 lg:w-36 h-16 font-qs font-bold my-2">
           <Menu open={openDateFrom} handler={setOpenDateFrom}>
             <MenuHandler>
               <div className="text-lg">
@@ -227,7 +226,7 @@ export default function Flightsearch() {
         </div>
 
         {returnDate ? (
-          <div className="mx-2 rounded-lg border p-2 px-4 w-32 font-qs font-bold my-2">
+          <div className="lg:mx-2 rounded-lg border p-2 px-4 lg:w-32 font-qs font-bold my-2">
             <Menu open={openDateTo} handler={setOpenDateTo}>
               <MenuHandler>
                 <div className="text-lg">
@@ -277,7 +276,7 @@ export default function Flightsearch() {
             </Menu>
           </div>
         ) : (
-          <div className="mx-2 rounded-lg border p-2 px-4 w-32 font-qs font-bold my-2">
+          <div className="lg:mx-2 rounded-lg border p-2 px-4  lg:w-32 font-qs font-bold my-2">
             <div className="text-xl ">
               <label className="absolute bg-white mx-2 text-xs -mt-4 px-2 h-max text-gray-500">
                 Return
@@ -289,7 +288,7 @@ export default function Flightsearch() {
           </div>
         )}
 
-        <div className="mx-2 rounded-lg border p-2 px-4 w-60 font-qs font-bold my-2">
+        <div className="lg:mx-2 rounded-lg border p-2 px-4 lg:w-60 font-qs font-bold my-2">
           <Menu open={openClass} handler={setOpenClass}>
             <MenuHandler>
               <div className="text-lg">
@@ -332,12 +331,12 @@ export default function Flightsearch() {
       ) : (
         ""
       )}
-      <div className="w-max mx-auto ">
+      <div className="w-max mx-auto">
         <button
           onClick={() => {
             searchFlight();
           }}
-          className="rounded-full p-4 w-max mt-2 uppercase tracking-widest font-bold font-arial text-white bg-orange-700"
+          className="rounded-full p-1 px-4  lg:p-4 w-max mt-2 uppercase tracking-widest font-bold font-arial text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 "
         >
           Search Flights
         </button>

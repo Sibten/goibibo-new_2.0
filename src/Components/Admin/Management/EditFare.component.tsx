@@ -138,6 +138,12 @@ export default function EditFarecomponents({
           </div>
         </DialogBody>
         <DialogFooter>
+          <button
+            className="mx-2 font-bold text-black"
+            onClick={() => setOpen(false)}
+          >
+            Cancel
+          </button>
           <Button color="indigo" onClick={() => updateFare()}>
             Update
           </Button>

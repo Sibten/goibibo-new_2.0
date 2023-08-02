@@ -16,7 +16,7 @@ export default function DefaultLoginHover() {
       </small>
       <Link to="/login">
         {" "}
-        <button className="bg-orange-700 font-qs w-full my-4 rounded-md p-2 text-white font-bold">
+        <button className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500  font-qs w-full my-4 rounded-md p-2 text-white font-bold">
           Login / Signup
         </button>{" "}
       </Link>

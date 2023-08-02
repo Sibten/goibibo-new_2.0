@@ -70,11 +70,11 @@ export default function ExtraInfo({
           <TabsBody>
             <TabPanel key="info" value="finfo">
               <div className="border rounded-lg p-2 my-2 grid grid-cols-4">
-                <div className="">
+                <div className="mx-auto">
                   <img
                     src={value.airline_id.airline_icon}
                     alt="airline"
-                    className="w-10 h-10 mx-auto"
+                    className="w-10 h-10 mx-auto my-2"
                   />{" "}
                   <p className="text-xs"> {value.flight_no}</p>
                 </div>
@@ -143,7 +143,7 @@ export default function ExtraInfo({
                   <img
                     src={value.airline_id.airline_icon}
                     alt="airline"
-                    className="w-16 h-10"
+                    className="w-10 h-10"
                   />{" "}
                   <p className="text-xs"> {value.flight_no}</p>
                 </div>

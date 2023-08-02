@@ -52,7 +52,7 @@ export default function EditLuggageComponent({
   useEffect(() => {
     console.log(data);
     data?.forEach((s) => update(s.type, s.limit));
-    setUpdateData(updateData);
+    setUpdateData({ ...updateData });
   }, []);
 
   const updateLuggage = async () => {
@@ -99,7 +99,7 @@ export default function EditLuggageComponent({
           <DialogHeader>Edit Luggage Capacity</DialogHeader>
           <DialogBody>
             {data?.map((s) => (
-              <div className="relative flex w-full my-4">
+              <div className="relative flex w-full my-4" key={s.type}>
                 {" "}
                 <Input
                   type="number"
@@ -107,7 +107,7 @@ export default function EditLuggageComponent({
                   label={getFlightClass(s.type)}
                   onBlur={(e) => {
                     update(s.type, parseInt(e.target.value));
-                    setUpdateData(updateData);
+                    setUpdateData({ ...updateData });
                   }}
                 />{" "}
                 <span className="absolute right-8 top-2">Kg</span>
@@ -115,6 +115,12 @@ export default function EditLuggageComponent({
             ))}
           </DialogBody>
           <DialogFooter>
+            <button
+              className="mx-2 font-bold text-black"
+              onClick={() => setOpen(false)}
+            >
+              Cancel
+            </button>
             <Button color="indigo" onClick={() => updateLuggage()}>
               {" "}
               Update{" "}

@@ -14,6 +14,7 @@ import { airlineActions } from "../../Actions/Admin/Airline.action";
 import { BookingFlightActions } from "../../Actions/BookingFlight.action";
 import { BookingActions } from "../../Actions/ConfirmBookingDetails.action";
 import { ResultActions } from "../../Actions/Result.action";
+import Title from "../Utility/Title";
 import TrackingActions, {
   trackingActions,
 } from "../../Actions/Tracking.actions";
@@ -100,14 +101,9 @@ export default function UserProfile() {
   };
 
   return (
-    <div className="bg-[#eef2f8] h-max p-1 ">
-      <div className="bg-blue-600 p-4 sm:p-8">
-        <h1 className="font-qs font-bold text-xl text-white text-center my-4">
-          {" "}
-          My Profile{" "}
-        </h1>
-      </div>
-      <div className="md:mx-auto md:w-[48rem] bg-white shadow-md m-2 rounded-md p-4 flex -mt-6">
+    <div className="bg-[#eef2f8] h-max">
+      <Title text="My Profile" />
+      <div className="md:mx-auto md:w-[48rem] bg-white shadow-md m-2 rounded-md p-4 flex -mt-3">
         <div>
           <img
             src={userData.profile_photo}

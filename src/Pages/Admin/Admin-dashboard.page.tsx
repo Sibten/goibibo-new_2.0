@@ -9,6 +9,7 @@ import { fetchAirlineDetails } from "../../Actions/Admin/Airline.action";
 import { fetchAirlineFlights } from "../../Actions/Admin/AirlineFlights.action";
 import { fetchRoutes } from "../../Actions/Admin/Route.action";
 import "./Style.css";
+import Greeting from "../../Components/Greeting/Greeting";
 
 export default function Admindashpage() {
   const selector = useSelector((state: RootState) => state.AirlineFlight);
@@ -45,7 +46,8 @@ export default function Admindashpage() {
   return (
     <div>
       <Title text="Dashboard" />
-      <div className="flex m-2 border-b p-2 w-max mx-auto">
+      <Greeting />
+      <div className="flex m-2 border-b p-2 w-max">
         <div className="infoblock block rounded-md mx-2  p-2">
           <p className=" text-white text-4xl font-qs">
             {" "}

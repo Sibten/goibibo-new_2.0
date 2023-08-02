@@ -128,6 +128,7 @@ export default function Form({
         <div></div>
         <div className="m-2 flex">
           <Button
+            className="bg-pink-600"
             onClick={() => {
               let f = formData.findIndex(
                 (s) =>

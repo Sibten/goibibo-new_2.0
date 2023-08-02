@@ -39,9 +39,9 @@ export default function Managementpage() {
     "w-40 border p-4 m-4 rounded-md h-40 hover:bg-gray-50 hover:cursor-pointer";
 
   return (
-    <div className="relative font-arial bg-white">
+    <div className=" relative font-arial bg-white pb-4">
       <Title text="Management" />
-      <div className="w-max rounded-md border mx-auto my-4 p-4">
+      <div className=" w-max rounded-md border mx-auto my-4 p-4">
         <Link to="/admin">
           <div className="flex text-sm m-4 border rounded-full p-1 w-max hover:bg-gray-100">
             <HiArrowLongLeft className="text-xl" />

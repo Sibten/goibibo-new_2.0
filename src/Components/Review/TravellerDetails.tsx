@@ -260,7 +260,7 @@ export default function TravellerDetails() {
         </div>
         <div className="w-max ml-auto m-4 h-max">
           <Button
-            className="bg-orange-600 p-2 shadow-md rounded-md font-qs font-bold text-sm text-white"
+            className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-2 shadow-md rounded-md font-qs font-bold text-sm text-white"
             disabled={deactive}
             onClick={() => navigateSeatSelection()}
           >

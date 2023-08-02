@@ -58,14 +58,14 @@ export default function SearchCard({
     );
 
     return (
-      <div className="">
+      <div className="overflow-auto">
         <div className="bg-white my-4 p-2 mx-4 rounded-md shadow-md transition-all duration-200 relative overflow-hidden z-0">
           <div className="absolute right-0">
             {(type == SearchType.From &&
               defFilter.dep.min == Flightfare.basic + Flightfare.tax) ||
             (type == SearchType.To &&
               defFilter.rtn.min == Flightfare.basic + Flightfare.tax) ? (
-              <div className="bg-green-700 text-sm rounded-bl-lg font-bold text-white p-1 -mt-2">
+              <div className="bg-pink-700 text-sm rounded-bl-lg font-bold text-white p-1 -mt-2">
                 Cheapest
               </div>
             ) : (
@@ -81,7 +81,7 @@ export default function SearchCard({
             />
             <span className="mt-2 mx-2">{value.airline_id.airline_name}</span>
           </div>
-          <div className="flex justify-between mx-8 my-4">
+          <div className="flex flex-wrap justify-between mx-8 my-4">
             <div>
               <p className="text-gray-600 font-bold text-xs">
                 {value.route_id.source_city.airport_code}{" "}
@@ -136,6 +136,7 @@ export default function SearchCard({
             <div>
               {Result.data.rtn?.length ? (
                 <Radio
+                  color="pink"
                   name={type.toString()}
                   onChange={(e) => {
                     if (e.target.checked) callBack(value, type);
@@ -143,7 +144,7 @@ export default function SearchCard({
                 />
               ) : (
                 <button
-                  className="font-bold uppercase bg-blue-700 rounded-md text-white px-6 p-2 text-xs shadow-md"
+                  className="font-bold uppercase bg-pink-600 rounded-md text-white px-6 p-2 text-xs shadow-md"
                   onClick={() => {
                     dispatch(trackingActions.activeBookig());
                     navigate(

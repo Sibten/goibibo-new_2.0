@@ -20,8 +20,13 @@ export default function Tracking() {
   
   return (
     <div>
-      <div className="bg-white">
-        <div className="w-[48rem] p-4 mx-auto pb-8 font-qs font-bold">
+      <div className="bg-white justify-evenly">
+        <img
+          src="https://res.cloudinary.com/dgsqarold/image/upload/v1690954684/Goibibo/0966299555499939e66eff0138bb21a5_ezn7hp.png"
+          alt="yalmst"
+          className="h-10 absolute my-8 mx-8 w-max"
+        />
+        <div className="w-[48rem] mx-auto p-4 pb-8 font-qs font-bold">
           {flight.rtn ? (
             <Stepper activeStep={activeState}>
               <Step className="relative">

@@ -10,7 +10,7 @@ import { MdSupportAgent } from "react-icons/md";
 export default function UserLoginHover() {
   const User = useSelector((state: RootState) => state.User);
   return (
-    <div className="bg-gray-50 rounded-md shadow-lg absolute mt-10 p-4 px-6 -ml-20  w-[14rem]">
+    <div className="bg-gray-50 rounded-md shadow-lg absolute mt-10 p-4 px-6 lg:-ml-20  w-[14rem]">
       <div className="font-qs font-bold tracking-wide text-gray-800 text-base  flex">
         <img src={User.profile_photo} alt="user" className="w-8 h-8 mr-4" />
         <Link to="/profile">

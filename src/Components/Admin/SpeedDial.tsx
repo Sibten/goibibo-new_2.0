@@ -24,7 +24,7 @@ export default function AdminManagementSpeedDial() {
     <div className="fixed bottom-8 right-8">
       <SpeedDial>
         <Link to="/admin/management">
-          <SpeedDialHandler className="bg-[#2176e3]">
+          <SpeedDialHandler className="bg-pink-600">
             <IconButton size="lg" className="rounded-full">
               <FaPlus className="h-5 w-5 transition-transform group-hover:rotate-45" />
             </IconButton>

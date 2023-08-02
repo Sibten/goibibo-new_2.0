@@ -69,11 +69,11 @@ export default function FlightDetails({
       <div>
         <div className="border-l-4 border-black px-4 font-bold flex">
           {isReturn ? (
-            <span className="bg-blue-700 text-white font-bold text-sm p-1 h-max rounded-md">
+            <span className="bg-pink-700 text-white font-bold text-sm p-1 h-max rounded-md">
               Return{" "}
             </span>
           ) : (
-            <span className="bg-blue-700 text-white font-bold text-sm p-1 h-max rounded-md">
+            <span className="bg-pink-700 text-white font-bold text-sm p-1 h-max rounded-md">
               Departure{" "}
             </span>
           )}
@@ -106,12 +106,12 @@ export default function FlightDetails({
           </h1>
         </div>
         <div className="my-4 flex justify-between">
-          <p className="bg-blue-50 w-max p-1 rounded-md">
+          <p className="bg-pink-50 w-max p-1 rounded-md">
             {" "}
             Start on -{" "}
             <span className="font-bold"> {source_time.toDateString()} </span>
           </p>
-          <p className="bg-blue-50 w-max p-1 rounded-md">
+          <p className="bg-pink-50 w-max p-1 rounded-md">
             {" "}
             Arrive on -{" "}
             <span className="font-bold"> {destn_time.toDateString()} </span>

@@ -386,7 +386,7 @@ export default function PaymentDetails({
             disabled={active}
           />{" "}
           <Button
-            className="bg-indigo-700 w-24 rounded-md mx-2 p-1 text-white"
+            className="bg-indigo-600 w-24 rounded-md mx-2 p-1 text-white"
             onClick={() => applyPromoCode()}
             disabled={active}
           >
@@ -404,8 +404,7 @@ export default function PaymentDetails({
 
         <div className="my-2 w-max mx-auto">
           <Button
-            className="flex"
-            color="indigo"
+            className="flex bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
             onClick={lockPayment}
             disabled={payLock}
           >

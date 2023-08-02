@@ -49,6 +49,7 @@ export default function Baggage({
                 <p className="mx-2">&#8377; {s.price} </p>
                 <Radio
                   name={`baggage-${type}`}
+                  color="pink"
                   onClick={() => {
                     setAddon(s);
                     setDisable(false);
@@ -61,7 +62,7 @@ export default function Baggage({
         </div>
         <div className="ml-auto w-max m-2">
           <button
-            className="bg-orange-700 rounded-md p-1 px-2 text-white font-qs font-bold disabled:bg-orange-200"
+            className="bg-pink-700 rounded-md p-1 px-2 text-white font-qs font-bold disabled:bg-pink-200"
             disabled={disable}
             onClick={(e) => {
               e.preventDefault();

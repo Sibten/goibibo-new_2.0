@@ -112,10 +112,10 @@ export default function Result({ filter }: { filter: Filter }) {
   const rtnRslt = selector.rtn && SearchParms.return_date ? <NotFound /> : "";
 
   return (
-    <div className="bg-fixed">
+    <div className="mx-auto">
       {selectedFlight ? <SelectionCard data={selectedFlight} /> : ""}
-      <div className={`grid ${selector.rtn ? "grid-cols-2" : "grid-cols-3"}`}>
-        <div className={`${selector.rtn ? "" : "col-span-2"}`}>
+      <div className="flex flex-wrap">
+        <div className="lg:w-1/2 w-full lg:h-max">
           <div className="mx-4">
             <h1 className="flex font-bold text-sm font-qs">
               {SearchParms.from.city_name}{" "}
@@ -142,7 +142,7 @@ export default function Result({ filter }: { filter: Filter }) {
             <NotFound />
           )}
         </div>
-        <div>
+        <div className="w-max">
           {selector.rtn && SearchParms.return_date ? (
             <div className="mx-4">
               <h1 className="flex font-bold text-sm font-qs">

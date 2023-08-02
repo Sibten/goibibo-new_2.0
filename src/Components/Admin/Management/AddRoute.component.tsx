@@ -20,6 +20,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { getStops } from "../../../Helper/Method";
 import { fetchRoutes } from "../../../Actions/Admin/Route.action";
+import Loaderdialog from "../../Dialog/Loader.dialog";
 
 export default function AddRouteComponent() {
   const [open, setOpen] = useState<boolean>(false);
@@ -46,6 +47,7 @@ export default function AddRouteComponent() {
 
   const [message, setMessage] = useState("");
   const dispatch = useDispatch<AppThunkDispatch>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const addRoute = () => {
     newRouteData.stops.splice(0, newRouteData.stops.length);
@@ -78,6 +80,7 @@ export default function AddRouteComponent() {
   };
 
   const confirmRoute = async () => {
+    setLoading(true);
     const data = JSON.stringify(newRouteData);
 
     let config = {
@@ -95,13 +98,16 @@ export default function AddRouteComponent() {
       if (res.status == 200) {
         toast.success("Route Added Successfully", { position: "bottom-right" });
       } else toast.error("Unable to add Route!");
+      setLoading(false);
     } catch (e) {
       toast.error("Something bad happen!", { position: "bottom-right" });
+      setLoading(false);
     }
   };
 
   return (
     <div className="mx-4">
+      {loading ? <Loaderdialog /> : ""}
       <div>
         <button
           className="bg-indigo-500 p-1 font-arial flex font-bold px-2 text-white rounded-full"
@@ -171,14 +177,12 @@ export default function AddRouteComponent() {
             ) : (
               ""
             )}
-            <Button
-              variant="outlined"
-              color="gray"
-              className="mx-2"
-              onClick={() => setOpen(!open)}
+            <button
+              className="mx-2 font-bold text-black"
+              onClick={() => setOpen(false)}
             >
               Cancel
-            </Button>
+            </button>
             <Button color="indigo" onClick={() => addRoute()}>
               Add Route
             </Button>

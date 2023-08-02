@@ -44,8 +44,8 @@ export default function FAQs() {
 
   return (
     <div className="lg:w-[60%] mx-auto my-8 ">
-      <h1 className="font-bold font-qs text-xl">Flight Booking FAQs</h1>
-      <div className="text-sm">
+      <h1 className="font-bold font-qs lg:text-xl mx-2">Flight Booking FAQs</h1>
+      <div className="text-sm mx-1">
         {faqData.map((s, i) => (
           <Accordion
             key={s.title}

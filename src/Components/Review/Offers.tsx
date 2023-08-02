@@ -37,7 +37,7 @@ export default function Offers({
                   callback(s);
                 }}
               >
-                <Radio name="offers" />
+                <Radio name="offers" color="pink" />
                 <div>
                   <h2 className="font-bold"> {s.offer_name}</h2>
                   <p className="text-sm text-gray-700">{s.description}</p>

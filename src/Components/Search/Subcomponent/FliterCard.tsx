@@ -4,7 +4,7 @@ import { RootState } from "../../../store";
 import { Airline, AirportType, Filter } from "../../../Types";
 import { GrPowerReset } from "react-icons/gr";
 import { calFare } from "../../../Helper/Method";
-
+import { Radio } from "@material-tailwind/react";
 
 export const defFilter: Filter = {
   dep: {
@@ -55,7 +55,7 @@ export default function FliterCard({ callback }: { callback: Function }) {
     });
 
     selector.rtn?.forEach((s) => {
-      let fare: { basic: number; tax: number } = { basic :0, tax : 0 };
+      let fare: { basic: number; tax: number } = { basic: 0, tax: 0 };
       if (SearchParams.return_date)
         fare = calFare(
           s.route_id.distance,
@@ -92,7 +92,7 @@ export default function FliterCard({ callback }: { callback: Function }) {
   }, [filter]);
 
   return (
-    <div className="py-2 pl-2 w-[24rem] mx-auto">
+    <div className="lg:block hidden py-2 pl-2 w-[24rem] mx-auto my-4">
       <div className="bg-white rounded-md p-2 shadow-md font-arial">
         <form>
           <div className="border-b">
@@ -120,10 +120,12 @@ export default function FliterCard({ callback }: { callback: Function }) {
             <div className="text-sm my-4">
               <span className="mx-2">
                 {" "}
-                <input
+                <Radio
                   type="radio"
                   name="time"
                   id="dep_b_6am"
+                  label="Before 6 AM"
+                  color="pink"
                   onChange={() =>
                     setFilter({
                       ...filter,
@@ -131,14 +133,15 @@ export default function FliterCard({ callback }: { callback: Function }) {
                     })
                   }
                 />{" "}
-                <label> Before 6 AM </label>
               </span>
               <span className="mx-2">
                 {" "}
-                <input
+                <Radio
                   type="radio"
                   name="time"
                   id="6am_12pm"
+                  label="6AM - 12PM "
+                  color="pink"
                   onChange={() =>
                     setFilter({
                       ...filter,
@@ -146,14 +149,15 @@ export default function FliterCard({ callback }: { callback: Function }) {
                     })
                   }
                 />{" "}
-                <label> 6AM - 12PM </label>
               </span>
               <span className="mx-2">
                 {" "}
-                <input
+                <Radio
                   type="radio"
                   name="time"
                   id="12pm_6pm"
+                  label="12PM - 6PM"
+                  color="pink"
                   onChange={() =>
                     setFilter({
                       ...filter,
@@ -161,14 +165,15 @@ export default function FliterCard({ callback }: { callback: Function }) {
                     })
                   }
                 />{" "}
-                <label> 12PM - 6PM </label>
               </span>
               <span className="mx-2">
                 {" "}
-                <input
+                <Radio
                   type="radio"
                   name="time"
                   id="12pm_6pm"
+                  label="After 6 PM"
+                  color="pink"
                   onChange={() =>
                     setFilter({
                       ...filter,
@@ -176,7 +181,6 @@ export default function FliterCard({ callback }: { callback: Function }) {
                     })
                   }
                 />{" "}
-                <label> After 6 PM </label>
               </span>
             </div>
           </div>
@@ -186,10 +190,12 @@ export default function FliterCard({ callback }: { callback: Function }) {
               <div className="text-sm my-4">
                 <span className="mx-2">
                   {" "}
-                  <input
+                  <Radio
                     type="radio"
                     name="rtn_time"
                     id="rtn_dep_b_6am"
+                    label="Before 6 AM"
+                    color="pink"
                     onChange={() =>
                       setFilter({
                         ...filter,
@@ -197,14 +203,15 @@ export default function FliterCard({ callback }: { callback: Function }) {
                       })
                     }
                   />{" "}
-                  <label> Before 6 AM </label>
                 </span>
                 <span className="mx-2">
                   {" "}
-                  <input
+                  <Radio
                     type="radio"
                     name="rtn_time"
                     id="rtn_6am_12pm"
+                    label="6AM - 12PM"
+                    color="pink"
                     onChange={() =>
                       setFilter({
                         ...filter,
@@ -212,14 +219,15 @@ export default function FliterCard({ callback }: { callback: Function }) {
                       })
                     }
                   />{" "}
-                  <label> 6AM - 12PM </label>
                 </span>
                 <span className="mx-2">
                   {" "}
-                  <input
+                  <Radio
                     type="radio"
                     name="rtn_time"
                     id="rtn_12pm_6pm"
+                    label="12PM - 6PM"
+                    color="pink"
                     onChange={() =>
                       setFilter({
                         ...filter,
@@ -227,14 +235,15 @@ export default function FliterCard({ callback }: { callback: Function }) {
                       })
                     }
                   />{" "}
-                  <label> 12PM - 6PM </label>
                 </span>
                 <span className="mx-2">
                   {" "}
-                  <input
+                  <Radio
                     type="radio"
                     name="rtn_time"
                     id="rtn_12pm_6pm"
+                    label="After 6 PM"
+                    color="pink"
                     onChange={() =>
                       setFilter({
                         ...filter,
@@ -242,7 +251,6 @@ export default function FliterCard({ callback }: { callback: Function }) {
                       })
                     }
                   />{" "}
-                  <label> After 6 PM </label>
                 </span>
               </div>
             </div>
@@ -254,51 +262,55 @@ export default function FliterCard({ callback }: { callback: Function }) {
             <div className="text-sm my-4">
               <span className="mx-2">
                 {" "}
-                <input
+                <Radio
                   type="radio"
                   name="stop"
+                  label="Non Stop"
+                  color="pink"
                   id="non_stop"
                   onChange={() =>
                     setFilter({ ...filter, dep: { ...filter.dep, stops: 0 } })
                   }
                 />{" "}
-                <label> Non Stop</label>
               </span>
               <span className="mx-2">
                 {" "}
-                <input
+                <Radio
                   type="radio"
                   name="stop"
                   id="one_stop"
+                  color="pink"
+                  label="1 Stop"
                   onChange={() =>
                     setFilter({ ...filter, dep: { ...filter.dep, stops: 1 } })
                   }
                 />{" "}
-                <label> 1 Stop </label>
               </span>
               <span className="mx-2">
                 {" "}
-                <input
+                <Radio
                   type="radio"
                   name="stop"
                   id="two_stop"
+                  color="pink"
+                  label="2 Stops"
                   onChange={() =>
                     setFilter({ ...filter, dep: { ...filter.dep, stops: 2 } })
                   }
                 />{" "}
-                <label> 2 Stops</label>
               </span>
               <span className="mx-2">
                 {" "}
-                <input
+                <Radio
                   type="radio"
                   name="stop"
                   id="multi_Stop"
+                  color="pink"
+                  label="2+ Stops"
                   onChange={() =>
                     setFilter({ ...filter, dep: { ...filter.dep, stops: 3 } })
                   }
                 />{" "}
-                <label> 2+ Stops </label>
               </span>
             </div>
           </div>
@@ -310,10 +322,12 @@ export default function FliterCard({ callback }: { callback: Function }) {
                 <div className="text-sm my-4">
                   <span className="mx-2">
                     {" "}
-                    <input
+                    <Radio
                       type="radio"
                       name="rtn_stop"
                       id="rtn_non_stop"
+                      label="Non Stop"
+                      color="pink"
                       onChange={() =>
                         setFilter({
                           ...filter,
@@ -321,14 +335,15 @@ export default function FliterCard({ callback }: { callback: Function }) {
                         })
                       }
                     />{" "}
-                    <label> Non Stop</label>
                   </span>
                   <span className="mx-2">
                     {" "}
-                    <input
+                    <Radio
                       type="radio"
                       name="rtn_stop"
                       id="rtn_one_stop"
+                      label="1 Stop"
+                      color="pink"
                       onChange={() =>
                         setFilter({
                           ...filter,
@@ -336,14 +351,15 @@ export default function FliterCard({ callback }: { callback: Function }) {
                         })
                       }
                     />{" "}
-                    <label> 1 Stop </label>
                   </span>
                   <span className="mx-2">
                     {" "}
-                    <input
+                    <Radio
                       type="radio"
                       name="rtn_stop"
                       id="rtn_two_stop"
+                      label="2 Stops"
+                      color="pink"
                       onChange={() =>
                         setFilter({
                           ...filter,
@@ -351,14 +367,15 @@ export default function FliterCard({ callback }: { callback: Function }) {
                         })
                       }
                     />{" "}
-                    <label> 2 Stops</label>
                   </span>
                   <span className="mx-2">
                     {" "}
-                    <input
+                    <Radio
                       type="radio"
                       name="rtn_stop"
                       id="rtn_multi_Stop"
+                      label="2+ Stops"
+                      color="pink"
                       onChange={() =>
                         setFilter({
                           ...filter,
@@ -366,7 +383,6 @@ export default function FliterCard({ callback }: { callback: Function }) {
                         })
                       }
                     />{" "}
-                    <label> 2+ Stops </label>
                   </span>
                 </div>
               </div>
@@ -384,8 +400,9 @@ export default function FliterCard({ callback }: { callback: Function }) {
                 </label>
                 <input
                   type="range"
-                  className="w-full transparent  border-2 cursor-pointer rounded-lg border-transparent bg-neutral-200"
+                  className="w-full cursor-pointer accent-pink-600"
                   name="min_range"
+                  style={{ backgroundColor: "pink" }}
                   id="minRange"
                   step={100}
                   min={defFilter.dep.min}
@@ -406,7 +423,7 @@ export default function FliterCard({ callback }: { callback: Function }) {
                 </label>
                 <input
                   type="range"
-                  className="w-full transparent  border-2 cursor-pointer rounded-lg border-transparent bg-neutral-200"
+                  className="w-full cursor-pointer accent-pink-600"
                   name="mx_range"
                   id="maxRange"
                   step={100}
@@ -434,7 +451,7 @@ export default function FliterCard({ callback }: { callback: Function }) {
                   </label>
                   <input
                     type="range"
-                    className="w-full transparent  border-2 cursor-pointer rounded-lg border-transparent bg-neutral-200"
+                    className="w-full cursor-pointer accent-pink-600"
                     name="rtn_min_range"
                     id="rtn_minRange"
                     step={100}
@@ -456,7 +473,7 @@ export default function FliterCard({ callback }: { callback: Function }) {
                   </label>
                   <input
                     type="range"
-                    className="w-full transparent  border-2 cursor-pointer rounded-lg border-transparent bg-neutral-200"
+                    className="w-full cursor-pointer accent-pink-600"
                     name="rtn_mx_range"
                     id="rtn_maxRange"
                     step={100}
@@ -485,6 +502,7 @@ export default function FliterCard({ callback }: { callback: Function }) {
                   <input
                     type="checkbox"
                     name="airlines"
+                    className="cursor-pointer p-1 accent-pink-600"
                     id={a.airline_code}
                     onChange={(e) => {
                       if (e.target.checked) {

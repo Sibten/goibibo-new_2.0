@@ -108,230 +108,233 @@ export default function FlightSearchHead() {
   };
 
   return (
-    <div className="bg-blue-700 sticky top-0 text-white  p-4 z-10">
-      <div className="flex">
-        {/* Dep : url  */}
-        <div className="mx-2 ">
-          <input
-            type="radio"
-            name="trip"
-            id="oneway"
-            className="p-4 mx-2"
-            defaultChecked={url.get("rtn_date") ? false : true}
-            onChange={() => {
-              setOpenReturn(false);
-              setURLSearchParamsData({
-                ...URLSearchParamsData,
-                return_date: null,
-              });
-            }}
-          />
-          <label className="font-qs font-bold">One way</label>
-        </div>
-        <div className="mx-2">
-          <input
-            type="radio"
-            name="trip"
-            id="roundtrip"
-            className="p-4 mx-2"
-            defaultChecked={url.get("rtn_date") ? true : false}
-            onChange={() => {
-              setOpenReturn(true);
-              setURLSearchParamsData({
-                ...URLSearchParamsData,
-                return_date:
-                  url.get("rtn_date") ??
-                  new Date(
-                    new Date(URLSearchParamsData.dept_date).setDate(
-                      new Date(URLSearchParamsData.dept_date).getDate() + 1
+    <div className="lg:bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500  sticky top-0 text-white  lg:p-4 z-10">
+      <div className="lg:w-full mx-auto">
+        <div className="flex flex-wrap">
+          <div className="mx-2 ">
+            <Radio
+              type="radio"
+              name="trip"
+              id="oneway"
+              // className="p-4 mx-2"
+              color="pink"
+              defaultChecked={url.get("rtn_date") ? false : true}
+              onChange={() => {
+                setOpenReturn(false);
+                setURLSearchParamsData({
+                  ...URLSearchParamsData,
+                  return_date: null,
+                });
+              }}
+            />
+            <label className="font-qs font-bold">One way</label>
+          </div>
+          <div className="mx-2">
+            <Radio
+              type="radio"
+              name="trip"
+              id="roundtrip"
+              color="pink"
+              // className="p-4 mx-2"
+              defaultChecked={url.get("rtn_date") ? true : false}
+              onChange={() => {
+                setOpenReturn(true);
+                setURLSearchParamsData({
+                  ...URLSearchParamsData,
+                  return_date:
+                    url.get("rtn_date") ??
+                    new Date(
+                      new Date(URLSearchParamsData.dept_date).setDate(
+                        new Date(URLSearchParamsData.dept_date).getDate() + 1
+                      )
                     )
-                  )
-                    .toISOString()
-                    .split("T")[0],
-              });
+                      .toISOString()
+                      .split("T")[0],
+                });
+              }}
+            />
+            <label className="font-qs font-bold">Round trip</label>
+          </div>
+        </div>
+        <div className="flex items-center flex-wrap mx-auto lg:mx-2 w-60 lg:w-full">
+          <div className="lg:mx-2">
+            <Menu open={openFrom} handler={setOpenFrom}>
+              <MenuHandler>
+                <div>
+                  <label
+                    htmlFor=""
+                    className="font-arial uppercase text-gray-200 text-xs my-2"
+                  >
+                    From
+                  </label>
+                  <input
+                    type="text"
+                    name="from"
+                    id="from"
+                    className="block border border-gray-500 bg-transparent p-2  w-60 rounded-lg font-qs font-bold"
+                    value={URLSearchParamsData.from.airport_code}
+                    readOnly
+                  />
+                </div>
+              </MenuHandler>
+              <MenuList className="-mt-16">
+                <>
+                  {" "}
+                  <FlightInput
+                    label="From"
+                    callback={clickCallback}
+                    type={SearchType.From}
+                    callType={callTypes.JustReturn}
+                  />{" "}
+                </>
+              </MenuList>
+            </Menu>
+          </div>
+          <div
+            className="mt-4 text-xl hidden lg:block"
+            onClick={() => {
+              [URLSearchParamsData.from, URLSearchParamsData.to] = [
+                URLSearchParamsData.to,
+                URLSearchParamsData.from,
+              ];
+              setURLSearchParamsData({ ...URLSearchParamsData });
             }}
-          />
-          <label className="font-qs font-bold">Round trip</label>
-        </div>
-      </div>
-      <div className="flex items-center flex-wrap">
-        <div className="mx-2">
-          <Menu open={openFrom} handler={setOpenFrom}>
-            <MenuHandler>
-              <div>
-                <label
-                  htmlFor=""
-                  className="font-arial uppercase text-gray-200 text-xs my-2"
-                >
-                  From
-                </label>
-                <input
-                  type="text"
-                  name="from"
-                  id="from"
-                  className="block bg-indigo-500 p-2 w-60 rounded-lg font-qs font-bold"
-                  value={URLSearchParamsData.from.airport_code}
-                  readOnly
-                />
-              </div>
-            </MenuHandler>
-            <MenuList className="-mt-16">
-              <>
-                {" "}
-                <FlightInput
-                  label="From"
-                  callback={clickCallback}
-                  type={SearchType.From}
-                  callType={callTypes.JustReturn}
-                />{" "}
-              </>
-            </MenuList>
-          </Menu>
-        </div>
-        <div
-          className="mt-4 text-xl"
-          onClick={() => {
-            [URLSearchParamsData.from, URLSearchParamsData.to] = [
-              URLSearchParamsData.to,
-              URLSearchParamsData.from,
-            ];
-            setURLSearchParamsData({ ...URLSearchParamsData });
-          }}
-        >
-          <HiOutlineArrowsRightLeft />
-        </div>
-        <div className="mx-2">
-          <Menu open={openTo} handler={setOpenTo}>
-            <MenuHandler>
-              <div>
-                <label
-                  htmlFor=""
-                  className="font-arial uppercase text-gray-200 text-xs my-2"
-                >
-                  To
-                </label>
-                <input
-                  type="text"
-                  name="to"
-                  id="to"
-                  className="block bg-indigo-500 p-2 w-60 rounded-lg font-qs font-bold"
-                  value={URLSearchParamsData.to.airport_code}
-                  readOnly
-                />
-              </div>
-            </MenuHandler>
-            <MenuList className="-mt-16">
-              <>
-                {" "}
-                <FlightInput
-                  label="To"
-                  callback={clickCallback}
-                  type={SearchType.To}
-                  callType={callTypes.JustReturn}
-                />{" "}
-              </>
-            </MenuList>
-          </Menu>
-        </div>
-        <div className="mx-2">
-          <label
-            htmlFor=""
-            className="font-arial uppercase text-gray-200 text-xs my-2"
           >
-            Departure Date
-          </label>
-          <input
-            type="date"
-            name="dep_date"
-            id="dep_date"
-            onKeyDown={(e) => e.preventDefault()}
-            min={new Date().toISOString().split("T")[0]}
-            className="block bg-indigo-500 p-2 w-30 rounded-lg font-qs font-bold"
-            defaultValue={
-              new Date(URLSearchParamsData.dept_date)
-                .toISOString()
-                .split("T")[0]
-            }
-            onChange={(e) =>
-              setURLSearchParamsData({
-                ...URLSearchParamsData,
-                dept_date: e.target.value,
-              })
-            }
-          />
-        </div>
-        <div className="mx-2">
-          <label
-            htmlFor=""
-            className="font-arial uppercase text-gray-200 text-xs my-2"
-          >
-            Return Date
-          </label>
-          {openReturn ? (
+            <HiOutlineArrowsRightLeft />
+          </div>
+          <div className="lg:mx-2">
+            <Menu open={openTo} handler={setOpenTo}>
+              <MenuHandler>
+                <div>
+                  <label
+                    htmlFor=""
+                    className="font-arial uppercase text-gray-200 text-xs my-2"
+                  >
+                    To
+                  </label>
+                  <input
+                    type="text"
+                    name="to"
+                    id="to"
+                    className="block border border-gray-500 bg-transparent p-2 w-60 rounded-lg font-qs font-bold"
+                    value={URLSearchParamsData.to.airport_code}
+                    readOnly
+                  />
+                </div>
+              </MenuHandler>
+              <MenuList className="-mt-16">
+                <>
+                  {" "}
+                  <FlightInput
+                    label="To"
+                    callback={clickCallback}
+                    type={SearchType.To}
+                    callType={callTypes.JustReturn}
+                  />{" "}
+                </>
+              </MenuList>
+            </Menu>
+          </div>
+          <div className="lg:mx-2">
+            <label
+              htmlFor=""
+              className="font-arial uppercase text-gray-200 text-xs my-2"
+            >
+              Departure Date
+            </label>
             <input
               type="date"
-              name="retn_date"
-              id="retn_date"
-              min={
+              name="dep_date"
+              id="dep_date"
+              onKeyDown={(e) => e.preventDefault()}
+              min={new Date().toISOString().split("T")[0]}
+              className="block border border-gray-500 bg-transparent p-2 w-60 lg:w-30  rounded-lg font-qs font-bold"
+              defaultValue={
                 new Date(URLSearchParamsData.dept_date)
                   .toISOString()
                   .split("T")[0]
               }
-              onKeyDown={(e) => e.preventDefault()}
-              value={URLSearchParamsData.return_date?.split("T")[0]}
-              defaultValue={returnDateDef()}
-              className="block bg-indigo-500 p-2 w-30 rounded-lg font-qs font-bold"
-              onChange={(e) => {
+              onChange={(e) =>
                 setURLSearchParamsData({
                   ...URLSearchParamsData,
-                  return_date: e.target.value,
-                });
-              }}
+                  dept_date: e.target.value,
+                })
+              }
             />
-          ) : (
-            <input
-              type="date"
-              className="block disabled:bg-indigo-400 disabled:text-gray-500 bg-indigo-500 p-2 w-30 rounded-lg font-qs font-bold"
-              disabled
-            />
-          )}
-        </div>
-        <div className="mx-2">
-          <Menu open={openClass} handler={setOpenClass}>
-            <MenuHandler>
-              <div>
-                <label
-                  htmlFor=""
-                  className="font-arial uppercase text-gray-200 text-xs my-2"
-                >
-                  Return Date
-                </label>
-                <div className="block bg-indigo-500 p-2 w-48 rounded-lg font-qs font-bold">
-                  {URLSearchParamsData.pepoles.adults +
-                    URLSearchParamsData.pepoles.children!}{" "}
-                  Traveller(s)
+          </div>
+          <div className="lg:mx-2">
+            <label
+              htmlFor=""
+              className="font-arial uppercase text-gray-200 text-xs my-2"
+            >
+              Return Date
+            </label>
+            {openReturn ? (
+              <input
+                type="date"
+                name="retn_date"
+                id="retn_date"
+                min={
+                  new Date(URLSearchParamsData.dept_date)
+                    .toISOString()
+                    .split("T")[0]
+                }
+                onKeyDown={(e) => e.preventDefault()}
+                value={URLSearchParamsData.return_date?.split("T")[0]}
+                defaultValue={returnDateDef()}
+                className="block border border-gray-500 bg-transparent p-2 w-60 lg:w-30 rounded-lg font-qs font-bold"
+                onChange={(e) => {
+                  setURLSearchParamsData({
+                    ...URLSearchParamsData,
+                    return_date: e.target.value,
+                  });
+                }}
+              />
+            ) : (
+              <input
+                type="date"
+                className="block border text-gray-500 border-gray-500 bg-transparent p-2 w-60 lg:w-30 rounded-lg font-qs font-bold"
+                disabled
+              />
+            )}
+          </div>
+          <div className="lg:mx-2">
+            <Menu open={openClass} handler={setOpenClass}>
+              <MenuHandler>
+                <div>
+                  <label
+                    htmlFor=""
+                    className="font-arial uppercase text-gray-200 text-xs my-2"
+                  >
+                    Travellers
+                  </label>
+                  <div className="block border border-gray-500 bg-transparent p-2 w-60 lg:w-36 rounded-lg font-qs font-bold">
+                    {URLSearchParamsData.pepoles.adults +
+                      URLSearchParamsData.pepoles.children!}{" "}
+                    Traveller(s)
+                  </div>
                 </div>
-              </div>
-            </MenuHandler>
-            <MenuList className="-mt-16">
-              <>
-                <FlightClass
-                  callback={clickCallback}
-                  callType={callTypes.JustReturn}
-                />
-              </>
-            </MenuList>
-          </Menu>
-        </div>
-        <div className="mt-6">
-          <button
-            type="button"
-            className="uppercase tracking-wider bg-white text-indigo-500 p-2 rounded-lg font-qs font-bold"
-            onClick={() => updateSearch()}
-          >
-            {" "}
-            Update Search{" "}
-          </button>
+              </MenuHandler>
+              <MenuList className="-mt-16">
+                <>
+                  <FlightClass
+                    callback={clickCallback}
+                    callType={callTypes.JustReturn}
+                  />
+                </>
+              </MenuList>
+            </Menu>
+          </div>
+          <div className="mt-6">
+            <button
+              type="button"
+              className="uppercase tracking-wider bg-white text-pink-500 p-2 rounded-lg font-qs font-bold"
+              onClick={() => updateSearch()}
+            >
+              {" "}
+              Update Search{" "}
+            </button>
+          </div>
         </div>
       </div>
     </div>

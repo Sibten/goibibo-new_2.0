@@ -10,21 +10,12 @@ import Admindashpage from "../../Pages/Admin/Admin-dashboard.page";
 import { MdDashboard, MdSettings } from "react-icons/md";
 import { FaPlane } from "react-icons/fa";
 import AirlineProfilePage from "../../Pages/Admin/Airline-Profile.page";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppThunkDispatch } from "../../store";
-import { fetchAirlineDetails } from "../../Actions/Admin/Airline.action";
-import { fetchAirlineFlights } from "../../Actions/Admin/AirlineFlights.action";
+
 import { Link } from "react-router-dom";
 export default function AdminRouter() {
   const [activeTab, setActiveTab] = useState<number>(1);
-
-  const user = useSelector((state: RootState) => state.User);
-  const airline = useSelector((state: RootState) => state.Airline);
-  const flight = useSelector((state: RootState) => state.AirlineFlight);
-
-  const dispatch = useDispatch<AppThunkDispatch>();
   return (
-    <div className="h-screen">
+    <div className="h-screen ">
       <Tabs value="dashboard" orientation="vertical">
         <TabsHeader className="w-48 h-screen sticky top-0">
           <Tab

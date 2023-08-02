@@ -1,5 +1,10 @@
 import React from "react";
+import SearchResult from "./SearchResult.component";
 
 export default function SearchResultSmall() {
-  return <div>SearchResultSmall.component</div>;
+  return (
+    <div>
+      <SearchResult />
+    </div>
+  );
 }

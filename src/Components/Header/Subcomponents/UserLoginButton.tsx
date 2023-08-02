@@ -20,7 +20,7 @@ export default function UserLoginButton() {
   return (
     <>
       <div
-        className="border border-blue-600 rounded-lg flex p-2 font-qs font-bold text-gray-800 tracking-wider text-xs"
+        className="lg:border border-blue-600 rounded-lg flex p-2 font-qs font-bold text-gray-800 tracking-wider text-xs"
         onClick={handleClick}
         onMouseEnter={loginPopupShow}
         onMouseLeave={loginPopupClose}

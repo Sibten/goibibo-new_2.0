@@ -96,7 +96,7 @@ export default function JouernyCalender({
       ) : (
         ""
       )}
-      <Button className="my-2" onClick={() => setParams()}>
+      <Button className="my-2 bg-indigo-500" onClick={() => setParams()}>
         Done
       </Button>
     </div>
