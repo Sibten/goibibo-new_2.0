@@ -42,6 +42,7 @@ export default function UserProfile() {
     setUserData({ ...User });
   }, [User]);
   const email = Cookies.get("email");
+  const [message, setMessage] = useState<string>("");
   const uploadPhoto = (e: any) => {
     //  console.log(e.target.files[0]);
 
@@ -75,33 +76,37 @@ export default function UserProfile() {
     e.preventDefault();
     delete userData.role;
     const data = JSON.stringify(userData);
+
+    if (userData.state == "def") {
+      setMessage("State Should be valid!");
+    } else {
+      const config = {
+        method: "put",
+        url: `${process.env.REACT_APP_API}/user/updateprofile`,
+        headers: {
+          "Content-Type": "application/json",
+          token: Cookies.get("token"),
+        },
+        data: data,
+      };
+
+      axios(config)
+        .then(function (response) {
+          toast.success("Profile Updated Sucessfully", {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          });
+          //  console.log(response.data);
+
+          dispatch(fetchUser(email!));
+        })
+        .catch(function (error) {
+          toast.error("Unable to Update Profile!", {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          });
+          //  console.log(error);
+        });
+    }
     //  console.log(userData);
-
-    const config = {
-      method: "put",
-      url: `${process.env.REACT_APP_API}/user/updateprofile`,
-      headers: {
-        "Content-Type": "application/json",
-        token: Cookies.get("token"),
-      },
-      data: data,
-    };
-
-    axios(config)
-      .then(function (response) {
-        toast.success("Profile Updated Sucessfully", {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
-        //  console.log(response.data);
-
-        dispatch(fetchUser(email!));
-      })
-      .catch(function (error) {
-        toast.error("Unable to Update Profile!", {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
-        //  console.log(error);
-      });
   };
 
   return (
@@ -278,7 +283,15 @@ export default function UserProfile() {
               ))}
             </select>
           </div>
-
+          <div className="block">
+            {message ? (
+              <Alert className="bg-red-50 text-red-500 font-bold text-sm font-arial">
+                {message}
+              </Alert>
+            ) : (
+              ""
+            )}
+          </div>
           <div className="flex font-arial font-bold">
             <button
               type="submit"

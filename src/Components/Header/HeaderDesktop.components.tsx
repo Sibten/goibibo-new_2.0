@@ -1,7 +1,7 @@
 import React from "react";
 import { GiCommercialAirplane } from "react-icons/gi";
 import DefaultLoginButton from "./Subcomponents/DefaultLoginButton";
-import { FaBus, FaHotel, FaTrain } from "react-icons/fa";
+import { FaBus, FaHotel, FaSuitcase, FaTrain } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -74,7 +74,19 @@ export default function HeaderDesktop() {
           </ul>
         </div>
       </div>
-      <div className="mx-2">
+      <div className="mx-2 flex items-center">
+        <Link to="/mytrips">
+          {" "}
+          <span className="flex items-center text-gray-800 font-arial mx-4">
+            {" "}
+            <FaSuitcase className="text-2xl mx-2 text-gray-600" />{" "}
+            <span className="text-sm">
+              {" "}
+              <p className="text-xs"> My Trips</p>{" "}
+              <p className="font-bold"> View Booking</p>
+            </span>
+          </span>{" "}
+        </Link>
         {User.email ? <UserLoginButton /> : <DefaultLoginButton />}
       </div>
     </div>

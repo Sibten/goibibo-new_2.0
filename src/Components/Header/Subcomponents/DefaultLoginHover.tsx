@@ -22,18 +22,23 @@ export default function DefaultLoginHover() {
       </Link>
       <div>
         <ul>
-          <li className="text-gray-700 flex my-2 border-b p-2">
-            <FaSuitcase className="text-xl" />{" "}
-            <p className="mx-4 text-md font-qs font-bold">My Trips </p>{" "}
-          </li>
+          <Link to="/mytrips">
+            {" "}
+            <li className="text-gray-700 flex my-2 border-b p-2">
+              <FaSuitcase className="text-xl" />{" "}
+              <p className="mx-4 text-md font-qs font-bold">My Trips </p>{" "}
+            </li>{" "}
+          </Link>
+          <Link to="/offers"> 
           <li className="text-gray-700 flex my-2 p-2">
             <TbDiscount2 className="text-xl" />{" "}
             <p className="mx-4 text-md font-qs font-bold"> Offers </p>{" "}
-          </li>
+          </li> </Link>
+          <Link to="/support"> 
           <li className="text-gray-700 flex my-2 p-2">
             <MdSupportAgent className="text-xl" />{" "}
             <p className="mx-4 text-md font-qs font-bold"> Help & Support </p>{" "}
-          </li>
+          </li> </Link>
         </ul>
       </div>
     </div>

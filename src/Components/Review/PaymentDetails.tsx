@@ -268,7 +268,7 @@ export default function PaymentDetails({
   };
 
   return (
-    <div className=" bg-white shadow-md  rounded-md w-[20rem] h-max py-4 my-4 font-arial">
+    <div className=" bg-white shadow-md  rounded-md w-[20rem] h-max py-4 my-4 font-arial sticky top-2 z-10">
       <div className="border-b border-gray-300 p-4">
         <h1 className="font-bold uppercase tracking-wide font-qs">
           {" "}

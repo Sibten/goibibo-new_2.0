@@ -56,7 +56,7 @@ export default function EditFarecomponents({
     fare?.forEach((v) => {
       update(v.class_type, v.basic_fare);
     });
-    setUpdateData(updateData);
+    setUpdateData({ ...updateData });
   }, [fare]);
 
   const GST = 18;

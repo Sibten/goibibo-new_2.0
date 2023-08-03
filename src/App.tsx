@@ -26,6 +26,7 @@ import UnderConstruction from "./Components/Errors/UnderConstruction";
 import Footer from "./Components/Footer/Footer";
 import Support from "./Pages/Support/Support";
 import AboutPage from "./Pages/About/About.page";
+import OffersPage from "./Pages/Offers/Offers.page";
 
 function App() {
   return (
@@ -64,11 +65,12 @@ function App() {
         </Route>
 
         <Route path="/support" element={<Support />} />
-        <Route path="/about" element={<AboutPage/>}/>
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/hotels" element={<UnderConstruction />} />
         <Route path="/trains" element={<UnderConstruction />} />
         <Route path="/bus" element={<UnderConstruction />} />
+        <Route path="/offers" element={<OffersPage />} />
         <Route path="*" element={<Pagenotfound />} />
       </Routes>
       <Footer />

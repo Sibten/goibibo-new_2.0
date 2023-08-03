@@ -97,6 +97,7 @@ export default function AddRouteComponent() {
       const res = await axios(config);
       if (res.status == 200) {
         toast.success("Route Added Successfully", { position: "bottom-right" });
+        dispatch(fetchRoutes());
       } else toast.error("Unable to add Route!");
       setLoading(false);
     } catch (e) {

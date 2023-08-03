@@ -77,9 +77,22 @@ export default function Footer() {
             <h1 className="text-sm font-bold uppercase"> Follow Us</h1>
             <div className="flex my-2">
               <FaFacebook className="text-2xl mx-2" />
-              <FaTwitter className="text-2xl mx-2" />
-              <FaLinkedin className="text-2xl mx-2" />
-              <FaYoutubeSquare className="text-2xl mx-2" />
+              <a href="https://twitter.com/goibibo" target="_blank">
+                {" "}
+                <FaTwitter className="text-2xl mx-2" />{" "}
+              </a>
+
+              <a
+                href="https://www.linkedin.com/company/goibibo"
+                target="_blank"
+              >
+                {" "}
+                <FaLinkedin className="text-2xl mx-2" />{" "}
+              </a>
+              <a href="https://www.youtube.com/@goibibo">
+                {" "}
+                <FaYoutubeSquare className="text-2xl mx-2" />{" "}
+              </a>
             </div>
           </div>
           <div>
@@ -96,12 +109,15 @@ export default function Footer() {
                   className="hidden lg:block w-24 h-8"
                 />{" "}
               </a>
-              <a href="https://apps.apple.com/in/app/goibibo-hotel-flight-booking/id631927169" target="_blank"> 
-              <img
-                src="https://res.cloudinary.com/dgsqarold/image/upload/v1690804031/Goibibo/App_Store_ofpgfl.png"
-                alt="as"
-                className="w-24 h-10 -mt-1 mx-2"
-              />
+              <a
+                href="https://apps.apple.com/in/app/goibibo-hotel-flight-booking/id631927169"
+                target="_blank"
+              >
+                <img
+                  src="https://res.cloudinary.com/dgsqarold/image/upload/v1690804031/Goibibo/App_Store_ofpgfl.png"
+                  alt="as"
+                  className="w-24 h-10 -mt-1 mx-2"
+                />
               </a>
             </div>
           </div>

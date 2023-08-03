@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { RiAddFill, RiSubtractLine } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
-import { Button, Checkbox, Chip, Radio } from "@material-tailwind/react";
+import { Alert, Button, Checkbox, Chip, Radio } from "@material-tailwind/react";
 import {
   Flighclass,
   SearchParamsType,
@@ -52,6 +52,8 @@ export default function FlightClass({ callback, callType }: MyProps) {
       callback!(CallBackType.success);
     }
   };
+
+  const [message, setMessage] = useState("");
 
   return (
     <div>
@@ -103,9 +105,12 @@ export default function FlightClass({ callback, callType }: MyProps) {
             <span className="-mt-2 mx-2"> {adults}</span>
             <button
               onClick={() => {
-                if (adults >= 1) {
+                if (adults >= 1 && adults < 8 && adults + children < 9) {
                   setAdults(adults + 1);
                   setAdultDisable(false);
+                } else {
+                  setMessage("Maximum 9 persons is allowed at a time");
+                  setTimeout(() => setMessage(""), 2000);
                 }
               }}
             >
@@ -134,9 +139,12 @@ export default function FlightClass({ callback, callType }: MyProps) {
             <span className="-mt-2 mx-2"> {children}</span>
             <button
               onClick={() => {
-                if (children >= 0) {
+                if (children >= 0 && children < 8 && adults + children < 9) {
                   setChildren(children + 1);
                   setChildrenDisable(false);
+                } else {
+                  setMessage("Maximum 9 persons is allowed at a time");
+                  setTimeout(() => setMessage(""), 2000);
                 }
               }}
             >
@@ -165,9 +173,12 @@ export default function FlightClass({ callback, callType }: MyProps) {
             <span className="-mt-2 mx-2"> {infants}</span>
             <button
               onClick={() => {
-                if (infants >= 0) {
+                if (infants >= 0 && infants < adults) {
                   setInfants(infants + 1);
                   setInfantsDisable(false);
+                } else {
+                  setMessage("You must have atleast one adult per infant");
+                  setTimeout(() => setMessage(""), 2000);
                 }
               }}
             >
@@ -207,6 +218,15 @@ export default function FlightClass({ callback, callType }: MyProps) {
             defaultChecked={SearchParams.class == Flighclass.FirstClass}
           />
         </div>
+      </div>
+      <div className="my-2">
+        {message ? (
+          <Alert className="bg-red-50 text-red-500 px-4 p-1 text-center text-sm">
+            {message}
+          </Alert>
+        ) : (
+          ""
+        )}
       </div>
       <div className="border-t p-2 flex justify-end">
         <div>

@@ -33,13 +33,15 @@ export default function UserLoginHover() {
               <p className="mx-4 text-md font-qs font-bold">My Trips </p>
             </li>
           </Link>
-          <li className="text-gray-700 flex border-b my-2 p-2">
-            <TbDiscount2 className="text-xl" />
-            <p className="mx-4 text-md font-qs font-bold"> Offers </p>
-          </li>
+          <Link to="/offers">
+            <li className="text-gray-700 flex border-b my-2 p-2">
+              <TbDiscount2 className="text-xl" />
+              <p className="mx-4 text-md font-qs font-bold"> Offers </p>
+            </li>{" "}
+          </Link>
           <Link to="/support">
             {" "}
-            <li className="text-gray-700 flex my-2 p-2 w-max">
+            <li className="text-gray-700 flex border-b my-2 p-2 w-max">
               <MdSupportAgent className="text-xl" />{" "}
               <p className="mx-4 text-md font-qs font-bold w-max">
                 {" "}
