@@ -39,7 +39,7 @@ export default function Tripspage() {
   );
 
   return (
-    <div className="bg-[#e9eef7] bg-fixed h-[51rem]">
+    <div className="bg-[#e9eef7] bg-fixed h-[51rem] w-full overflow-auto">
       <div>
         <Title text="My Trips" />
         <div className="w-[60rem] mx-auto relative">

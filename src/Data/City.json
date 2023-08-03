@@ -1,0 +1,32 @@
+{
+  "cities": [
+    {
+      "id": 2,
+      "name": "Agra",
+      "img": "https://res.cloudinary.com/dgsqarold/image/upload/v1691043783/Goibibo/india-4051753_640_xmf3nk.jpg",
+      "quotes": "Agra, where the Taj Mahal stands tall, and love reigns supreme.",
+      "airport": "AGR"
+    },
+    {
+      "id": 3,
+      "name": "Jaipur",
+      "img": "https://res.cloudinary.com/dgsqarold/image/upload/v1691043753/Goibibo/hawa-mahal-6156123_640_he2kr9.jpg",
+      "quotes": "Jaipur, where history and culture come alive.",
+      "airport": "JAI"
+    },
+    {
+      "id": 4,
+      "name": "Delhi",
+      "img": "https://res.cloudinary.com/dgsqarold/image/upload/v1691043829/Goibibo/travel-4813658_640_ayl4rm.jpg",
+      "quotes": "Delhi is not just a city, it's an emotion.",
+      "airport": "DEL"
+    },
+    {
+      "id": 5,
+      "name": "Kolkata",
+      "img": "https://res.cloudinary.com/dgsqarold/image/upload/v1691044669/Goibibo/victoria-memorial-2394784_640_geradm.jpg",
+      "quotes": "Kolkata is one of these great places that is a really sensual, physically beautiful place",
+      "airport": "CCU"
+    }
+  ]
+}

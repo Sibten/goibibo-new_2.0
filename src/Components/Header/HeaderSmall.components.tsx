@@ -15,10 +15,13 @@ export default function HeaderSmall() {
               <AiOutlineHome className="w-max mx-auto text-2xl" /> Home{" "}
             </li>
           </Link>
-          <li className="mx-4">
+          <Link to="/mytrips">
             {" "}
-            <RiSuitcaseLine className="w-max mx-auto text-2xl" /> My Trips{" "}
-          </li>
+            <li className="mx-4">
+              {" "}
+              <RiSuitcaseLine className="w-max mx-auto text-2xl" /> My Trips{" "}
+            </li>{" "}
+          </Link>
           <li className="mx-4">
             {" "}
             <TbDiscount2 className="w-max mx-auto text-2xl" /> Offers{" "}

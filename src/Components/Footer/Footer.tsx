@@ -85,16 +85,24 @@ export default function Footer() {
           <div>
             <h1 className="text-sm font-bold uppercase">Download Our App</h1>
             <div className="flex my-2">
-              <img
-                src="https://res.cloudinary.com/dgsqarold/image/upload/v1690804040/Goibibo/PlayStore_em9auu.png"
-                alt="gp"
-                className="hidden lg:block w-24 h-8"
-              />
+              <a
+                href="https://play.google.com/store/apps/details?id=com.goibibo"
+                target="_blank"
+              >
+                {" "}
+                <img
+                  src="https://res.cloudinary.com/dgsqarold/image/upload/v1690804040/Goibibo/PlayStore_em9auu.png"
+                  alt="gp"
+                  className="hidden lg:block w-24 h-8"
+                />{" "}
+              </a>
+              <a href="https://apps.apple.com/in/app/goibibo-hotel-flight-booking/id631927169" target="_blank"> 
               <img
                 src="https://res.cloudinary.com/dgsqarold/image/upload/v1690804031/Goibibo/App_Store_ofpgfl.png"
                 alt="as"
                 className="w-24 h-10 -mt-1 mx-2"
               />
+              </a>
             </div>
           </div>
           <div>

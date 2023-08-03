@@ -132,7 +132,7 @@ export default function LoginPage() {
         src="https://res.cloudinary.com/dgsqarold/image/upload/v1687350557/Goibibo/landscape-159294_1280_veiwja.png"
         alt=""
       />
-      <div className="sm:bg-gray-50 sm:shadow-lg mx-4 w-full min-h-[28rem] sm:w-96  sm:mx-auto p-4 rounded-lg relative">
+      <div className="bg-white sm:shadow-lg w-full min-h-[28rem] sm:w-96  sm:mx-auto p-4 rounded-lg relative">
         <Link to="/">
           {" "}
           <div className="flex">

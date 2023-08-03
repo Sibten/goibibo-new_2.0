@@ -113,7 +113,7 @@ export default function UserProfile() {
           <input
             type="file"
             name="profilePhoto"
-            className="text-xs w-max my-1 font-arial"
+            className="text-xs w-24 my-1  font-arial"
             id="pf"
             onChange={(e) => uploadPhoto(e)}
           />

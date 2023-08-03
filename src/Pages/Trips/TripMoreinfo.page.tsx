@@ -18,7 +18,7 @@ export default function TripMorepage() {
   const data = selector.find((s) => s.PNR_no == parseInt(params.pnr!));
 
   return (
-    <div className="">
+    <div className="w-full overflow-auto">
       <Title text="Your Trip" />
       <div className="w-max mx-auto">
         <img src="https://res.cloudinary.com/dgsqarold/image/upload/v1690998775/Goibibo/gbo_gstxd2.png" />
@@ -186,7 +186,7 @@ export default function TripMorepage() {
           </table>
         </div>
       </div>
-      <div className="my-2 border-t border-gray-400  font-arial mx-auto w-[48rem] p-4">
+      <div className="my-1 border-t border-gray-400  font-arial mx-auto w-[48rem] p-4">
         <h1 className="font-bold text-lg my-2"> Billing Information </h1>
         <div className=" w-[24rem]">
           <div>

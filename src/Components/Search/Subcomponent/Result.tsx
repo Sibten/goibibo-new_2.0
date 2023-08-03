@@ -142,7 +142,7 @@ export default function Result({ filter }: { filter: Filter }) {
             <NotFound />
           )}
         </div>
-        <div className="w-max">
+        <div className="lg:w-1/2 w-full lg:h-max ">
           {selector.rtn && SearchParms.return_date ? (
             <div className="mx-4">
               <h1 className="flex font-bold text-sm font-qs">
