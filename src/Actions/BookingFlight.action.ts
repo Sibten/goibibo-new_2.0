@@ -13,10 +13,10 @@ export const fetchFlight = createAsyncThunk(
   async (call: { config: AxiosRequestConfig; type: number }) => {
     const data = await axios(call.config);
     if (call.type == SearchType.From) {
-      console.log("from");
+      // //  console.log("from");
       return { data: data.data, type: SearchType.From };
     } else {
-      console.log("to");
+      // //  console.log("to");
       return { data: data.data, type: SearchType.To };
     }
   }

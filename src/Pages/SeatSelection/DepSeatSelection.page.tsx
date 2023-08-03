@@ -68,7 +68,7 @@ export default function DepSeatSelectionPage() {
       dispatch(BookingActions.updatePeople(value));
       dispatch(trackingActions.activePayment());
       navigate("/flight/payment");
-      console.log("done");
+      // //  console.log("done");
     }
   };
 

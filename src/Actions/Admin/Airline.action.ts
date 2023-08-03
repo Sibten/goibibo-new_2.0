@@ -12,7 +12,7 @@ const initialState: Airline = {
 };
 
 export const fetchAirlineDetails = createAsyncThunk("airline", async () => {
-  console.log("i'm calling");
+  // //  console.log("i'm calling");
   const config: AxiosRequestConfig = {
     method: "get",
     url: "http://localhost:5050/airlines/myairline/getdetails",

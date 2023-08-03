@@ -6,7 +6,7 @@ import { Route } from "../../Types";
 const initialState: Array<Route> = [];
 
 export const fetchRoutes = createAsyncThunk("route", async () => {
-  console.log("calling.. route");
+  // //  console.log("calling.. route");
   let config: AxiosRequestConfig = {
     method: "get",
     url: "http://localhost:5050/route/getroutes",

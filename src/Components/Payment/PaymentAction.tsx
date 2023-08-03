@@ -74,7 +74,7 @@ const verifyPayment = async (
       return_addons: bookingDetails.addOnRtn,
     },
   };
-  console.log(sendingData);
+  // //  console.log(sendingData);
   const data = JSON.stringify(sendingData);
 
   const config: AxiosRequestConfig = {
@@ -124,7 +124,7 @@ export default function PaymentAction() {
     try {
       const order = await createPaymentOrder(payableAmount);
       const paymentKeyId = process.env.REACT_APP_RZP_KEY ?? "";
-      console.log(paymentKeyId);
+      // //  console.log(paymentKeyId);
       const paymentOptions = {
         key: paymentKeyId, // Enter the Key ID generated from the Dashboard
         amount: (payableAmount * 100).toString(),

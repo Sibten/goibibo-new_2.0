@@ -5,7 +5,7 @@ import axios from "axios";
 const initialState: Array<AirportType> = [];
 
 export const fetchAirports = createAsyncThunk("fetchAirports", async () => {
-  console.log("Calling...");
+  // //  console.log("Calling...");
   const config = {
     method: "get",
     url: "http://localhost:5050/city/",

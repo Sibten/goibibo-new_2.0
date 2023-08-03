@@ -53,9 +53,9 @@ export default function SearchCard({
         ? SearchParams.dept_date
         : SearchParams.return_date!
     );
-    console.log(
-      type == 1 ? value.route_id.distance * value.fare.fare[0].basic_fare : ""
-    );
+    // //  console.log(
+    //   type == 1 ? value.route_id.distance * value.fare.fare[0].basic_fare : ""
+    // );
 
     return (
       <div className="overflow-auto">

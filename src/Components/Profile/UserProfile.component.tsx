@@ -43,7 +43,7 @@ export default function UserProfile() {
   }, [User]);
   const email = Cookies.get("email");
   const uploadPhoto = (e: any) => {
-    console.log(e.target.files[0]);
+    //  console.log(e.target.files[0]);
 
     const formdata = new FormData();
     formdata.append("email", email!);
@@ -71,7 +71,7 @@ export default function UserProfile() {
     e.preventDefault();
     delete userData.role;
     const data = JSON.stringify(userData);
-    console.log(userData);
+    //  console.log(userData);
 
     const config = {
       method: "put",
@@ -88,7 +88,7 @@ export default function UserProfile() {
         toast.success("Profile Updated Sucessfully", {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
-        console.log(response.data);
+        //  console.log(response.data);
 
         dispatch(fetchUser(email!));
       })
@@ -96,7 +96,7 @@ export default function UserProfile() {
         toast.error("Unable to Update Profile!", {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
-        console.log(error);
+        //  console.log(error);
       });
   };
 

@@ -42,7 +42,7 @@ export default function TravellerDetails() {
     });
 
   useEffect(() => {
-    console.log(TravellerDetails);
+    //  console.log(TravellerDetails);
   }, [TravellerDetails]);
 
   const emailRegx = /^[A-Za-z0-9_.]+@[a-z.]+\.[a-z]{2,4}$/;

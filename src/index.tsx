@@ -14,7 +14,7 @@ import { fetchOffers } from "./Actions/Offers.action";
 import { fetchAddons } from "./Actions/Addon.action";
 import { fetchTrips } from "./Actions/Trip.action";
 
-store.subscribe(() => console.log(store.getState()));
+// store.subscribe(() => //  console.log(store.getState()));
 
 const email = Cookies.get("email");
 store.dispatch(fetchAirports());
@@ -40,6 +40,6 @@ root.render(
 );
 
 // If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
+// to log results (for example: reportWebVitals(//  console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

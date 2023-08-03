@@ -37,12 +37,12 @@ export default function Flightscomponent({
       }
       setPageData([...pageData]);
     }
-    console.log(
-      active,
-      pageData.length,
-      pageLength
-      // Math.floor(pageData.length / pageLength)
-    );
+    // //  console.log(
+    //   active,
+    //   pageData.length,
+    //   pageLength
+    //   // Math.floor(pageData.length / pageLength)
+    // );
   }, [mainData]);
   const next = () => {
     if (active === Math.floor(pageData.length)) return;

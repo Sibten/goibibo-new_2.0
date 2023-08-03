@@ -26,8 +26,8 @@ export default function Routepage() {
     }
   }, []);
 
-  console.log(routeSelector);
-  console.log(defaultRoute);
+  // //  console.log(routeSelector);
+  // //  console.log(defaultRoute);
   return (
     <div className="bg-white pb-8">
       <Title text="Route Management" />

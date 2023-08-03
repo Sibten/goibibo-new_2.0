@@ -50,13 +50,13 @@ export default function EditLuggageComponent({
   };
 
   useEffect(() => {
-    console.log(data);
+    // //  console.log(data);
     data?.forEach((s) => update(s.type, s.limit));
     setUpdateData({ ...updateData });
   }, []);
 
   const updateLuggage = async () => {
-    console.log(updateData);
+    // //  console.log(updateData);
     const data = JSON.stringify(updateData);
     let config = {
       method: "post",
@@ -70,7 +70,7 @@ export default function EditLuggageComponent({
     try {
       const res = await axios(config);
       if (res.status == 200) {
-        console.log(res.data);
+        // //  console.log(res.data);
         setOpen(false);
         dispatch(fetchLuggage());
         toast.success("Luggage updated successfully!", {

@@ -44,7 +44,7 @@ export default function ScheduleFlightpage() {
   }>({ route_id: "", airbus_code: "", source_time: "", destination_time: "" });
 
   const scheduleFlight = async () => {
-    console.log(scheduleFlightData);
+    // //  console.log(scheduleFlightData);
     const data = JSON.stringify(scheduleFlightData);
     setLoading(true);
     let config = {
@@ -56,7 +56,7 @@ export default function ScheduleFlightpage() {
       },
       data: data,
     };
-    console.log(config);
+    // //  console.log(config);
 
     try {
       const res = await axios(config);
@@ -136,13 +136,13 @@ export default function ScheduleFlightpage() {
                   2000
                 );
               } else {
-                console.log(routes);
+                // //  console.log(routes);
                 let data = routes.filter(
                   (s) =>
                     s.destination_city.airport_code == routeSearchParams.to &&
                     s.source_city.airport_code == routeSearchParams.from
                 );
-                console.log(data);
+                // //  console.log(data);
                 if (data.length == 0) {
                   setMessage({ type: 1, message: "No Route avaliable" });
 

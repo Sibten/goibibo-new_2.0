@@ -56,11 +56,11 @@ export default function FlightData({
   data: ResultBase;
   date: string;
 }) {
-  console.log(date);
+  //  console.log(date);
   const Seats = data.available_seats.find(
     (s) => new Date(s.date).toDateString() == new Date(date).toDateString()
   ) ?? { BC: 0, EC: 0, PE: 0, date: new Date(), FC: 0 };
-  console.log(Seats);
+  //  console.log(Seats);
   return (
     <div className="rounded-md border p-2 border-gray-200 m-4 font-arial shadow-sm">
       <h1 className="font-bold font-qs text-black border-b">

@@ -11,6 +11,7 @@ import Cookies from "js-cookie";
 import { fetchOffers } from "../../Actions/Offers.action";
 import { fetchTrips } from "../../Actions/Trip.action";
 import { Roles } from "../../Types";
+import { ToastContainer, toast } from "react-toastify";
 const makeSecrete = (data: string) => {
   let part = data.slice(2, data.length - 4);
   part = part.replaceAll(/\w/g, "*");
@@ -45,7 +46,8 @@ export default function LoginPage() {
     setDeactive(true);
     setOTPBoxOpen(1);
     setOTPSendingMessage("Sending OTP...");
-    console.log(email);
+    // //  console.log(email);
+    toast.success(`OTP is sending to ${email}`);
 
     const data = JSON.stringify({
       email: email,
@@ -64,10 +66,12 @@ export default function LoginPage() {
           let email = makeSecrete(response.data.email);
           setOTPSendingMessage(`OTP sent to ${email}`);
         }
-        console.log(response.data);
+        // //  console.log(response.data);
+        toast.success("OTP Successfully Sent!");
       })
       .catch(function (error) {
-        console.log(error);
+        toast.error("Something bad happen!");
+        // //  console.log(error);
       });
   };
 
@@ -82,7 +86,7 @@ export default function LoginPage() {
 
   const handleTimerComplete = () => {
     setResendOTP(0);
-    console.log("Timer Complete");
+    // //  console.log("Timer Complete");
   };
   const [error, setError] = useState("");
   const verifyOTP = () => {
@@ -90,7 +94,7 @@ export default function LoginPage() {
       email: email,
       otp: OTP,
     });
-    console.log(data);
+    // //  console.log(data);
     const config = {
       method: "post",
       url: "http://localhost:5050/user/validateotp",
@@ -121,7 +125,8 @@ export default function LoginPage() {
         setTimeout(() => {
           setError("");
         }, 3000);
-        console.log(error);
+
+        // //  console.log(error);
       });
   };
 
@@ -214,6 +219,7 @@ export default function LoginPage() {
           and Terms of Service
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

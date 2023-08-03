@@ -86,7 +86,7 @@ export default function Form({
                   } else {
                     Message[i] = `Invalid Age of passanger ${i + 1}`;
                     setMessage([...Message]);
-                    console.log("Invalid Age");
+                    //  console.log("Invalid Age");
                   }
                 }}
                 className="border placeholder:text-gray-600 p-2 w-full border-gray-500 rounded-md bg-transparent"

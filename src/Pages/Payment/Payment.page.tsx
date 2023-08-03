@@ -52,7 +52,7 @@ export default function PaymentPage() {
             <Timer
               Start={true}
               Callback={() => {
-                console.log("hell");
+                // //  console.log("hell");
                 setStart(false);
                 navigate("/flight");
               }}
