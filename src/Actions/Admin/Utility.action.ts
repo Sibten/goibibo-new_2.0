@@ -10,7 +10,7 @@ export const initialState: Utility = {
 export const fetchFare = createAsyncThunk("fare", async () => {
   let config: AxiosRequestConfig = {
     method: "get",
-    url: "http://localhost:5050/airlines/myairline/fare",
+    url: `${process.env.REACT_APP_API}/airlines/myairline/fare`,
     headers: {
       token: Cookies.get("token"),
     },
@@ -24,7 +24,7 @@ export const fetchFare = createAsyncThunk("fare", async () => {
 export const fetchLuggage = createAsyncThunk("Luggage", async () => {
   const config: AxiosRequestConfig = {
     method: "get",
-    url: "http://localhost:5050/airlines/myairline/rule",
+    url: `${process.env.REACT_APP_API}/airlines/myairline/rule`,
     headers: {
       token: Cookies.get("token"),
     },

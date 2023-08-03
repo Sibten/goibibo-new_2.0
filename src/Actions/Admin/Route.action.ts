@@ -9,7 +9,7 @@ export const fetchRoutes = createAsyncThunk("route", async () => {
   // //  console.log("calling.. route");
   let config: AxiosRequestConfig = {
     method: "get",
-    url: "http://localhost:5050/route/getroutes",
+    url: `${process.env.REACT_APP_API}/route/getroutes`,
     headers: {
       token: Cookies.get("token"),
     },

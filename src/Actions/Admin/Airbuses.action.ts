@@ -8,7 +8,7 @@ const initialState: Array<Airbus> = [];
 export const fetchAirbus = createAsyncThunk("airbuses", async () => {
   let config: AxiosRequestConfig = {
     method: "get",
-    url: "http://localhost:5050/airbus/",
+    url: `${process.env.REACT_APP_API}/airbus/`,
     headers: {
       token: Cookies.get("token"),
     },

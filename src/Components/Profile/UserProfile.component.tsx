@@ -49,12 +49,16 @@ export default function UserProfile() {
     formdata.append("email", email!);
     formdata.append("file", e.target.files[0]);
     axios
-      .post("http://localhost:5050/user/updateprofile/uploadphoto", formdata, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          token: Cookies.get("token"),
-        },
-      })
+      .post(
+        `${process.env.REACT_APP_API}/user/updateprofile/uploadphoto`,
+        formdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token: Cookies.get("token"),
+          },
+        }
+      )
       .then((d) => {
         toast.success("Successfully Updated Profile Photo", {
           position: toast.POSITION.BOTTOM_RIGHT,
@@ -75,7 +79,7 @@ export default function UserProfile() {
 
     const config = {
       method: "put",
-      url: "http://localhost:5050/user/updateprofile",
+      url: `${process.env.REACT_APP_API}/user/updateprofile`,
       headers: {
         "Content-Type": "application/json",
         token: Cookies.get("token"),

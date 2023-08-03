@@ -23,7 +23,7 @@ export default function Editcomponent({ data }: { data: Airline }) {
     });
     let config: AxiosRequestConfig = {
       method: "put",
-      url: "http://localhost:5050/airlines/myairline/update",
+      url: `${process.env.REACT_APP_API}/airlines/myairline/update`,
       headers: {
         token: Cookies.get("token"),
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export default function Editcomponent({ data }: { data: Airline }) {
 
     axios
       .patch(
-        "http://localhost:5050/airlines/myairline/update/uploadicon",
+        `${process.env.REACT_APP_API}/airlines/myairline/update/uploadicon`,
         formdata,
         {
           headers: {

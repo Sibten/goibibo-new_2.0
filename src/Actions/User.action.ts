@@ -16,7 +16,7 @@ export const fetchUser = createAsyncThunk(
   async (email: string) => {
     const config = {
       method: "get",
-      url: `http://localhost:5050/user/mydetails?email=${email}`,
+      url: `${process.env.REACT_APP_API}/user/mydetails?email=${email}`,
       headers: {
         token: Cookies.get("token"),
       },

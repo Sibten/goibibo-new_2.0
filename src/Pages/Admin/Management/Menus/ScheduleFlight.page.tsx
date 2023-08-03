@@ -49,7 +49,7 @@ export default function ScheduleFlightpage() {
     setLoading(true);
     let config = {
       method: "post",
-      url: "http://localhost:5050/flight/schedule",
+      url: `${process.env.REACT_APP_API}/flight/schedule`,
       headers: {
         token: Cookies.get("token"),
         "Content-Type": "application/json",

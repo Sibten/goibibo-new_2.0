@@ -8,9 +8,10 @@ export const fetchAirports = createAsyncThunk("fetchAirports", async () => {
   // //  console.log("Calling...");
   const config = {
     method: "get",
-    url: "http://localhost:5050/city/",
+    url: `${process.env.REACT_APP_API}/city/`,
     headers: {},
   };
+  console.log(config);
   const data = await axios(config);
   return data.data;
 });

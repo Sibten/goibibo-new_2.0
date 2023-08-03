@@ -10,7 +10,7 @@ export const fetchAirlineFlights = createAsyncThunk(
   async () => {
     const config: AxiosRequestConfig = {
       method: "get",
-      url: "http://localhost:5050/flight/my_airline_flights",
+      url: `${process.env.REACT_APP_API}/flight/my_airline_flights`,
       headers: {
         token: Cookies.get("token"),
       },

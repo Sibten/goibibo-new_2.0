@@ -31,7 +31,7 @@ export default function Reviewpage() {
     if (url.get("dep_flight_no")) {
       const config: AxiosRequestConfig = {
         method: getAPICallType(APICallType.GET),
-        url: `http://localhost:5050/flight/get_flight?flightno=${url.get(
+        url: `${process.env.REACT_APP_API}/flight/get_flight?flightno=${url.get(
           "dep_flight_no"
         )}`,
         headers: {},
@@ -42,7 +42,7 @@ export default function Reviewpage() {
     if (url.get("rtn_flight_no")) {
       const config: AxiosRequestConfig = {
         method: getAPICallType(APICallType.GET),
-        url: `http://localhost:5050/flight/get_flight?flightno=${url.get(
+        url: `${process.env.REACT_APP_API}/flight/get_flight?flightno=${url.get(
           "rtn_flight_no"
         )}`,
         headers: {},

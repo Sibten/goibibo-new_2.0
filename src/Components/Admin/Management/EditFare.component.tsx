@@ -65,7 +65,7 @@ export default function EditFarecomponents({
     const data = JSON.stringify(updateData);
     let config = {
       method: "post",
-      url: "http://localhost:5050/airlines/myairline/fare/add",
+      url: `${process.env.REACT_APP_API}/airlines/myairline/fare/add`,
       headers: {
         token: Cookies.get("token"),
         "Content-Type": "application/json",

@@ -28,7 +28,9 @@ export default function SearchFlights({ data }: { data: Filter }) {
   useEffect(() => {
     if (SearchParams.return_date) {
       config.method = getAPICallType(APICallType.GET);
-      config.url = `http://localhost:5050/search/get_dep_rtn_flights?start_point=${
+      config.url = `${
+        process.env.REACT_APP_API
+      }/search/get_dep_rtn_flights?start_point=${
         SearchParams.from.airport_code
       }&end_point=${SearchParams.to.airport_code}&date=${
         SearchParams.dept_date
@@ -38,7 +40,9 @@ export default function SearchFlights({ data }: { data: Filter }) {
     } else {
       config.method = getAPICallType(APICallType.GET);
 
-      config.url = `http://localhost:5050/search/get_dep_flights?start_point=${
+      config.url = `${
+        process.env.REACT_APP_API
+      }/search/get_dep_flights?start_point=${
         SearchParams.from.airport_code
       }&end_point=${SearchParams.to.airport_code}&date=${
         new Date(SearchParams.dept_date).toISOString().split("T")[0]

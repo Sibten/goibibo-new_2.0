@@ -29,28 +29,28 @@ export default function Tracking() {
         <div className="w-[48rem] mx-auto p-4 pb-8 font-qs font-bold">
           {flight.rtn ? (
             <Stepper activeStep={activeState}>
-              <Step className="relative">
+              <Step className="relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
                 {" "}
                 <FaCalendarCheck />
                 <div className="absolute -bottom-8 text-black text-sm">
                   Review
                 </div>
               </Step>
-              <Step className="relative">
+              <Step className="relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
                 {" "}
                 <MdOutlineAirlineSeatReclineNormal />
                 <div className="absolute -bottom-8 text-black w-max text-sm">
                   Departure Seat Selection
                 </div>
               </Step>
-              <Step className="relative">
+              <Step className="relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
                 {" "}
                 <MdOutlineAirlineSeatReclineNormal />
                 <div className="absolute -bottom-8 text-black w-max text-sm">
                   Return Seat Selection
                 </div>
               </Step>
-              <Step className="relative">
+              <Step className="relative bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ">
                 {" "}
                 <MdPayment />
                 <div className="absolute -bottom-8 text-black w-max text-sm">
@@ -60,21 +60,21 @@ export default function Tracking() {
             </Stepper>
           ) : (
             <Stepper activeStep={activeState}>
-              <Step className="relative">
+              <Step className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ">
                 {" "}
                 <FaCalendarCheck />
                 <div className="absolute -bottom-8 text-black text-sm">
                   Review
                 </div>
               </Step>
-              <Step className="relative">
+              <Step className="relative bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ">
                 {" "}
                 <MdOutlineAirlineSeatReclineNormal />
                 <div className="absolute -bottom-8 text-black w-max text-sm">
                   Seat Selection
                 </div>
               </Step>
-              <Step className="relative">
+              <Step className="relative bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ">
                 {" "}
                 <MdPayment />
                 <div className="absolute -bottom-8 text-black w-max text-sm">

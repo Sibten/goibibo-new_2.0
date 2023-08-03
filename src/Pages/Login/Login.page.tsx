@@ -54,7 +54,7 @@ export default function LoginPage() {
     });
     const config = {
       method: "post",
-      url: "http://localhost:5050/user/generateotp",
+      url: `${process.env.REACT_APP_API}/user/generateotp`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -97,7 +97,7 @@ export default function LoginPage() {
     // //  console.log(data);
     const config = {
       method: "post",
-      url: "http://localhost:5050/user/validateotp",
+      url: `${process.env.REACT_APP_API}/user/validateotp`,
       headers: {
         "Content-Type": "application/json",
       },

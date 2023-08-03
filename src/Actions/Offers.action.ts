@@ -8,7 +8,7 @@ const initialState: Array<OfferBase> = [];
 export const fetchOffers = createAsyncThunk("offer fetch", async () => {
   const config: AxiosRequestConfig = {
     method: getAPICallType(APICallType.GET),
-    url: "http://localhost:5050/offers/all_offers",
+    url: `${process.env.REACT_APP_API}/offers/all_offers`,
     headers: {},
   };
   const data = await axios(config);

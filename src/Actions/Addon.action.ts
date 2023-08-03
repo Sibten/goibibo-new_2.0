@@ -5,7 +5,7 @@ import { AddonBase } from "../Types";
 export const fetchAddons = createAsyncThunk("addons", async () => {
   let config = {
     method: "get",
-    url: "http://localhost:5050/addons/",
+    url: `${process.env.REACT_APP_API}/addons/`,
     headers: {},
   };
 

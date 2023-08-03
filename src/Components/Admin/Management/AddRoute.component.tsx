@@ -85,7 +85,7 @@ export default function AddRouteComponent() {
 
     let config = {
       method: "post",
-      url: "http://localhost:5050/route/addroute",
+      url: `${process.env.REACT_APP_API}/route/addroute`,
       headers: {
         token: Cookies.get("token"),
         "Content-Type": "application/json",

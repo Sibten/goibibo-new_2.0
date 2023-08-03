@@ -8,7 +8,7 @@ const initialState: Array<TripData> = [];
 export const fetchTrips = createAsyncThunk("Trips", async () => {
   const config: AxiosRequestConfig = {
     method: "get",
-    url: "http://localhost:5050/user/my_trips",
+    url: `${process.env.REACT_APP_API}/user/my_trips`,
     headers: {
       token: Cookies.get("token"),
     },

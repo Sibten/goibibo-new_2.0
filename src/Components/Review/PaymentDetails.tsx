@@ -220,7 +220,7 @@ export default function PaymentDetails({
   const applyPromoCode = async () => {
     const config: AxiosRequestConfig = {
       method: "get",
-      url: `http://localhost:5050/offers/reedme?code=${promocode}`,
+      url: `${process.env.REACT_APP_API}/offers/reedme?code=${promocode}`,
       headers: {
         token: Cookies.get("token"),
       },

@@ -26,7 +26,7 @@ import { payment } from "../../Types";
 export const createPaymentOrder = async (amount: number) => {
   let config = {
     method: "post",
-    url: `http://localhost:5050/payment/create?amount=${amount}`,
+    url: `${process.env.REACT_APP_API}/payment/create?amount=${amount}`,
     headers: {
       token: Cookies.get("token"),
     },
@@ -79,7 +79,7 @@ const verifyPayment = async (
 
   const config: AxiosRequestConfig = {
     method: "post",
-    url: "http://localhost:5050/payment/validate",
+    url: `${process.env.REACT_APP_API}/payment/validate`,
     headers: {
       token: Cookies.get("token"),
       "Content-Type": "application/json",
