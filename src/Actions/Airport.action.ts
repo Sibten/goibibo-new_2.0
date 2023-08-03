@@ -11,7 +11,7 @@ export const fetchAirports = createAsyncThunk("fetchAirports", async () => {
     url: `${process.env.REACT_APP_API}/city/`,
     headers: {},
   };
-  console.log(config);
+  // console.log(config);
   const data = await axios(config);
   return data.data;
 });
