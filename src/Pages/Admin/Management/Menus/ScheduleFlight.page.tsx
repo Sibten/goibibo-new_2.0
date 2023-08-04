@@ -51,7 +51,7 @@ export default function ScheduleFlightpage() {
       method: "post",
       url: `${process.env.REACT_APP_API}/flight/schedule`,
       headers: {
-        token: Cookies.get("token"),
+        // token: Cookies.get("token"),
         "Content-Type": "application/json",
       },
       data: data,

@@ -12,7 +12,7 @@ export const fetchAirlineFlights = createAsyncThunk(
       method: "get",
       url: `${process.env.REACT_APP_API}/flight/my_airline_flights`,
       headers: {
-        token: Cookies.get("token"),
+        // token: Cookies.get("token"),
       },
     };
 

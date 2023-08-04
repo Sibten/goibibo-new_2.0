@@ -79,7 +79,7 @@ export default function Footer() {
               <FaFacebook className="text-2xl mx-2" />
               <a href="https://twitter.com/goibibo" target="_blank">
                 {" "}
-                <FaTwitter className="text-2xl mx-2" />{" "}
+                <FaTwitter className="text-2xl mx-2 hover:text-blue-400" />{" "}
               </a>
 
               <a
@@ -87,11 +87,11 @@ export default function Footer() {
                 target="_blank"
               >
                 {" "}
-                <FaLinkedin className="text-2xl mx-2" />{" "}
+                <FaLinkedin className="text-2xl mx-2 hover:text-indigo-400" />{" "}
               </a>
-              <a href="https://www.youtube.com/@goibibo">
+              <a href="https://www.youtube.com/@goibibo" target="_blank">
                 {" "}
-                <FaYoutubeSquare className="text-2xl mx-2" />{" "}
+                <FaYoutubeSquare className="text-2xl mx-2 hover:text-red-500" />{" "}
               </a>
             </div>
           </div>

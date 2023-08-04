@@ -12,7 +12,7 @@ export const fetchFare = createAsyncThunk("fare", async () => {
     method: "get",
     url: `${process.env.REACT_APP_API}/airlines/myairline/fare`,
     headers: {
-      token: Cookies.get("token"),
+      // token: Cookies.get("token"),
     },
   };
 
@@ -26,7 +26,7 @@ export const fetchLuggage = createAsyncThunk("Luggage", async () => {
     method: "get",
     url: `${process.env.REACT_APP_API}/airlines/myairline/rule`,
     headers: {
-      token: Cookies.get("token"),
+      // token: Cookies.get("token"),
     },
   };
   const res = await axios(config);

@@ -62,7 +62,7 @@ export default function EditLuggageComponent({
       method: "post",
       url: `${process.env.REACT_APP_API}/airlines/myairline/rule/add?type=0`,
       headers: {
-        token: Cookies.get("token"),
+        // token: Cookies.get("token"),
         "Content-Type": "application/json",
       },
       data: data,

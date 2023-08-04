@@ -105,7 +105,7 @@ export default function FlightClass({ callback, callType }: MyProps) {
             <span className="-mt-2 mx-2"> {adults}</span>
             <button
               onClick={() => {
-                if (adults >= 1 && adults < 8 && adults + children < 9) {
+                if (adults >= 1 && adults < 9 && adults + children < 9) {
                   setAdults(adults + 1);
                   setAdultDisable(false);
                 } else {

@@ -10,7 +10,7 @@ export const fetchAirbus = createAsyncThunk("airbuses", async () => {
     method: "get",
     url: `${process.env.REACT_APP_API}/airbus/`,
     headers: {
-      token: Cookies.get("token"),
+      // token: Cookies.get("token"),
     },
   };
   const res = await axios(config);

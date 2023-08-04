@@ -3,14 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { RootState, AppThunkDispatch } from "../../store";
 import { SearchParamsType, SearchType, callTypes } from "../../Types";
-import { initialState, searchActions } from "../../Actions/Search.action";
+import { searchActions } from "../../Actions/Search.action";
 import FlightInput from "./MainSubcomponents/CityInput";
 import { Menu, MenuHandler, MenuList, Radio } from "@material-tailwind/react";
 import { HiOutlineArrowsRightLeft } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import FlightClass from "./MainSubcomponents/FlightClass";
-import { URL } from "url";
-import { fetchResult } from "../../Actions/Result.action";
 
 export default function FlightSearchHead() {
   const location = useLocation();

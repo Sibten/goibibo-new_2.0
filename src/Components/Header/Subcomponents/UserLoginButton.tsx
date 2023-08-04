@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import {
+  MdOutlineKeyboardArrowDown,
+  MdOutlineKeyboardArrowUp,
+} from "react-icons/md";
 import UserLoginHover from "./UserLoginHover";
 
 export default function UserLoginButton() {
@@ -30,7 +33,11 @@ export default function UserLoginButton() {
         </div>
         <h1 className="my-2 ml-2 flex">
           Hey {User.first_name}{" "}
-          <MdOutlineKeyboardArrowDown className="text-lg" />
+          {!loginShow ? (
+            <MdOutlineKeyboardArrowDown className="text-lg" />
+          ) : (
+            <MdOutlineKeyboardArrowUp className="text-lg" />
+          )}
         </h1>
         {loginShow ? <UserLoginHover /> : ""}
       </div>

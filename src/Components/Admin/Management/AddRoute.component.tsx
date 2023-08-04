@@ -87,7 +87,7 @@ export default function AddRouteComponent() {
       method: "post",
       url: `${process.env.REACT_APP_API}/route/addroute`,
       headers: {
-        token: Cookies.get("token"),
+        // token: Cookies.get("token"),
         "Content-Type": "application/json",
       },
       data: data,

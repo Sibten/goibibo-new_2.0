@@ -1,5 +1,5 @@
 import { Alert, Button, Input } from "@material-tailwind/react";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
@@ -52,14 +52,16 @@ export default function LoginPage() {
     const data = JSON.stringify({
       email: email,
     });
-    const config = {
+    const config: AxiosRequestConfig = {
       method: "post",
       url: `${process.env.REACT_APP_API}/user/generateotp`,
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,     
       data: data,
     };
+    // axios.post()
     axios(config)
       .then(function (response) {
         if (response.status == 200) {
@@ -95,20 +97,19 @@ export default function LoginPage() {
       otp: OTP,
     });
     // //  console.log(data);
-    const config = {
+    const config: AxiosRequestConfig = {
       method: "post",
       url: `${process.env.REACT_APP_API}/user/validateotp`,
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
       data: data,
     };
 
     axios(config)
       .then(function (response) {
         if (response.data.login) {
-          Cookies.set("token", response.data.token);
-          Cookies.set("email", email);
           dispatch(fetchUser(email));
           dispatch(fetchOffers());
           dispatch(fetchTrips());

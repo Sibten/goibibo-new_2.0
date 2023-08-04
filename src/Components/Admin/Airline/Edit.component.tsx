@@ -25,7 +25,7 @@ export default function Editcomponent({ data }: { data: Airline }) {
       method: "put",
       url: `${process.env.REACT_APP_API}/airlines/myairline/update`,
       headers: {
-        token: Cookies.get("token"),
+        // token: Cookies.get("token"),
         "Content-Type": "application/json",
       },
       data: data,
@@ -56,7 +56,7 @@ export default function Editcomponent({ data }: { data: Airline }) {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            token: Cookies.get("token"),
+            // token: Cookies.get("token"),
           },
         }
       )

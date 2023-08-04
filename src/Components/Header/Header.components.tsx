@@ -9,7 +9,7 @@ export default function Header() {
 
   return (
     <div>
-      <div className="lg:block hidden">
+      <div className="lg:block  hidden">
         <HeaderDesktop />
       </div>
       <div className="block lg:hidden">

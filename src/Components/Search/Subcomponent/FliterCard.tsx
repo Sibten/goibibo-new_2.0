@@ -67,10 +67,8 @@ export default function FliterCard({ callback }: { callback: Function }) {
         );
       rtnmax = Math.max(rtnmax, fare.basic + fare.tax);
       rtnmin = Math.min(rtnmin, fare.basic + fare.tax);
-      if (
-        !rtnAirlines.some((i) => i.airline_code == s.airline_id.airline_code)
-      ) {
-        rtnAirlines.push(s.airline_id);
+      if (!airlines.some((i) => i.airline_code == s.airline_id.airline_code)) {
+        airlines.push(s.airline_id);
       }
     });
 
@@ -184,7 +182,7 @@ export default function FliterCard({ callback }: { callback: Function }) {
               </span>
             </div>
           </div>
-          {selector.rtn ? (
+          {selector.rtn && SearchParams.return_date ? (
             <div className="my-2 border-b">
               <h1 className="font-bold"> Return </h1>
               <div className="text-sm my-4">
@@ -314,7 +312,7 @@ export default function FliterCard({ callback }: { callback: Function }) {
               </span>
             </div>
           </div>
-          {selector.rtn ? (
+          {selector.rtn && SearchParams.return_date ? (
             <>
               {" "}
               <div className="my-2 border-b">
@@ -440,7 +438,7 @@ export default function FliterCard({ callback }: { callback: Function }) {
               </div>
             </div>
           </div>
-          {selector.rtn ? (
+          {selector.rtn && SearchParams.return_date ? (
             <div className="my-2 border-b">
               <h1 className="font-bold"> Return Price </h1>
               <div className="w-full">

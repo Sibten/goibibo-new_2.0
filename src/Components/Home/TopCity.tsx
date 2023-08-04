@@ -17,7 +17,9 @@ export default function TopCity() {
               key={c.id}
             >
               <Link
-                to={`/flight/search/?from=BOM&to=${c.airport}&dep_date=2023-08-03&class=0&adults=1&child=0&infants=0`}
+                to={`/flight/search/?from=BOM&to=${c.airport}&dep_date=${
+                  new Date().toISOString().split("T")[0]
+                }&class=0&adults=1&child=0&infants=0`}
               >
                 <div className="absolute text-white bottom-0 p-2 w-full bg-black opacity-70 hidden group-hover:block">
                   <h1 className="font-bold text-sm">{c.name}</h1>

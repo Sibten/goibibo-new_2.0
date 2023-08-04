@@ -28,7 +28,7 @@ export const createPaymentOrder = async (amount: number) => {
     method: "post",
     url: `${process.env.REACT_APP_API}/payment/create?amount=${amount}`,
     headers: {
-      token: Cookies.get("token"),
+      // token: Cookies.get("token"),
     },
   };
 
@@ -81,7 +81,7 @@ const verifyPayment = async (
     method: "post",
     url: `${process.env.REACT_APP_API}/payment/validate`,
     headers: {
-      token: Cookies.get("token"),
+      // token: Cookies.get("token"),
       "Content-Type": "application/json",
     },
     data: data,

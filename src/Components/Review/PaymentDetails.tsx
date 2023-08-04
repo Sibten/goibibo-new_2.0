@@ -222,7 +222,7 @@ export default function PaymentDetails({
       method: "get",
       url: `${process.env.REACT_APP_API}/offers/reedme?code=${promocode}`,
       headers: {
-        token: Cookies.get("token"),
+        // token: Cookies.get("token"),
       },
     };
     try {

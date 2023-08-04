@@ -67,7 +67,7 @@ export default function EditFarecomponents({
       method: "post",
       url: `${process.env.REACT_APP_API}/airlines/myairline/fare/add`,
       headers: {
-        token: Cookies.get("token"),
+        // token: Cookies.get("token"),
         "Content-Type": "application/json",
       },
       data: data,
@@ -110,7 +110,7 @@ export default function EditFarecomponents({
                     defaultValue={s.basic_fare}
                     onBlur={(e) => {
                       update(s.class_type, parseInt(e.target.value));
-                      setUpdateData(updateData);
+                      setUpdateData({ ...updateData });
                     }}
                   />
                   <p className="absolute right-8 top-2 rounded text-sm">

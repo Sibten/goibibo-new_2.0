@@ -17,7 +17,7 @@ export const fetchAirlineDetails = createAsyncThunk("airline", async () => {
     method: "get",
     url: `${process.env.REACT_APP_API}/airlines/myairline/getdetails`,
     headers: {
-      token: Cookies.get("token"),
+      // token: Cookies.get("token"),
     },
   };
   const data = await axios(config);

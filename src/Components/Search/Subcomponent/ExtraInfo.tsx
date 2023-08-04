@@ -36,10 +36,12 @@ export default function ExtraInfo({
   type,
   value,
   fclass,
+  id,
 }: {
   type: number;
   value: ResultBase;
   fclass: number;
+  id: number;
 }) {
   const searchParams = useSelector((state: RootState) => state.SearchParms);
   const flightfare = calFare(
@@ -57,18 +59,18 @@ export default function ExtraInfo({
       <div>
         <Tabs value="finfo">
           <TabsHeader>
-            <Tab key="info" value="finfo">
+            <Tab key={`info${id}`} value={`finfo${id}`}>
               Flight Information{" "}
             </Tab>
-            <Tab key="fare" value="fdetails">
+            <Tab key={`fare${id}`} value={`fdetails${id}`}>
               Fare Details{" "}
             </Tab>
-            <Tab key="bag" value="binfo">
+            <Tab key={`bag${id}`} value={`binfo${id}`}>
               Baggage Rule{" "}
             </Tab>
           </TabsHeader>
           <TabsBody>
-            <TabPanel key="info" value="finfo">
+            <TabPanel key={`info${id}`} value={`finfo${id}`}>
               <div className="border rounded-lg p-2 my-2 grid grid-cols-4">
                 <div className="mx-auto">
                   <img
@@ -118,7 +120,7 @@ export default function ExtraInfo({
                 </div>
               </div>
             </TabPanel>
-            <TabPanel key="fare" value="fdetails">
+            <TabPanel key={`fare${id}`} value={`fdetails${id}`}>
               <table className="w-full">
                 <caption>Charges </caption>
                 <tbody className="text-black">
@@ -137,7 +139,7 @@ export default function ExtraInfo({
                 </tbody>
               </table>
             </TabPanel>
-            <TabPanel key="bag" value="binfo">
+            <TabPanel key={`bag${id}`} value={`binfo${id}`}>
               <div>
                 <div className="my-2">
                   <img

@@ -11,7 +11,7 @@ export const fetchRoutes = createAsyncThunk("route", async () => {
     method: "get",
     url: `${process.env.REACT_APP_API}/route/getroutes`,
     headers: {
-      token: Cookies.get("token"),
+      // token: Cookies.get("token"),
     },
   };
   const data = await axios(config);

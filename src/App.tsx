@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import LoginPage from "./Pages/Login/Login.page";
 import Homepage from "./Pages/Home/Home.page";
 import Profilepage from "./Pages/Profile/Profile.page";
-import Flightspage from "./Pages/Flights/FlightsSearch.page";
+import Flightspage from "./Pages/FlightSearch/FlightsSearch.page";
 import Pagenotfound from "./Components/Errors/Pagenotfound";
 import Reviewpage from "./Pages/Review/Review.page";
 import Protected from "./Protected";
@@ -13,9 +13,7 @@ import RtnSeatSelectionPage from "./Pages/SeatSelection/RtnSeatSelection.page";
 import PaymentPage from "./Pages/Payment/Payment.page";
 import Tripspage from "./Pages/Trips/Trips.page";
 import TripMorepage from "./Pages/Trips/TripMoreinfo.page";
-
 import AdminProtection from "./AdminProtection";
-import Admindashpage from "./Pages/Admin/Admin-dashboard.page";
 import AdminRouter from "./Components/Admin/AdminRouter";
 import Managementpage from "./Pages/Admin/Management/Managment.page";
 import ScheduleFlightpage from "./Pages/Admin/Management/Menus/ScheduleFlight.page";
@@ -27,7 +25,9 @@ import Footer from "./Components/Footer/Footer";
 import Support from "./Pages/Support/Support";
 import AboutPage from "./Pages/About/About.page";
 import OffersPage from "./Pages/Offers/Offers.page";
+import axios from "axios";
 
+axios.defaults.withCredentials = true;
 function App() {
   return (
     <div className="App">

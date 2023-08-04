@@ -105,9 +105,9 @@ export default function Result({ filter }: { filter: Filter }) {
     }
   };
 
-  useEffect(() => {
-    //  console.log(selectedFlight);
-  }, [selectedFlight]);
+  // useEffect(() => {
+  //   //  console.log(selectedFlight);
+  // }, [selectedFlight]);
 
   const rtnRslt = selector.rtn && SearchParms.return_date ? <NotFound /> : "";
 

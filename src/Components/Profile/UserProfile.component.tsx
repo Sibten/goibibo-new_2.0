@@ -56,7 +56,7 @@ export default function UserProfile() {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            token: Cookies.get("token"),
+            // token: Cookies.get("token"),
           },
         }
       )
@@ -93,7 +93,7 @@ export default function UserProfile() {
         url: `${process.env.REACT_APP_API}/user/updateprofile`,
         headers: {
           "Content-Type": "application/json",
-          token: Cookies.get("token"),
+          // token: Cookies.get("token"),
         },
         data: data,
       };
@@ -288,7 +288,7 @@ export default function UserProfile() {
           <div className="flex font-arial font-bold">
             <button
               type="submit"
-              className="rounded-md p-2 px-4 text-white font-bold font-arial bg-orange-600 my-2 block text-base"
+              className="rounded-md p-2 px-4 text-white font-bold font-arial bg-indigo-600 my-2 block text-base"
               onClick={(e) => updateProfile(e)}
             >
               Save

@@ -9,9 +9,7 @@ export const fetchTrips = createAsyncThunk("Trips", async () => {
   const config: AxiosRequestConfig = {
     method: "get",
     url: `${process.env.REACT_APP_API}/user/my_trips`,
-    headers: {
-      token: Cookies.get("token"),
-    },
+    headers: {},
   };
 
   const data = await axios(config);
