@@ -79,6 +79,14 @@ export default function UserProfile() {
 
     if (userData.state == "def") {
       setMessage("State Should be valid!");
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+    } else if (userData.pincode?.toString().length != 6) {
+      setMessage("Pincode must be 6 digit long!");
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
     } else {
       const config = {
         method: "put",
@@ -213,21 +221,6 @@ export default function UserProfile() {
               />{" "}
               Female
             </div>
-            <div className="mx-2 flex font-arial">
-              <button
-                type="submit"
-                className="rounded-md p-2 px-4 text-white bg-orange-600 my-2 block text-base"
-                onClick={(e) => updateProfile(e)}
-              >
-                Save
-              </button>
-              <button
-                type="reset"
-                className="rounded-md p-2 px-4  my-2 block text-base"
-              >
-                Cancel
-              </button>
-            </div>
           </div>
         </form>
       </div>
@@ -283,9 +276,9 @@ export default function UserProfile() {
               ))}
             </select>
           </div>
-          <div className="block">
+          <div className="block w-full">
             {message ? (
-              <Alert className="bg-red-50 text-red-500 font-bold text-sm font-arial">
+              <Alert className="bg-red-50 text-red-500  text-sm font-arial">
                 {message}
               </Alert>
             ) : (
