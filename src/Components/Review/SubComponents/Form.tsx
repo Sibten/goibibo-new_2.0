@@ -30,6 +30,9 @@ export default function Form({
 
   const [Message, setMessage] = useState<Array<string>>([]);
   const [SuccessMsg, setSuccess] = useState<string>("");
+
+  const nameRegx = /[a-zA-Z]/;
+
   useEffect(() => {
     rawForm.splice(0, rawForm.length);
     formData.splice(0, formData.length);
@@ -52,9 +55,14 @@ export default function Form({
               <Input
                 label="First Name*"
                 onBlur={(e) => {
-                  if (e.target.value != "") {
+                  if (e.target.value != "" && nameRegx.test(e.target.value)) {
                     formData[i].first_name = e.target.value;
                     setFormData([...formData]);
+                    Message.splice(i, 1);
+                  } else {
+                    Message[i] =
+                      "Name can contain only alphabets not even white space.";
+                    setMessage([...Message]);
                   }
                 }}
               />{" "}
@@ -64,9 +72,14 @@ export default function Form({
               <Input
                 label="Last Name*"
                 onBlur={(e) => {
-                  if (e.target.value != "") {
+                  if (e.target.value != "" && nameRegx.test(e.target.value)) {
                     formData[i].last_name = e.target.value;
                     setFormData([...formData]);
+                    Message.splice(i, 1);
+                  } else {
+                    Message[i] =
+                      "Name can contain only alphabets not even white space.";
+                    setMessage([...Message]);
                   }
                 }}
               />
