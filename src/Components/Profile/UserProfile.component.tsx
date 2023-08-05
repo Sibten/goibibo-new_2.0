@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Alert, Button, Input, Radio, Select } from "@material-tailwind/react";
 import { BiLogOut } from "react-icons/bi";
 import { UserType, indianStates } from "../../Types";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { airlineActions } from "../../Actions/Admin/Airline.action";
 import { BookingFlightActions } from "../../Actions/BookingFlight.action";
 import { BookingActions } from "../../Actions/ConfirmBookingDetails.action";
@@ -26,16 +26,33 @@ export default function UserProfile() {
 
   const navigate = useNavigate();
 
-  const logout = () => {
-    dispatch(userActions.remove());
-    dispatch(airlineActions.remove());
-    dispatch(BookingFlightActions.reset());
-    dispatch(BookingActions.reset());
-    dispatch(ResultActions.reset());
-    dispatch(trackingActions.disableAll());
-    Cookies.remove("token");
-    Cookies.remove("email");
-    navigate("/");
+  const logout = async () => {
+    try{
+
+      const config: AxiosRequestConfig = {
+        method: "get",
+        url: `${process.env.REACT_APP_API}/user/logout`,
+      };
+      console.log(config)
+      const res = await axios(config);
+      if(res.status == 200){
+        toast.success("Successfully Logged out")
+          dispatch(userActions.remove());
+      dispatch(airlineActions.remove());
+      dispatch(BookingFlightActions.reset());
+      dispatch(BookingActions.reset());
+      dispatch(ResultActions.reset());
+      dispatch(trackingActions.disableAll());
+      navigate("/");
+      }
+      else{
+        toast.error("Unable to log out!")
+      }
+    }
+    catch(e){
+      toast.error("Something bad happen! Unable to log out.")
+    }
+  
   };
   const [userData, setUserData] = useState<UserType>(User);
   useEffect(() => {
