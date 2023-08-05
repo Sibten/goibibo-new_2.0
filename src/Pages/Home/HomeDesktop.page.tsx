@@ -1,5 +1,5 @@
 import React from "react";
-import Flightsearch from "../../Components/Flight/Flightsearch.components";
+import Flightsearch from "../../Components/FlightSearchBox/Flightsearch.components";
 import FAQs from "../../Components/Home/FAQs";
 import Advt from "../../Components/Home/Advt";
 import TopCity from "../../Components/Home/TopCity";

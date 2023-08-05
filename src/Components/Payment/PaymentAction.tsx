@@ -2,26 +2,20 @@ import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import axios, { AxiosRequestConfig } from "axios";
-import Cookies from "js-cookie";
 import useRazorpay from "react-razorpay";
 import { useNavigate } from "react-router-dom";
 import {
-  BookingSendingData,
   ResultBase,
-  ResultData,
   SeatBase,
   TotalPaymentDetails,
   TravellerDetailsBase,
 } from "../../Types";
-import { Spinner } from "@material-tailwind/react";
-import Faildialog from "../Dialog/Fail.dialog";
-import Successdialog from "../Dialog/Sucess.dialog";
 import Statusdialog from "../Dialog/Status.dialog";
 import { MdDone } from "react-icons/md";
 import Loaderdialog from "../Dialog/Loader.dialog";
 import Timer from "../../Helper/Timer";
 import { ToastContainer, toast } from "react-toastify";
-import { payment } from "../../Types";
+
 
 export const createPaymentOrder = async (amount: number) => {
   let config = {
@@ -89,6 +83,7 @@ const verifyPayment = async (
 
   try {
     const data = await axios(config);
+
     return { data: data, status: true };
   } catch (e) {
     return { data: null, status: false };

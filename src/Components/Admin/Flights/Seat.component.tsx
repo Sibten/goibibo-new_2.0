@@ -10,7 +10,7 @@ import {
 import { FaInfo } from "react-icons/fa";
 import { HiOutlineArrowLongRight, HiOutlineArrowRight } from "react-icons/hi2";
 import { date, time } from "../../../Helper/Method";
-import { MdAirlineSeatReclineExtra } from "react-icons/md";
+import { MdAirlineSeatReclineExtra, MdClose } from "react-icons/md";
 import { RxReset } from "react-icons/rx";
 
 export default function SeatFlightComponent({ data }: { data: ResultBase }) {
@@ -34,9 +34,15 @@ export default function SeatFlightComponent({ data }: { data: ResultBase }) {
         <MdAirlineSeatReclineExtra />
       </IconButton>
       <Dialog handler={setOpen} open={open}>
-        <DialogHeader className="block border-b">
-          <h1 className="text-xl text-indigo-700"> {data.flight_no}</h1>
-          <p className="text-base  -mt-1 font-bold">Seat Avaliablity</p>
+        <DialogHeader className="flex border-b justify-between">
+          <div>
+            <h1 className="text-xl text-indigo-700"> {data.flight_no}</h1>
+            <p className="text-base  -mt-1 font-bold">Seat Avaliablity</p>
+          </div>
+          <button onClick={() => setOpen(!open)}>
+            {" "}
+            <MdClose />{" "}
+          </button>
         </DialogHeader>
         <DialogBody>
           <form>

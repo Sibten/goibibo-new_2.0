@@ -16,6 +16,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { AppThunkDispatch } from "../../../store";
 import { fetchFare } from "../../../Actions/Admin/Utility.action";
+import { callAPI } from "../../../Services/APIFetch";
 
 export default function EditFarecomponents({
   fare,
@@ -59,7 +60,7 @@ export default function EditFarecomponents({
     setUpdateData({ ...updateData });
   }, [fare]);
 
-  const GST = 18;
+  const GST: number = parseInt(process.env.REACT_APP_GST!) ?? 18;
 
   const updateFare = async () => {
     const data = JSON.stringify(updateData);
@@ -72,6 +73,7 @@ export default function EditFarecomponents({
       },
       data: data,
     };
+
     try {
       const res = await axios(config);
       if (res.status == 200) {

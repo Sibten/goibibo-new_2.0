@@ -2,6 +2,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Fare, Luggage, Utility } from "../../Types";
 import axios, { AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
+import { callAPI } from "../../Services/APIFetch";
 export const initialState: Utility = {
   fare: null,
   luggage: null,

@@ -12,7 +12,7 @@ export default function HeaderDesktop() {
   const location = useLocation();
 
   return (
-    <div className=" shadow-md sticky top-0  bg-white bg-gray-white p-2 w-full flex justify-between">
+    <div className="z-20 shadow-md sticky top-0  bg-white bg-gray-white p-2 w-full flex justify-between">
       <div className="mx-4 w-max flex">
         <Link to="/">
           {" "}

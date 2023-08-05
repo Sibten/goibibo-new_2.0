@@ -7,10 +7,14 @@ import {
   DialogBody,
   Input,
 } from "@material-tailwind/react";
-import { FaInfo } from "react-icons/fa";
+import { FaInfo, FaPlus } from "react-icons/fa";
 import { HiOutlineArrowLongRight, HiOutlineArrowRight } from "react-icons/hi2";
 import { date, time } from "../../../Helper/Method";
 import { RxReset } from "react-icons/rx";
+import { MdAdd, MdClose } from "react-icons/md";
+import AddSchedulededFlightcomponent from "../Management/AddSchedulededFlight.component";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 
 export default function ScheduledFlightComponent({
   data,
@@ -40,17 +44,24 @@ export default function ScheduledFlightComponent({
         <FaInfo />
       </IconButton>
       <Dialog handler={setOpen} open={open}>
-        <DialogHeader className="block border-b">
-          <h1 className="text-xl text-indigo-700"> {data.flight_no}</h1>
-          <p className="text-base  -mt-1 font-bold">Schedule</p>
+        <DialogHeader className="border-b flex justify-between">
+          <div>
+            <h1 className="text-xl text-indigo-700"> {data.flight_no}</h1>
+            <p className="text-base  -mt-1 font-bold">Schedule</p>
+          </div>
+          <button onClick={() => setOpen(!open)}>
+            {" "}
+            <MdClose />{" "}
+          </button>
         </DialogHeader>
         <DialogBody>
-          <div className="text-gray-800 b border-b my-1">
+          <div className="text-gray-800 b border-b my-1 flex justify-between">
             <p className="flex">
               {data.route_id.source_city.city_name}{" "}
               <HiOutlineArrowLongRight className="text-xl mt-[1px] font-bold mx-2" />{" "}
               {data.route_id.destination_city.city_name}{" "}
             </p>
+            <AddSchedulededFlightcomponent flightno={data.flight_no} />
           </div>
           <form>
             <div className="w-48 mx-auto my-2 flex">

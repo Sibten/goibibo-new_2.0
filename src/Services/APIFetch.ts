@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { APICallType } from "../Types";
 
 export const getAPICallType = (callNo: number) => {
@@ -16,10 +16,12 @@ export const getAPICallType = (callNo: number) => {
   }
 };
 
-export const callAPI = async (config: AxiosRequestConfig<string>) => {
-  const data = await axios(config);
+export const callAPI = async (
+  config: AxiosRequestConfig<string>
+): Promise<AxiosResponse> => {
+  const response = await axios(config);
   return new Promise((res, rej) => {
-    if (data.statusText == "OK") return res(data);
-    else return rej(data.data);
+    if (response.statusText == "OK") return res(response);
+    else return rej(response);
   });
 };

@@ -12,6 +12,13 @@ import { ResultBase } from "../../../Types";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import ScheduledFlightComponent from "./ScheduledFlight.component";
 import SeatFlightComponent from "./Seat.component";
+import {
+  BsArrowUp,
+  BsChevronBarUp,
+  BsChevronDown,
+  BsChevronUp,
+  BsSortAlphaDown,
+} from "react-icons/bs";
 
 export default function Flightscomponent({
   data,
@@ -55,6 +62,41 @@ export default function Flightscomponent({
 
     setActive(active - 1);
   };
+
+  const [sortedUpDis, setSortedUpDis] = useState<boolean>(false);
+  const [sortedDwnDis, setSortedDwnDis] = useState<boolean>(false);
+
+  const setSortedUpByDis = () => {
+    if (!sortedUpDis) {
+      setSortedUpDis(true);
+      setSortedDwnDis(false);
+      const sortedData = mainData.sort(
+        (d1: ResultBase, d2: ResultBase) =>
+          d1.route_id.distance - d2.route_id.distance
+      );
+      setMainData([...sortedData]);
+    } else {
+      setSortedDwnDis(false);
+      setSortedUpDis(false);
+      setMainData([...data]);
+    }
+  };
+  const setSortedDwnByDis = () => {
+    if (!sortedDwnDis) {
+      setSortedDwnDis(true);
+      setSortedUpDis(false);
+      const sortedData = mainData.sort(
+        (d1: ResultBase, d2: ResultBase) =>
+          d2.route_id.distance - d1.route_id.distance
+      );
+      setMainData([...sortedData]);
+    } else {
+      setSortedDwnDis(false);
+      setSortedUpDis(false);
+      setMainData([...data]);
+    }
+  };
+
   return (
     <div className="m-2">
       <div className="w-24 flex">
@@ -75,6 +117,11 @@ export default function Flightscomponent({
             }}
           />
         </div>
+        {/* <div className="mx-2">
+          <select>
+            <option>AB-205</option>
+          </select>
+        </div> */}
       </div>
       <div className="my-1">
         <h1 className="font-bold"> Flights </h1>
@@ -95,7 +142,24 @@ export default function Flightscomponent({
               <th> Source Airport Name</th>
               <th> Destination City </th>
               <th> Destination Airport Name </th>
-              <th> Total Distance </th>
+              <th className="flex items-center">
+                {" "}
+                Total Distance{" "}
+                <span>
+                  <BsChevronUp
+                    className={`${
+                      sortedUpDis ? "text-indigo-600 " : "text-black"
+                    } ${sortedDwnDis ? "text-gray-400" : ""} cursor-pointer`}
+                    onClick={() => setSortedUpByDis()}
+                  />{" "}
+                  <BsChevronDown
+                    className={`${sortedUpDis ? "text-gray-400 " : ""} ${
+                      sortedDwnDis ? "text-indigo-600" : "text-black"
+                    } cursor-pointer`}
+                    onClick={() => setSortedDwnByDis()}
+                  />
+                </span>
+              </th>
               <th> Info</th>
             </tr>
           </thead>

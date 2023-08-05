@@ -126,7 +126,7 @@ export default function Result({ filter }: { filter: Filter }) {
           </div>
           {result.length > 0 ? (
             <>
-              {result.map((res) => {
+              {result.map((res,i) => {
                 return (
                   <SearchCard
                     seat={res.available_seats}
@@ -134,6 +134,7 @@ export default function Result({ filter }: { filter: Filter }) {
                     value={res}
                     callBack={handleCallBack}
                     key={`${res.flight_no}-${res.timing[0].source_time}`}
+                    id={i}
                   />
                 );
               })}{" "}
@@ -157,12 +158,13 @@ export default function Result({ filter }: { filter: Filter }) {
           )}
           {returnResult.length > 0 && SearchParms.return_date ? (
             <>
-              {returnResult.map((res) => (
+              {returnResult.map((res, i) => (
                 <SearchCard
                   value={res}
                   callBack={handleCallBack}
                   type={SearchType.To}
                   key={`${res.flight_no}-${res.timing[0].source_time}`}
+                  id={i}
                 />
               ))}
             </>

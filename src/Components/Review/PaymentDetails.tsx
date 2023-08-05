@@ -16,7 +16,7 @@ import { FaBaby, FaChild, FaLock } from "react-icons/fa";
 import { Button, Input, Alert } from "@material-tailwind/react";
 import axios, { AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
-import { getAPICallType } from "../../Services/APIFetch";
+import { callAPI, getAPICallType } from "../../Services/APIFetch";
 
 import { BookingActions } from "../../Actions/ConfirmBookingDetails.action";
 
@@ -207,9 +207,9 @@ export default function PaymentDetails({
     }
   }, [appliedOffer]);
 
-  const [promocode, setPromoCode] = useState<string>();
+  const [promocode, setPromoCode] = useState<string>("");
 
-  const [active, setActive] = useState<boolean>(false);
+  const [promoApplied, setpromoApplied] = useState<boolean>(false);
   const [payLock, setPayLock] = useState<boolean>(false);
   const [promoError, setPromoError] = useState("");
   const [depAddon, setDepAddon] = useState<AddonBase>();
@@ -233,7 +233,7 @@ export default function PaymentDetails({
           TotalPayment.original_total * res.data.offer.offer_discount
         );
         setTotalPayment({ ...TotalPayment });
-        setActive(true);
+        setpromoApplied(true);
       } else {
         setPromoError("Invalid Promocode.");
         setTimeout(() => {
@@ -247,6 +247,12 @@ export default function PaymentDetails({
       }, 2000);
     }
   };
+  const removePromo = () => {
+    setPromoCode("");
+    TotalPayment.promotion = 0;
+    setTotalPayment({ ...TotalPayment });
+    setpromoApplied(false);
+  };
 
   useEffect(() => {
     if (addons && addons.type == SearchType.From) {
@@ -257,12 +263,17 @@ export default function PaymentDetails({
   }, [addons]);
 
   const lockPayment = () => {
-    TotalPayment.total_add_on = TotalPayment.total_add_on + (depAddon?.price ?? 0) +  (rtnAddon?.price ?? 0)
-    setTotalPayment({...TotalPayment})
+    TotalPayment.total_add_on =
+      TotalPayment.total_add_on +
+      (depAddon?.price ?? 0) +
+      (rtnAddon?.price ?? 0);
+    setTotalPayment({ ...TotalPayment });
     dispatch(BookingActions.addPayment(TotalPayment));
-    dispatch(BookingActions.addAddon({type : SearchType.From, data : depAddon}))
-    dispatch(BookingActions.addAddon({type : SearchType.To, data : rtnAddon}))
-    setActive(true);
+    dispatch(
+      BookingActions.addAddon({ type: SearchType.From, data: depAddon })
+    );
+    dispatch(BookingActions.addAddon({ type: SearchType.To, data: rtnAddon }));
+    setpromoApplied(true);
     setPayLock(true);
     callback();
   };
@@ -382,16 +393,26 @@ export default function PaymentDetails({
           <Input
             label="Promo Code"
             color="indigo"
+            value={promocode}
             onChange={(e) => setPromoCode(e.target.value)}
-            disabled={active}
+            disabled={promoApplied}
           />{" "}
-          <Button
-            className="bg-indigo-600 w-24 rounded-md mx-2 p-1 text-white"
-            onClick={() => applyPromoCode()}
-            disabled={active}
-          >
-            {active ? "Applied" : "Apply"}
-          </Button>
+          {promoApplied ? (
+            <Button
+              className="bg-red-600 w-24 rounded-md mx-2 p-1 text-white"
+              onClick={() => removePromo()}
+            >
+              Remove
+            </Button>
+          ) : (
+            <Button
+              className="bg-indigo-600 w-24 rounded-md mx-2 p-1 text-white"
+              onClick={() => applyPromoCode()}
+              disabled={promoApplied}
+            >
+              Apply
+            </Button>
+          )}
         </div>
         <div className="w-full text-xs my-2">
           {promoError && (

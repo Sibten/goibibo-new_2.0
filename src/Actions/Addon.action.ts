@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { AddonBase } from "../Types";
+import axios from "axios";
 
 export const fetchAddons = createAsyncThunk("addons", async () => {
   let config = {

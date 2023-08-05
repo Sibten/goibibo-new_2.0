@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { AppThunkDispatch } from "../../../store";
 import { fetchAirlineDetails } from "../../../Actions/Admin/Airline.action";
+import { callAPI } from "../../../Services/APIFetch";
 
 export default function Editcomponent({ data }: { data: Airline }) {
   const [airlineData, setAirlineData] = useState<Airline>(data);

@@ -29,6 +29,7 @@ export default function Form({
   };
 
   const [Message, setMessage] = useState<Array<string>>([]);
+  const [SuccessMsg, setSuccess] = useState<string>("");
   useEffect(() => {
     rawForm.splice(0, rawForm.length);
     formData.splice(0, formData.length);
@@ -152,8 +153,8 @@ export default function Form({
                 }, 200);
               } else {
                 callback(formData);
-                Message[0] = "Successfully Saved!";
-                setMessage([...Message]);
+                setSuccess("Successfully Saved!");
+                // setMessage([...Message]);
               }
             }}
           >
@@ -161,6 +162,11 @@ export default function Form({
           </Button>
           {Message.length > 0 ? (
             <p className="text-red-500 my-2 mx-2"> {Message.concat(" ")}</p>
+          ) : (
+            ""
+          )}
+          {SuccessMsg ? (
+            <p className="text-green-500 my-2 mx-2">{SuccessMsg}</p>
           ) : (
             ""
           )}

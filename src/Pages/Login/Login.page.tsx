@@ -58,7 +58,7 @@ export default function LoginPage() {
       headers: {
         "Content-Type": "application/json",
       },
-      withCredentials: true,     
+      withCredentials: true,
       data: data,
     };
     // axios.post()

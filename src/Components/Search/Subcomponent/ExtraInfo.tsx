@@ -57,15 +57,15 @@ export default function ExtraInfo({
   return (
     <div>
       <div>
-        <Tabs value="finfo">
+        <Tabs value={`finfo${id}`}>
           <TabsHeader>
-            <Tab key={`info${id}`} value={`finfo${id}`}>
+            <Tab id={`info${id}`} key={`info${id}`} value={`finfo${id}`}>
               Flight Information{" "}
             </Tab>
-            <Tab key={`fare${id}`} value={`fdetails${id}`}>
+            <Tab id={`fare${id}`} key={`fare${id}`} value={`fdetails${id}`}>
               Fare Details{" "}
             </Tab>
-            <Tab key={`bag${id}`} value={`binfo${id}`}>
+            <Tab id={`bag${id}`} key={`bag${id}`} value={`binfo${id}`}>
               Baggage Rule{" "}
             </Tab>
           </TabsHeader>

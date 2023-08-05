@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { TripData } from "../Types";
 import axios, { AxiosRequestConfig } from "axios";
-import Cookies from "js-cookie";
+
 
 const initialState: Array<TripData> = [];
 

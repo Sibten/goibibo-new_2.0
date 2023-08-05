@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Airbus } from "../../Types";
 import axios, { AxiosRequestConfig } from "axios";
-import Cookies from "js-cookie";
+
 
 const initialState: Array<Airbus> = [];
 

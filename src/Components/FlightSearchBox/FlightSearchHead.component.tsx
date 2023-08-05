@@ -17,7 +17,6 @@ export default function FlightSearchHead() {
   const Airports = useSelector((state: RootState) => state.Airports);
   const dispatch = useDispatch();
 
-  const dispatchThunk = useDispatch<AppThunkDispatch>();
   let [URLSearchParamsData, setURLSearchParamsData] =
     useState<SearchParamsType>({
       ...SearchParams,
@@ -27,7 +26,7 @@ export default function FlightSearchHead() {
         infants: parseInt(url.get("infants") ?? "0"),
       },
       dept_date: url.get("dep_date") ?? new Date().toISOString(),
-      return_date: url.get("rtn_date") ?? null,
+      return_date: url.get("rtn_date") ?? "",
       class: parseInt(url.get("class") ?? "0"),
     });
 
@@ -47,9 +46,7 @@ export default function FlightSearchHead() {
     }
   }, [Airports]);
 
-  const [openReturn, setOpenReturn] = useState(
-    url.get("rtn_date") ? true : false
-  );
+  const [openReturn, setOpenReturn] = useState(!!url.get("rtn_date"));
   const [openFrom, setOpenFrom] = useState(false);
   const [openTo, setOpenTo] = useState(false);
   const [openClass, setOpenClass] = useState(false);
@@ -63,13 +60,7 @@ export default function FlightSearchHead() {
 
   const returnDateDef = () => {
     if (!URLSearchParamsData.return_date) {
-      return new Date(
-        new Date(URLSearchParamsData.dept_date).setDate(
-          new Date(URLSearchParamsData.dept_date).getDate() + 1
-        )
-      )
-        .toISOString()
-        .split("T")[0];
+      return "";
     } else {
       return new Date(URLSearchParamsData.return_date)
         .toISOString()
@@ -116,12 +107,12 @@ export default function FlightSearchHead() {
               id="oneway"
               // className="p-4 mx-2"
               color="pink"
-              defaultChecked={url.get("rtn_date") ? false : true}
+              defaultChecked={!url.get("rtn_date")}
               onChange={() => {
                 setOpenReturn(false);
                 setURLSearchParamsData({
                   ...URLSearchParamsData,
-                  return_date: null,
+                  return_date: "",
                 });
               }}
             />
@@ -134,7 +125,7 @@ export default function FlightSearchHead() {
               id="roundtrip"
               color="pink"
               // className="p-4 mx-2"
-              defaultChecked={url.get("rtn_date") ? true : false}
+              defaultChecked={!!url.get("rtn_date")}
               onChange={() => {
                 setOpenReturn(true);
                 setURLSearchParamsData({
@@ -267,6 +258,7 @@ export default function FlightSearchHead() {
             >
               Return Date
             </label>
+
             {openReturn ? (
               <input
                 type="date"
@@ -275,11 +267,11 @@ export default function FlightSearchHead() {
                 min={
                   new Date(URLSearchParamsData.dept_date)
                     .toISOString()
-                    .split("T")[0]
+                    .split("T")[0] ?? ""
                 }
                 onKeyDown={(e) => e.preventDefault()}
-                value={URLSearchParamsData.return_date?.split("T")[0]}
                 defaultValue={returnDateDef()}
+                // value={returnDateDef()}
                 className="block border border-gray-500 bg-transparent p-2 w-60 lg:w-30 rounded-lg font-qs font-bold"
                 onChange={(e) => {
                   setURLSearchParamsData({

@@ -65,29 +65,14 @@ export default function Tripspage() {
               </Tab>
 
               <Tab
-                key={"cancelled"}
-                value="cancelled"
+                key={"completed"}
+                value="completed"
                 className={
                   currentTab == 2
                     ? "font-qs font-bold"
                     : " font-qs font-bold opacity-60"
                 }
                 onClick={() => setCurrentTab(2)}
-              >
-                <p className="flex">
-                  <MdFreeCancellation className="mx-2 my-1" />
-                  Cancelled
-                </p>
-              </Tab>
-              <Tab
-                key={"completed"}
-                value="completed"
-                className={
-                  currentTab == 3
-                    ? "font-qs font-bold"
-                    : " font-qs font-bold opacity-60"
-                }
-                onClick={() => setCurrentTab(3)}
               >
                 <p className="flex">
                   <MdDoneOutline className="mx-2 my-1" /> Completed Trip
@@ -98,9 +83,7 @@ export default function Tripspage() {
               <TabPanel key={"upcoming"} value={"upcoming"}>
                 <UpcomingTrips data={upcoming} />
               </TabPanel>
-              <TabPanel key={"cancelled"} value={"cancelled"}>
-                <CancelTrip data={cancel} />
-              </TabPanel>
+
               <TabPanel key={"completed"} value={"completed"}>
                 <Completedtrip data={completed} />
               </TabPanel>

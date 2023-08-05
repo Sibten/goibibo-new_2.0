@@ -28,11 +28,13 @@ export default function SearchCard({
   type,
   callBack,
   seat,
+  id,
 }: {
   value: ResultBase;
   type: number;
   callBack: Function;
   seat?: Array<AvaliableSeat>;
+  id: number;
 }) {
   const [openDetails, setOpenDetails] = useState(false);
   const SearchParams = useSelector((state: RootState) => state.SearchParms);
@@ -172,7 +174,12 @@ export default function SearchCard({
             </button>
           </div>
           {openDetails ? (
-            <ExtraInfo type={type} value={value} fclass={SearchParams.class} />
+            <ExtraInfo
+              type={type}
+              value={value}
+              fclass={SearchParams.class}
+              id={id}
+            />
           ) : (
             ""
           )}

@@ -12,7 +12,7 @@ import {
   BsTrainFront,
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import Flightsearchsmall from "../../Components/Flight/Flightsearch.small.component";
+import Flightsearchsmall from "../../Components/FlightSearchBox/Flightsearch.small.component";
 import Advt from "../../Components/Home/Advt";
 import FAQs from "../../Components/Home/FAQs";
 

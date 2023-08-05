@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { callTypes, ResultBase, SearchType } from "../Types";
 import axios, { AxiosRequestConfig } from "axios";
-import { callAPI } from "../Services/APIFetch";
+
 
 let initalState: { dep?: ResultBase; rtn?: ResultBase } = {
   dep: undefined,

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Roles, UserType } from "../Types";
 import axios, { AxiosRequestConfig } from "axios";
-import Cookies from "js-cookie";
+
 
 const initalState: UserType = {
   role: {

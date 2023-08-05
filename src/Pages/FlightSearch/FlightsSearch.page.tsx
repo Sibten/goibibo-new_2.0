@@ -1,5 +1,5 @@
-import FlightSearchHead from "../../Components/Flight/FlightSearchHead.component";
-import FlightSearchHeadsmall from "../../Components/Flight/FlightSearchHead.small.component";
+import FlightSearchHead from "../../Components/FlightSearchBox/FlightSearchHead.component";
+import FlightSearchHeadsmall from "../../Components/FlightSearchBox/FlightSearchHead.small.component";
 import SearchResult from "../../Components/Search/SearchResult.component";
 import SearchResultSmall from "../../Components/Search/SearchResultSmall.component";
 

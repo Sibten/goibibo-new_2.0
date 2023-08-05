@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { AirportType } from "../Types";
+
 import axios from "axios";
 
 const initialState: Array<AirportType> = [];
@@ -12,6 +13,7 @@ export const fetchAirports = createAsyncThunk("fetchAirports", async () => {
     headers: {},
   };
   // console.log(config);
+
   const data = await axios(config);
   return data.data;
 });

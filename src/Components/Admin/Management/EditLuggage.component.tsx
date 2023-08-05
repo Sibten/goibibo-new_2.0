@@ -16,6 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { AppThunkDispatch } from "../../../store";
 import { fetchLuggage } from "../../../Actions/Admin/Utility.action";
+import { callAPI } from "../../../Services/APIFetch";
 
 export default function EditLuggageComponent({
   data,
@@ -67,6 +68,7 @@ export default function EditLuggageComponent({
       },
       data: data,
     };
+
     try {
       const res = await axios(config);
       if (res.status == 200) {

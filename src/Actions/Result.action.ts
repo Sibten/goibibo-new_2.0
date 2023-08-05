@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ResultBase, ResultData } from "../Types";
 import axios, { AxiosRequestConfig } from "axios";
-import { initialState } from "./Search.action";
+
 
 const initalState: ResultData = { dep: [], rtn: [] };
 
