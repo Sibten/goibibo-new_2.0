@@ -15,7 +15,7 @@ import { MdDone } from "react-icons/md";
 import Loaderdialog from "../Dialog/Loader.dialog";
 import Timer from "../../Helper/Timer";
 import { ToastContainer, toast } from "react-toastify";
-
+import { getFlightClass } from "../../Helper/Method";
 
 export const createPaymentOrder = async (amount: number) => {
   let config = {
@@ -53,7 +53,7 @@ const verifyPayment = async (
     address: bookingDetails.basic.address,
     pincode: bookingDetails.basic.pincode,
     state: bookingDetails.basic.state,
-    travel_class: bookingDetails.jouerny?.travel_class ?? 0,
+    travel_class: bookingDetails.jouerny.travel_class,
     dep_date: bookingDetails.jouerny?.dep?.source_time ?? null,
     rtn_date: bookingDetails.jouerny?.rtn?.source_time ?? null,
     dep_booking_seat: dep_seat,
@@ -124,8 +124,12 @@ export default function PaymentAction() {
         key: paymentKeyId, // Enter the Key ID generated from the Dashboard
         amount: (payableAmount * 100).toString(),
         currency: "INR",
-        name: "Goibibo",
-        description: `Ticket Booking of ${flight.dep?.route_id.source_city.city_name} - ${flight.dep?.route_id.destination_city.city_name} `,
+        name: `Goibibo ${getFlightClass(selector.jouerny.travel_class)}`,
+        description: `Ticket Booking of ${
+          flight.dep?.route_id.source_city.city_name
+        } - ${
+          flight.dep?.route_id.destination_city.city_name
+        } - ${getFlightClass(selector.jouerny.travel_class)} `,
         image:
           "https://res.cloudinary.com/dgsqarold/image/upload/v1685613732/Goibibo/OIP_l87euo.jpg",
         order_id: order.data.id,

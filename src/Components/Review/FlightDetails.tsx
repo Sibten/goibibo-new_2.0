@@ -24,8 +24,7 @@ export default function FlightDetails({
   isReturn: boolean;
 }) {
   const bookingParams = useSelector((state: RootState) => state.SearchParms);
-
-
+  const selector = useSelector((state: RootState) => state.SearchParms);
 
   const flightTimingData = data?.timing.find(
     (s) =>
@@ -47,7 +46,7 @@ export default function FlightDetails({
             source_time: source_time.toISOString(),
             destination_time: destn_time.toISOString(),
           },
-          class: bookingParams.class,
+          class: selector.class,
         })
       );
     } else {
@@ -58,7 +57,7 @@ export default function FlightDetails({
             source_time: source_time.toISOString(),
             destination_time: destn_time.toISOString(),
           },
-          class: bookingParams.class,
+          class: selector.class,
         })
       );
     }

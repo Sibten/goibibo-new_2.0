@@ -167,7 +167,7 @@ export default function TripMorepage() {
               </tr>
             </thead>
             <tbody>
-              {data?.jouerny_info.peoples.map((s) => (
+              {data?.jouerny_info.peoples.map((s: any) => (
                 <tr key={s.seat_no?.seat_no} className="text-center">
                   <td>{s.type == 0 ? "Adult" : "Child"}</td>
                   <td>

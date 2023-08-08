@@ -43,11 +43,14 @@ const BookingSlice = createSlice({
       state,
       action: PayloadAction<{ data: Timing; type: number; class: number }>
     ) => {
-      Object.assign(state.jouerny!.travel_class, action.payload.class);
+      // console.log("class", action.payload.class);
+      state.jouerny.travel_class = action.payload.class;
       if (action.payload.type == SearchType.From) {
-        Object.assign(state.jouerny!.dep, action.payload.data);
+        Object.assign(state.jouerny.dep, action.payload.data);
+        console.log("state", state);
       } else {
         Object.assign(state.jouerny.rtn as any, action.payload.data);
+        console.log("state", state);
       }
     },
     addBasic: (state, action: PayloadAction<TravellerDetailsBase>) => {

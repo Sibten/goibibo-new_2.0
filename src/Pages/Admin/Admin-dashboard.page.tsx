@@ -10,6 +10,8 @@ import { fetchAirlineFlights } from "../../Actions/Admin/AirlineFlights.action";
 import { fetchRoutes } from "../../Actions/Admin/Route.action";
 import "./Style.css";
 import Greeting from "../../Components/Greeting/Greeting";
+import { Link } from "react-router-dom";
+import TodaysFlightcomponent from "../../Components/Admin/Flights/TodaysFlight.component";
 
 export default function Admindashpage() {
   const selector = useSelector((state: RootState) => state.AirlineFlight);
@@ -56,13 +58,15 @@ export default function Admindashpage() {
           <h1 className="text-gray-300"> Total Flight Schedule</h1>
         </div>
         <div className="infoblock rounded-md mx-2 p-2">
-          <p className="text-white text-4xl font-qs"> {todayFlight.length} </p>
-          <h1 className="text-gray-300"> Today's Flights</h1>
+          <TodaysFlightcomponent data={todayFlight} />
         </div>
-        <div className="infoblock rounded-md mx-2 p-2">
-          <p className="text-white text-4xl font-qs">{routeSet.size} </p>
-          <h1 className="text-gray-300"> Total Routes</h1>
-        </div>
+        <Link to="/admin/management/route">
+          {" "}
+          <div className="infoblock rounded-md mx-2 p-2">
+            <p className="text-white text-4xl font-qs">{routeSet.size} </p>
+            <h1 className="text-gray-300"> Total Routes</h1>
+          </div>{" "}
+        </Link>
         <div className="infoblock rounded-md mx-2 p-2">
           <p className="text-white text-4xl font-qs"> {todayBooking} </p>
           <h1 className="text-gray-300"> Today's Booking </h1>

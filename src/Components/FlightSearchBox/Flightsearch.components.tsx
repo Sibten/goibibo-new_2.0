@@ -36,7 +36,7 @@ export default function Flightsearch() {
   const [openClass, setOpenClass] = useState(false);
 
   const [returnDate, setReturnDate] = useState(
-    SearchParams.return_date ? true : false
+    !!SearchParams.return_date
   );
 
   const clickCallBack = (type: CallBackType) => {
@@ -47,8 +47,11 @@ export default function Flightsearch() {
     setOpenClass(false);
   };
 
-  const clickSearchParams: SearchParamsType = { ...SearchParams };
+ 
 
+  const [clickSearchParams, setClickSearchParams] = useState<SearchParamsType>({
+    ...SearchParams,
+  });
   const adultsSpelling = SearchParams.pepoles.adults > 1 ? "Adults" : "Adult";
   const childernSpelling =
     SearchParams.pepoles.children! > 1 ? "Children" : "Child";
@@ -63,6 +66,13 @@ export default function Flightsearch() {
     );
   };
 
+  useEffect(() =>{
+    if(returnDate){
+      clickSearchParams.return_date = retnDateDef().toISOString().split("T")[0];
+      setClickSearchParams({...clickSearchParams})
+    }
+  },[SearchParams.dept_date])
+
   const [message, setMessage] = useState<string>("");
 
   const searchFlight = () => {
@@ -76,12 +86,17 @@ export default function Flightsearch() {
     let url = "";
     if (!clickSearchParams.return_date) {
       clickSearchParams.return_date = retnDateDef().toISOString().split("T")[0];
+      // SearchParams.return_date = retnDateDef().toISOString().split("T")[0];
+      setClickSearchParams({ ...clickSearchParams });
     }
+
     if (returnDate) {
       url = `?from=${SearchParams.from.airport_code}&to=${
         SearchParams.to.airport_code
       }&dep_date=${SearchParams.dept_date}&rtn_date=${
-        SearchParams.return_date ?? clickSearchParams.return_date
+        SearchParams.return_date && SearchParams.return_date != ""
+          ? SearchParams.return_date
+          : clickSearchParams.return_date
       }&class=${SearchParams.class}&adults=${
         SearchParams.pepoles.adults
       }&child=${SearchParams.pepoles.children}&infants=${
@@ -103,9 +118,11 @@ export default function Flightsearch() {
               id="blue"
               name="color"
               color="pink"
-              defaultChecked={SearchParams.return_date ? false : true}
+              defaultChecked={!SearchParams.return_date}
               onChange={() => {
                 clickSearchParams.return_date = undefined;
+                setClickSearchParams({ ...clickSearchParams });
+
                 setReturnDate(false);
               }}
             />{" "}
@@ -117,19 +134,23 @@ export default function Flightsearch() {
               id="blue"
               name="color"
               color="pink"
-              defaultChecked={SearchParams.return_date ? true : false}
+              defaultChecked={!!SearchParams.return_date}
               onChange={() => {
                 setReturnDate(true);
-                clickSearchParams.return_date =
-                  SearchParams.return_date ??
-                  new Date(
-                    new Date().setDate(
-                      new Date(SearchParams.dept_date).getDate() + 1
+                clickSearchParams.return_date = SearchParams.return_date
+                  ? SearchParams.return_date
+                  : new Date(
+                      new Date().setDate(
+                        new Date(SearchParams.dept_date).getDate() + 1
+                      )
                     )
-                  ).toISOString();
+                      .toISOString()
+                      .split("T")[0];
+                console.log(clickSearchParams.return_date);
+                setClickSearchParams({ ...clickSearchParams });
               }}
             />{" "}
-            <label className="text-lg">Round Trip</label>
+            <label className="text-lg">Round Trip {}</label>
           </span>
         </div>
         <div className="lg:flex my-4 flex-wrap w-max lg:w-full mx-auto">

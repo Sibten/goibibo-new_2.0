@@ -397,7 +397,7 @@ export default function PaymentDetails({
             onChange={(e) => setPromoCode(e.target.value)}
             disabled={promoApplied}
           />{" "}
-          {promoApplied ? (
+          {promoApplied && !payLock ? (
             <Button
               className="bg-red-600 w-24 rounded-md mx-2 p-1 text-white"
               onClick={() => removePromo()}

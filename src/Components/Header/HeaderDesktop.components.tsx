@@ -17,7 +17,7 @@ export default function HeaderDesktop() {
         <Link to="/">
           {" "}
           <img
-            src="https://res.cloudinary.com/dgsqarold/image/upload/v1685613732/Goibibo/OIP_l87euo.jpg"
+            src="https://res.cloudinary.com/dgsqarold/image/upload/v1691484041/Goibibo/GoibiboClone_bvxwj4.png"
             alt="goibibo logo"
             className="mx-auto w-28 my-4 h-max "
           />{" "}

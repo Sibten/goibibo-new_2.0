@@ -86,7 +86,7 @@ export default function TravellerDetails() {
         TravellerDetails.basic.state != "def"
       ) {
         setMessage("");
-        TravellerDetails.payment = bookingDetails.payment;
+        TravellerDetails.payment = bookingDetails.payment;      
         dispatch(BookingActions.addBasic(TravellerDetails));
         dispatch(trackingActions.activeDepSeat());
         navigate(

@@ -14,7 +14,7 @@ import { fetchOffers } from "./Actions/Offers.action";
 import { fetchAddons } from "./Actions/Addon.action";
 import { fetchTrips } from "./Actions/Trip.action";
 
-// store.subscribe(() => //  console.log(store.getState()));
+store.subscribe(() => console.log(store.getState()));
 
 const email = Cookies.get("email");
 store.dispatch(fetchAirports());

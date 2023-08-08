@@ -1,6 +1,8 @@
 import { Button, Input, Radio } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import { People, Traveller } from "../../../Types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 
 export default function Form({
   name,
@@ -20,11 +22,11 @@ export default function Form({
   const validateAge = (value: number, type: number) => {
     switch (type) {
       case People.Adult:
-        return value > 18 ? true : false;
+        return value > 18;
       case People.Child:
-        return value > 2 && value <= 18 ? true : false;
+        return !!(value > 2 && value <= 18);
       case People.Infant:
-        return value > 0 && value <= 2 ? true : false;
+        return !!(value > 0 && value <= 2);
     }
   };
 
@@ -33,16 +35,18 @@ export default function Form({
 
   const nameRegx = /[a-zA-Z]/;
 
+  const selector = useSelector((state: RootState) => state.BookingDetails);
+
   useEffect(() => {
     rawForm.splice(0, rawForm.length);
     formData.splice(0, formData.length);
     for (let i = 0; i < number; i++) {
       formData.push({
         type: type,
-        first_name: "",
-        last_name: "",
-        gender: "",
-        age: 0,
+        first_name: selector.basic.people[i]?.first_name ?? "",
+        last_name: selector.basic.people[i]?.last_name ?? "",
+        gender: selector.basic.people[i]?.gender ?? "",
+        age: selector.basic.people[i]?.age ?? 0,
       });
       rawForm.push(
         <div key={i}>
@@ -54,6 +58,7 @@ export default function Form({
               {" "}
               <Input
                 label="First Name*"
+                defaultValue={formData[i].first_name}
                 onBlur={(e) => {
                   if (e.target.value != "" && nameRegx.test(e.target.value)) {
                     formData[i].first_name = e.target.value;
@@ -71,6 +76,7 @@ export default function Form({
               {" "}
               <Input
                 label="Last Name*"
+                defaultValue={formData[i].last_name}
                 onBlur={(e) => {
                   if (e.target.value != "" && nameRegx.test(e.target.value)) {
                     formData[i].last_name = e.target.value;
@@ -91,6 +97,7 @@ export default function Form({
               <input
                 type="number"
                 min={0}
+                defaultValue={formData[i].age}
                 onBlur={(e) => {
                   if (validateAge(parseInt(e.target.value), type)) {
                     formData[i].age = parseInt(e.target.value);
@@ -100,7 +107,6 @@ export default function Form({
                   } else {
                     Message[i] = `Invalid Age of passanger ${i + 1}`;
                     setMessage([...Message]);
-                    //  console.log("Invalid Age");
                   }
                 }}
                 className="border placeholder:text-gray-600 p-2 w-full border-gray-500 rounded-md bg-transparent"
@@ -114,6 +120,7 @@ export default function Form({
                   formData[i].gender = "Male";
                   setFormData([...formData]);
                 }}
+                defaultChecked={formData[i].gender == "Male"}
               />
               <Radio
                 name={`gender-${i}-${type}`}
@@ -122,6 +129,7 @@ export default function Form({
                   formData[i].gender = "Female";
                   setFormData([...formData]);
                 }}
+                defaultChecked={formData[i].gender == "Female"}
               />
             </div>
           </div>
