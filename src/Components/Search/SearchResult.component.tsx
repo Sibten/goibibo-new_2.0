@@ -7,7 +7,7 @@ import SearchFlights from "./Subcomponent/SearchFlights";
 import { Filter } from "../../Types";
 
 export default function SearchResult() {
-  const SearchParams = useSelector((state: RootState) => state.SearchParms);
+  // const SearchParams = useSelector((state: RootState) => state.SearchParms);
   const [filter, setFilter] = useState<Filter>(defFilter);
 
   const handlecallBack = (data: Filter) => {

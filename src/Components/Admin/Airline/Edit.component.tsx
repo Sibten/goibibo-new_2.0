@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Airline } from "../../../Types";
-import { Button, Input } from "@material-tailwind/react";
+import { Alert, Button, Input } from "@material-tailwind/react";
 import { FaPen } from "react-icons/fa";
 import axios, { AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
@@ -15,6 +15,7 @@ import { callAPI } from "../../../Services/APIFetch";
 export default function Editcomponent({ data }: { data: Airline }) {
   const [airlineData, setAirlineData] = useState<Airline>(data);
   const dispatch = useDispatch<AppThunkDispatch>();
+  const [message, setMessage] = useState<string>("")
   const updateAirline = async () => {
     let data = JSON.stringify({
       airline_id: airlineData.airline_id,
@@ -22,60 +23,76 @@ export default function Editcomponent({ data }: { data: Airline }) {
       airline_location: airlineData.airline_location,
       airline_code: airlineData.airline_code,
     });
-    let config: AxiosRequestConfig = {
-      method: "put",
-      url: `${process.env.REACT_APP_API}/airlines/myairline/update`,
-      headers: {
-        // token: Cookies.get("token"),
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
+    if(airlineData.airline_name && airlineData.airline_location){
 
-    const res = await axios(config);
-
-    if (res.data.update) {
-      toast.success("Airline update successfully.", {
-        position: "bottom-right",
-      });
-      dispatch(fetchAirlineDetails());
-    } else {
-      toast.error("Unable to update Airline", { position: "bottom-right" });
+      let config: AxiosRequestConfig = {
+        method: "put",
+        url: `${process.env.REACT_APP_API}/airlines/myairline/update`,
+        headers: {
+          // token: Cookies.get("token"),
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+  
+      const res = await axios(config);
+  
+      if (res.data.update) {
+        toast.success("Airline update successfully.", {
+          position: "bottom-right",
+        });
+        dispatch(fetchAirlineDetails());
+      } else {
+        toast.error("Unable to update Airline", { position: "bottom-right" });
+      }
+    }
+    else{
+      setMessage("Airline data must be provided!");
+      setTimeout(() => setMessage(""),2000)
     }
   };
 
   const [fileIcon, setFileIcon] = useState<any>();
 
-  const updateIcon = () => {
-    const formdata = new FormData();
-    formdata.append("file", fileIcon);
 
-    axios
-      .patch(
-        `${process.env.REACT_APP_API}/airlines/myairline/update/uploadicon`,
-        formdata,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            // token: Cookies.get("token"),
-          },
-        }
-      )
-      .then((s) => {
-        if (s.data.update)
-          toast.success("Icon updated successfully!", {
-            position: "bottom-right",
-          });
-        else
-          toast.error("Unable to update", {
-            position: "bottom-right",
-          });
-      })
-      .catch((e) =>
-        toast.error("Unable to update!", {
-          position: "bottom-right",
+  const updateIcon = () => {
+    if (fileIcon) {
+      const formdata = new FormData();
+      formdata.append("file", fileIcon);
+
+      axios
+        .patch(
+          `${process.env.REACT_APP_API}/airlines/myairline/update/uploadicon`,
+          formdata,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              // token: Cookies.get("token"),
+            },
+          }
+        )
+        .then((s) => {
+          if (s.data.update)
+            toast.success("Icon updated successfully!", {
+              position: "bottom-right",
+            });
+          else
+            toast.error("Unable to update", {
+              position: "bottom-right",
+            });
         })
-      );
+        .catch((e) =>
+          toast.error("Unable to update!", {
+            position: "bottom-right",
+          })
+        )
+    } else {
+      setMessage("Icon must be provided!");
+      setTimeout(() => {
+        setMessage("")
+      },2000)
+    } 
+ 
   };
   return (
     <div className="  rounded-md w-[24rem] mx-auto p-4">
@@ -120,7 +137,8 @@ export default function Editcomponent({ data }: { data: Airline }) {
         {" "}
         Upload
       </Button>
-
+      
+      {message ?  <Alert className="bg-red-50 text-sm text-red-500 p-2 my-2">{message}</Alert> : ""}
       <ToastContainer />
     </div>
   );

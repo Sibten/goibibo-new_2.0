@@ -11,7 +11,7 @@ export default function HomeDesktop() {
         <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-400 p-16">
           <h1 className="font-bold font-qs text-white text-xl text-center">
             {" "}
-            Domestic Cheap Flights Search{" "}
+            International & Domestic Cheap Flights Search{" "}
           </h1>
         </div>
         <Flightsearch />

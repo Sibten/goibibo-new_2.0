@@ -32,7 +32,11 @@ export const calDuration = (time1: string, time2: string) => {
   let diff = t2 - t1;
   let hrs = Math.floor(diff / (1000 * 60 * 60));
   let min = Math.ceil(((diff / (1000 * 60 * 60)) % 1) * 60);
-  return `${hrs}h ${min}m`;
+  if (hrs >= 24) {
+    let day = Math.floor(hrs / 24);
+    hrs = hrs - 24 * day;
+    return `${day}d ${hrs}h ${min}m`;
+  } else return `${hrs}h ${min}m`;
 };
 export const calFare = (
   totalkm: number,

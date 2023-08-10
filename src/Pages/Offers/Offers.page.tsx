@@ -13,7 +13,7 @@ export default function OffersPage() {
       <div className="w-max mx-auto my-2">
         <div>
           <img
-            src="https://res.cloudinary.com/dgsqarold/image/upload/v1691060489/Goibibo/top-1690886978_qu5xlk.avif"
+            src="https://res.cloudinary.com/dgsqarold/image/upload/v1691574024/Goibibo/topband-1670486848_uzokgp.webp"
             alt="offer"
             className="w-[48rem]"
           />

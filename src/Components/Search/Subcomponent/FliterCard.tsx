@@ -9,7 +9,7 @@ import { Radio } from "@material-tailwind/react";
 export const defFilter: Filter = {
   dep: {
     time1: 0,
-    time2: 24,
+    time2: 48,
     stops: -1,
     airline: [],
     min: 0,
@@ -17,7 +17,7 @@ export const defFilter: Filter = {
   },
   rtn: {
     time1: 0,
-    time2: 24,
+    time2: 48,
     stops: -1,
     airline: [],
     min: 0,

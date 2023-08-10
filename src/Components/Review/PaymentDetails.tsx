@@ -193,12 +193,19 @@ export default function PaymentDetails({
 
   useEffect(() => {
     if (appliedOffer) {
-      setTotalPayment({
-        ...TotalPayment,
-        discount: Math.ceil(
-          TotalPayment.original_total * appliedOffer.offer_discount
-        ),
-      });
+      if (appliedOffer.offer_discount > 1) {
+        setTotalPayment({
+          ...TotalPayment,
+          discount: Math.ceil(appliedOffer.offer_discount),
+        });
+      } else {
+        setTotalPayment({
+          ...TotalPayment,
+          discount: Math.ceil(
+            TotalPayment.original_total * appliedOffer.offer_discount
+          ),
+        });
+      }
     } else {
       setTotalPayment({
         ...TotalPayment,

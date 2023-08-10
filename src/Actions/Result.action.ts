@@ -9,7 +9,6 @@ export const fetchResult = createAsyncThunk(
   "fetchResult",
   async (config: AxiosRequestConfig) => {
     const data = await axios(config);
-
     return data.data;
   }
 );

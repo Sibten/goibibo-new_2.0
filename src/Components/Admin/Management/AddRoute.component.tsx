@@ -51,6 +51,7 @@ export default function AddRouteComponent() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const addRoute = () => {
+  
     newRouteData.stops.splice(0, newRouteData.stops.length);
     selectedOptions.forEach((s) =>
       newRouteData.stops.push(
@@ -64,6 +65,8 @@ export default function AddRouteComponent() {
     setSelectedOptions([...selectedOptions]);
 
     if (
+      newRouteData.destination_city &&
+      newRouteData.source_city &&
       newRouteData.destination_city != newRouteData.source_city &&
       !newRouteData.stops.includes(
         newRouteData.destination_city || newRouteData.source_city

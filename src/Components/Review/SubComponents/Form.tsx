@@ -65,8 +65,7 @@ export default function Form({
                     setFormData([...formData]);
                     Message.splice(i, 1);
                   } else {
-                    Message[i] =
-                      "Name can contain only alphabets not even white space.";
+                    Message[i] = "Name can contain only alphabets";
                     setMessage([...Message]);
                   }
                 }}

@@ -35,11 +35,11 @@ export default function Result({ filter }: { filter: Filter }) {
         if (
           new Date(s.timing[0].source_time) >=
             new Date(
-              new Date(s.timing[0].destination_time).setHours(filter.dep.time1)
+              new Date(s.timing[0].source_time).setHours(filter.dep.time1)
             ) &&
           new Date(s.timing[0].source_time) <
             new Date(
-              new Date(s.timing[0].destination_time).setHours(filter.dep.time2)
+              new Date(s.timing[0].source_time).setHours(filter.dep.time2)
             ) &&
           (filter.dep.stops == 3 ? s.route_id.stops.length > 3 : true) &&
           (filter.dep.stops == -1
