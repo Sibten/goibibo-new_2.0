@@ -16,17 +16,10 @@ import Loaderdialog from "../Dialog/Loader.dialog";
 import Timer from "../../Helper/Timer";
 import { ToastContainer, toast } from "react-toastify";
 import { getFlightClass } from "../../Helper/Method";
+import { postAPI } from "../../Services/API.services";
 
 export const createPaymentOrder = async (amount: number) => {
-  let config = {
-    method: "post",
-    url: `${process.env.REACT_APP_API}/payment/create?amount=${amount}`,
-    headers: {
-      // token: Cookies.get("token"),
-    },
-  };
-
-  return await axios(config);
+  return await postAPI(`/payment/create?amount=${amount}`);
 };
 
 const verifyPayment = async (
@@ -68,23 +61,13 @@ const verifyPayment = async (
       return_addons: bookingDetails.addOnRtn,
     },
   };
-  // //  console.log(sendingData);
+
   const data = JSON.stringify(sendingData);
 
-  const config: AxiosRequestConfig = {
-    method: "post",
-    url: `${process.env.REACT_APP_API}/payment/validate`,
-    headers: {
-      // token: Cookies.get("token"),
-      "Content-Type": "application/json",
-    },
-    data: data,
-  };
-
   try {
-    const data = await axios(config);
+    const res = await postAPI("/payment/validate", data);
 
-    return { data: data, status: true };
+    return { data: res, status: true };
   } catch (e) {
     return { data: null, status: false };
   }

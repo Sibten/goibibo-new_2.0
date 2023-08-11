@@ -16,7 +16,7 @@ import { FaBaby, FaChild, FaLock } from "react-icons/fa";
 import { Button, Input, Alert } from "@material-tailwind/react";
 import axios, { AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
-import { callAPI, getAPICallType } from "../../Services/APIFetch";
+import { callAPI, getAPI, getAPICallType } from "../../Services/API.services";
 
 import { BookingActions } from "../../Actions/ConfirmBookingDetails.action";
 
@@ -225,15 +225,8 @@ export default function PaymentDetails({
   const dispatch = useDispatch();
 
   const applyPromoCode = async () => {
-    const config: AxiosRequestConfig = {
-      method: "get",
-      url: `${process.env.REACT_APP_API}/offers/reedme?code=${promocode}`,
-      headers: {
-        // token: Cookies.get("token"),
-      },
-    };
     try {
-      const res = await axios(config);
+      const res = await getAPI(`/offers/reedme?code=${promocode}`);
       if (res.status == 200 && res.data.reedme) {
         setPromoError("");
         TotalPayment.promotion = Math.ceil(

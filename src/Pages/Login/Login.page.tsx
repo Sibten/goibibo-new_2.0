@@ -12,6 +12,7 @@ import { fetchOffers } from "../../Actions/Offers.action";
 import { fetchTrips } from "../../Actions/Trip.action";
 import { Roles } from "../../Types";
 import { ToastContainer, toast } from "react-toastify";
+import { postAPI } from "../../Services/API.services";
 const makeSecrete = (data: string) => {
   let part = data.slice(2, data.length - 4);
   part = part.replaceAll(/\w/g, "*");
@@ -41,7 +42,7 @@ export default function LoginPage() {
     }
   };
 
-  const sendOTP = () => {
+  const sendOTP = async () => {
     setResendOTP(1);
     setDeactive(true);
     setOTPBoxOpen(1);
@@ -52,29 +53,17 @@ export default function LoginPage() {
     const data = JSON.stringify({
       email: email,
     });
-    const config: AxiosRequestConfig = {
-      method: "post",
-      url: `${process.env.REACT_APP_API}/user/generateotp`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-      data: data,
-    };
-    // axios.post()
-    axios(config)
-      .then(function (response) {
-        if (response.status == 200) {
-          let email = makeSecrete(response.data.email);
-          setOTPSendingMessage(`OTP sent to ${email}`);
-        }
-        // //  console.log(response.data);
+
+    try {
+      const res = await postAPI("/user/generateotp", data);
+      if (res.status == 200) {
+        let email = makeSecrete(res.data.email);
+        setOTPSendingMessage(`OTP sent to ${email}`);
         toast.success("OTP Successfully Sent!");
-      })
-      .catch(function (error) {
-        toast.error("Something bad happen!");
-        // //  console.log(error);
-      });
+      }
+    } catch (e) {
+      toast.error("Something bad happen!");
+    }
   };
 
   const checkOTP = (comingOTP: string) => {
@@ -91,44 +80,32 @@ export default function LoginPage() {
     // //  console.log("Timer Complete");
   };
   const [error, setError] = useState("");
-  const verifyOTP = () => {
+  const verifyOTP = async () => {
     const data = JSON.stringify({
       email: email,
       otp: OTP,
     });
     // //  console.log(data);
-    const config: AxiosRequestConfig = {
-      method: "post",
-      url: `${process.env.REACT_APP_API}/user/validateotp`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-      data: data,
-    };
-
-    axios(config)
-      .then(function (response) {
-        if (response.data.login) {
-          dispatch(fetchUser(email));
-          dispatch(fetchOffers());
-          dispatch(fetchTrips());
-          navigate("/profile");
-        } else {
-          setError("Verification failed");
-          setTimeout(() => {
-            setError("");
-          }, 3000);
-        }
-      })
-      .catch(function (error) {
+    try {
+      const res = await postAPI("/user/validateotp", data);
+      if (res.data.login) {
+        dispatch(fetchUser(email));
+        dispatch(fetchOffers());
+        dispatch(fetchTrips());
+        navigate("/profile");
+      } else {
         setError("Verification failed");
         setTimeout(() => {
           setError("");
         }, 3000);
-
-        // //  console.log(error);
-      });
+      }
+    } catch (e) {
+      setError("Verification failed");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+      toast.error("OTP verfication failed");
+    }
   };
 
   return (

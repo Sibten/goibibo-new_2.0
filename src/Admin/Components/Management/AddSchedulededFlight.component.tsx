@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { fetchAirlineFlights } from "../../../Actions/Admin/AirlineFlights.action";
+import { postAPI } from "../../../Services/API.services";
 
 export default function AddSchedulededFlightcomponent({
   flightno,
@@ -51,16 +52,8 @@ export default function AddSchedulededFlightcomponent({
       try {
         const data = JSON.stringify(scheduleFlightData);
         setLoading(true);
-        let config = {
-          method: "post",
-          url: `${process.env.REACT_APP_API}/flight/schedule`,
-          headers: {
-            // token: Cookies.get("token"),
-            "Content-Type": "application/json",
-          },
-          data: data,
-        };
-        const res = await axios(config);
+
+        const res = await postAPI("/flight/schedule", data);
         if (res.status == 200) {
           toast.success("Flight Successfully Schedulded!");
           dispatch(fetchAirlineFlights());

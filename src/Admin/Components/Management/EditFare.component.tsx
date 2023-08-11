@@ -16,16 +16,17 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { AppThunkDispatch } from "../../../store";
 import { fetchFare } from "../../../Actions/Admin/Utility.action";
-import { callAPI } from "../../../Services/APIFetch";
+import { callAPI, postAPI } from "../../../Services/API.services";
 
 export default function EditFarecomponents({
   fare,
   tax,
 }: {
   fare?: Array<ClassFare>;
-  tax?: number;
+  tax: number;
 }) {
   const [open, setOpen] = useState<boolean>(false);
+  const GST: number = parseInt(process.env.REACT_APP_GST!) ?? 18;
 
   const dispatch = useDispatch<AppThunkDispatch>();
 
@@ -34,7 +35,7 @@ export default function EditFarecomponents({
     BC_fare: 0,
     PE_fare: 0,
     FC_fare: 0,
-    tax: tax ?? 0,
+    tax: tax,
   });
 
   const update = (type: number, value: number) => {
@@ -60,32 +61,22 @@ export default function EditFarecomponents({
     setUpdateData({ ...updateData });
   }, [fare]);
 
-  const GST: number = parseInt(process.env.REACT_APP_GST!) ?? 18;
-
   const updateFare = async () => {
+    console.log(tax - GST / 100);
     const data = JSON.stringify(updateData);
-    let config = {
-      method: "post",
-      url: `${process.env.REACT_APP_API}/airlines/myairline/fare/add`,
-      headers: {
-        // token: Cookies.get("token"),
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
-
-    try {
-      const res = await axios(config);
-      if (res.status == 200) {
-        toast.success("Fare Updated Successfully", {
-          position: "bottom-right",
-        });
-        dispatch(fetchFare());
-        setOpen(false);
-      } else toast.error("Unable to update!", { position: "bottom-right" });
-    } catch (e) {
-      toast.error("Something bad happen!", { position: "bottom-right" });
-    }
+    console.log(data);
+    // try {
+    //   const res = await postAPI("/airlines/myairline/fare/add", data);
+    //   if (res.status == 200) {
+    //     toast.success("Fare Updated Successfully", {
+    //       position: "bottom-right",
+    //     });
+    //     dispatch(fetchFare());
+    //     setOpen(false);
+    //   } else toast.error("Unable to update!", { position: "bottom-right" });
+    // } catch (e) {
+    //   toast.error("Something bad happen!", { position: "bottom-right" });
+    // }
   };
 
   return (
@@ -132,7 +123,7 @@ export default function EditFarecomponents({
                   tax: (parseInt(e.target.value) + GST) / 100,
                 })
               }
-              defaultValue={Math.ceil(tax! * 100) - GST}
+              defaultValue={Math.ceil(updateData.tax * 100 - GST)}
             />
             <p className="absolute right-8  top-2 rounded text-sm font-bold">
               % on total amt + {GST} % GST

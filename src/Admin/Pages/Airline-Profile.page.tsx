@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Button } from "@material-tailwind/react";
 import { FaPen } from "react-icons/fa";
-import Editcomponent from "../../Components/Admin/Airline/Edit.component";
+import Editcomponent from "../../Admin/Components/Airline/Edit.component";
 import { MdCancel } from "react-icons/md";
 
 export default function AirlineProfilePage() {

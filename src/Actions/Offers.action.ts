@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { APICallType, OfferBase } from "../Types";
 import axios, { AxiosRequestConfig } from "axios";
-import { getAPICallType } from "../Services/APIFetch";
+import { getAPICallType } from "../Services/API.services";
 
 const initialState: Array<OfferBase> = [];
 

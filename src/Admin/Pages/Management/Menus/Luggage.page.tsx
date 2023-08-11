@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import Title from "../../../../Components/Utility/Title";
-import BackToMenu from "../../../../Components/Admin/Menus/BackToMenu";
+import BackToMenu from "../../../Components/Menus/BackToMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { AppThunkDispatch, RootState } from "../../../../store";
 import { fetchLuggage } from "../../../../Actions/Admin/Utility.action";
-import AirlineData from "../../../../Components/Admin/Airline/AirlineData";
-import EditLuggageComponent from "../../../../Components/Admin/Management/EditLuggage.component";
+import AirlineData from "../../../Components/Airline/AirlineData";
+import EditLuggageComponent from "../../../Components/Management/EditLuggage.component";
 import { getFlightClass } from "../../../../Helper/Method";
-import { type } from "os";
 import { Alert } from "@material-tailwind/react";
 export default function LuggagePage() {
   const lugSelector = useSelector((state: RootState) => state.Utility.luggage);

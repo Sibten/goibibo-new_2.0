@@ -5,10 +5,10 @@ import { AppThunkDispatch, RootState } from "../../../../store";
 import { fetchFare } from "../../../../Actions/Admin/Utility.action";
 import { getFlightClass } from "../../../../Helper/Method";
 import { Button } from "@material-tailwind/react";
-import BackToMenu from "../../../../Components/Admin/Menus/BackToMenu";
+import BackToMenu from "../../../Components/Menus/BackToMenu";
 import { FaPen } from "react-icons/fa";
-import EditFarecomponents from "../../../../Components/Admin/Management/EditFare.component";
-import AirlineData from "../../../../Components/Admin/Airline/AirlineData";
+import EditFarecomponents from "../../../Components/Management/EditFare.component";
+import AirlineData from "../../../Components/Airline/AirlineData";
 
 export default function Farepage() {
   const fareSelector = useSelector((state: RootState) => state.Utility.fare);
@@ -29,7 +29,7 @@ export default function Farepage() {
             <div className="mx-4">
               <EditFarecomponents
                 fare={fareSelector?.fare}
-                tax={fareSelector?.tax}
+                tax={fareSelector?.tax ?? parseInt(process.env.GST ?? "18")}
               />
             </div>
           </div>

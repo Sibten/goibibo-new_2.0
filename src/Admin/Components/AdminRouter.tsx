@@ -6,13 +6,12 @@ import {
   TabsBody,
   TabsHeader,
 } from "@material-tailwind/react";
-import Admindashpage from "../../Pages/Admin/Admin-dashboard.page";
+import Admindashpage from "../Pages/Admin-dashboard.page";
 import { MdDashboard, MdFlight, MdSettings } from "react-icons/md";
 import { FaPlane } from "react-icons/fa";
-import AirlineProfilePage from "../../Pages/Admin/Airline-Profile.page";
+import AirlineProfilePage from "../Pages/Airline-Profile.page";
 
 import { Link } from "react-router-dom";
-import BookingDashboardPage from "../../Pages/Admin/Management/Booking-dashboard.page";
 export default function AdminRouter() {
   const [activeTab, setActiveTab] = useState<number>(1);
   return (

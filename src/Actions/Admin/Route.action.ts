@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
 import { Route } from "../../Types";
-import { callAPI } from "../../Services/APIFetch";
+import { callAPI } from "../../Services/API.services";
 
 const initialState: Array<Route> = [];
 

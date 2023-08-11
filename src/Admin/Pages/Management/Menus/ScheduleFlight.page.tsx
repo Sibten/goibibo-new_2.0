@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import BackToMenu from "../../../../Components/Admin/Menus/BackToMenu";
+import BackToMenu from "../../../Components/Menus/BackToMenu";
 import Title from "../../../../Components/Utility/Title";
 import { Input, Select, Option, Button, Alert } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,11 +8,8 @@ import { Route, SearchType, callTypes } from "../../../../Types";
 import { fetchRoutes } from "../../../../Actions/Admin/Route.action";
 import { fetchAirbus } from "../../../../Actions/Admin/Airbuses.action";
 import { ToastContainer, toast } from "react-toastify";
-import Cookies from "js-cookie";
-import axios from "axios";
-import ReactSelect from "react-select";
 import Loaderdialog from "../../../../Components/Dialog/Loader.dialog";
-import { callAPI } from "../../../../Services/APIFetch";
+import { postAPI } from "../../../../Services/API.services";
 
 export default function ScheduleFlightpage() {
   const dispatch = useDispatch<AppThunkDispatch>();
@@ -48,19 +45,9 @@ export default function ScheduleFlightpage() {
     // //  console.log(scheduleFlightData);
     const data = JSON.stringify(scheduleFlightData);
     setLoading(true);
-    let config = {
-      method: "post",
-      url: `${process.env.REACT_APP_API}/flight/schedule`,
-      headers: {
-        // token: Cookies.get("token"),
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
-    // //  console.log(config);
 
     try {
-      const res = await axios(config);
+      const res = await postAPI("/flight/schedule", data);
       if (res.status == 200) {
         setLoading(false);
         toast.success("Flight Scheduleded!", { position: "bottom-right" });

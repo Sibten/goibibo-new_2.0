@@ -13,13 +13,6 @@ import RtnSeatSelectionPage from "./Pages/SeatSelection/RtnSeatSelection.page";
 import PaymentPage from "./Pages/Payment/Payment.page";
 import Tripspage from "./Pages/Trips/Trips.page";
 import TripMorepage from "./Pages/Trips/TripMoreinfo.page";
-import AdminProtection from "./AdminProtection";
-import AdminRouter from "./Components/Admin/AdminRouter";
-import Managementpage from "./Pages/Admin/Management/Managment.page";
-import ScheduleFlightpage from "./Pages/Admin/Management/Menus/ScheduleFlight.page";
-import Farepage from "./Pages/Admin/Management/Menus/Fare.page";
-import LuggagePage from "./Pages/Admin/Management/Menus/Luggage.page";
-import Routepage from "./Pages/Admin/Management/Menus/Route.page";
 import UnderConstruction from "./Components/Errors/UnderConstruction";
 import Footer from "./Components/Footer/Footer";
 import Support from "./Pages/Support/Support";
@@ -51,17 +44,6 @@ function App() {
           <Route path="/profile" element={<Profilepage />} />
           <Route path="/mytrips" element={<Tripspage />} />
           <Route path="/mytrip/:pnr" element={<TripMorepage />} />
-        </Route>
-
-        <Route path="/admin" element={<AdminProtection />}>
-          <Route path="" element={<AdminRouter />} />
-          <Route path="management">
-            <Route path="" element={<Managementpage />} />
-            <Route path="scheduleflight" element={<ScheduleFlightpage />} />
-            <Route path="fare" element={<Farepage />} />
-            <Route path="luggage" element={<LuggagePage />} />
-            <Route path="route" element={<Routepage />} />
-          </Route>
         </Route>
 
         <Route path="/support" element={<Support />} />

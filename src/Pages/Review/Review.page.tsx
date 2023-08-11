@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppThunkDispatch, RootState } from "../../store";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AxiosRequestConfig } from "axios";
-import { getAPICallType } from "../../Services/APIFetch";
+import { getAPICallType } from "../../Services/API.services";
 import { APICallType, SearchType, OfferBase } from "../../Types";
 import { fetchFlight } from "../../Actions/BookingFlight.action";
 import { Spinner } from "@material-tailwind/react";

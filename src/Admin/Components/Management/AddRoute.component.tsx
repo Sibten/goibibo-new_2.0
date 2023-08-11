@@ -14,14 +14,11 @@ import { BiPlus } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import ReactSelect from "react-select";
 import { AppThunkDispatch, RootState } from "../../../store";
-import { AirportType } from "../../../Types";
-import Cookies from "js-cookie";
-import axios from "axios";
+
 import { ToastContainer, toast } from "react-toastify";
-import { getStops } from "../../../Helper/Method";
 import { fetchRoutes } from "../../../Actions/Admin/Route.action";
-import Loaderdialog from "../../Dialog/Loader.dialog";
-import { callAPI } from "../../../Services/APIFetch";
+import Loaderdialog from "../../../Components/Dialog/Loader.dialog";
+import { postAPI } from "../../../Services/API.services";
 
 export default function AddRouteComponent() {
   const [open, setOpen] = useState<boolean>(false);
@@ -51,7 +48,6 @@ export default function AddRouteComponent() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const addRoute = () => {
-  
     newRouteData.stops.splice(0, newRouteData.stops.length);
     selectedOptions.forEach((s) =>
       newRouteData.stops.push(
@@ -87,18 +83,8 @@ export default function AddRouteComponent() {
     setLoading(true);
     const data = JSON.stringify(newRouteData);
 
-    let config = {
-      method: "post",
-      url: `${process.env.REACT_APP_API}/route/addroute`,
-      headers: {
-        // token: Cookies.get("token"),
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
-
     try {
-      const res = await axios(config);
+      const res = await postAPI("/route/addroute", data);
       if (res.status == 200) {
         toast.success("Route Added Successfully", { position: "bottom-right" });
         dispatch(fetchRoutes());

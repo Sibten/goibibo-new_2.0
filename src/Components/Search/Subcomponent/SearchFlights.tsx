@@ -8,7 +8,7 @@ import {
   ResultBase,
   ClassFare,
 } from "../../../Types";
-import { callAPI, getAPICallType } from "../../../Services/APIFetch";
+import { callAPI, getAPICallType } from "../../../Services/API.services";
 import axios, { AxiosRequestConfig } from "axios";
 import { Spinner } from "@material-tailwind/react";
 import Result from "./Result";

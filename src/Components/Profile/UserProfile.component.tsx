@@ -18,6 +18,7 @@ import Title from "../Utility/Title";
 import TrackingActions, {
   trackingActions,
 } from "../../Actions/Tracking.actions";
+import { getAPI, postAPI, putAPI } from "../../Services/API.services";
 
 export default function UserProfile() {
   const User = useSelector((state: RootState) => state.User);
@@ -27,32 +28,23 @@ export default function UserProfile() {
   const navigate = useNavigate();
 
   const logout = async () => {
-    try{
-
-      const config: AxiosRequestConfig = {
-        method: "get",
-        url: `${process.env.REACT_APP_API}/user/logout`,
-      };
-      console.log(config)
-      const res = await axios(config);
-      if(res.status == 200){
-        toast.success("Successfully Logged out")
-          dispatch(userActions.remove());
-      dispatch(airlineActions.remove());
-      dispatch(BookingFlightActions.reset());
-      dispatch(BookingActions.reset());
-      dispatch(ResultActions.reset());
-      dispatch(trackingActions.disableAll());
-      navigate("/");
+    try {
+      const res = await getAPI("/user/logout");
+      if (res.status == 200) {
+        toast.success("Successfully Logged out");
+        dispatch(userActions.remove());
+        dispatch(airlineActions.remove());
+        dispatch(BookingFlightActions.reset());
+        dispatch(BookingActions.reset());
+        dispatch(ResultActions.reset());
+        dispatch(trackingActions.disableAll());
+        navigate("/");
+      } else {
+        toast.error("Unable to log out!");
       }
-      else{
-        toast.error("Unable to log out!")
-      }
+    } catch (e) {
+      toast.error("Something bad happen! Unable to log out.");
     }
-    catch(e){
-      toast.error("Something bad happen! Unable to log out.")
-    }
-  
   };
   const [userData, setUserData] = useState<UserType>(User);
   useEffect(() => {
@@ -81,6 +73,8 @@ export default function UserProfile() {
         toast.success("Successfully Updated Profile Photo", {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
+        if(email)
+        dispatch(fetchUser(email));
       })
       .catch((e) => {
         toast.error("Unable to Update Profile Photo", {
@@ -89,7 +83,7 @@ export default function UserProfile() {
       });
     dispatch(fetchUser(email!));
   };
-  const updateProfile = (e: MouseEvent<HTMLButtonElement>) => {
+  const updateProfile = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     delete userData.role;
     const data = JSON.stringify(userData);
@@ -107,29 +101,28 @@ export default function UserProfile() {
     } else {
       const config = {
         method: "put",
-        url: `${process.env.REACT_APP_API}/user/updateprofile`,
+        url: `${process.env.REACT_APP_API}`,
         headers: {
           "Content-Type": "application/json",
           // token: Cookies.get("token"),
         },
         data: data,
       };
-
-      axios(config)
-        .then(function (response) {
+      try {
+        const res = await putAPI("/user/updateprofile", data);
+        if (res.status == 200) {
           toast.success("Profile Updated Sucessfully", {
             position: toast.POSITION.BOTTOM_RIGHT,
           });
           //  console.log(response.data);
 
           dispatch(fetchUser(email!));
-        })
-        .catch(function (error) {
-          toast.error("Unable to Update Profile!", {
-            position: toast.POSITION.BOTTOM_RIGHT,
-          });
-          //  console.log(error);
+        }
+      } catch (e) {
+        toast.error("Unable to Update Profile!", {
+          position: toast.POSITION.BOTTOM_RIGHT,
         });
+      }
     }
     //  console.log(userData);
   };

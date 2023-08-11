@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import Title from "../../Components/Utility/Title";
-import AdminManagementSpeedDial from "../../Components/Admin/SpeedDial";
-import Flightscomponent from "../../Components/Admin/Flights/Flights.component";
+import AdminManagementSpeedDial from "../Components/SpeedDial";
+import Flightscomponent from "../Components/Flights/Flights.component";
 import { useDispatch, useSelector } from "react-redux";
 import { AppThunkDispatch, RootState } from "../../store";
-import ScheduledFlightComponent from "../../Components/Admin/Flights/ScheduledFlight.component";
+import ScheduledFlightComponent from "../Components/Flights/ScheduledFlight.component";
 import { fetchAirlineDetails } from "../../Actions/Admin/Airline.action";
 import { fetchAirlineFlights } from "../../Actions/Admin/AirlineFlights.action";
 import { fetchRoutes } from "../../Actions/Admin/Route.action";
 import "./Style.css";
 import Greeting from "../../Components/Greeting/Greeting";
 import { Link } from "react-router-dom";
-import TodaysFlightcomponent from "../../Components/Admin/Flights/TodaysFlight.component";
+import TodaysFlightcomponent from "../Components/Flights/TodaysFlight.component";
 
 export default function Admindashpage() {
   const selector = useSelector((state: RootState) => state.AirlineFlight);

@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import Title from "../../../../Components/Utility/Title";
-import BackToMenu from "../../../../Components/Admin/Menus/BackToMenu";
+import BackToMenu from "../../../Components/Menus/BackToMenu";
 import { Input } from "@material-tailwind/react";
-import AirlineData from "../../../../Components/Admin/Airline/AirlineData";
+import AirlineData from "../../../Components/Airline/AirlineData";
 import { useDispatch, useSelector } from "react-redux";
 import { AppThunkDispatch, RootState } from "../../../../store";
 import { Route } from "../../../../Types";
 import { fetchRoutes } from "../../../../Actions/Admin/Route.action";
 import { getStops } from "../../../../Helper/Method";
-import AddRouteComponent from "../../../../Components/Admin/Management/AddRoute.component";
+import AddRouteComponent from "../../../Components/Management/AddRoute.component";
 
 export default function Routepage() {
   const routeSelector = useSelector((state: RootState) => state.Routes);

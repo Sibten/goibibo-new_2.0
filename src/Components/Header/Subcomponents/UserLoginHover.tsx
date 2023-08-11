@@ -49,17 +49,6 @@ export default function UserLoginHover() {
               </p>{" "}
             </li>
           </Link>
-          {User.role?.role_id == Roles.Admin ? (
-            <Link to="/admin">
-              {" "}
-              <li className="text-gray-700 flex border-b my-2 p-2">
-                <RiAdminFill className="text-xl" />
-                <p className="mx-4 text-md font-qs font-bold">Administration</p>
-              </li>{" "}
-            </Link>
-          ) : (
-            ""
-          )}
         </ul>
       </div>
     </div>

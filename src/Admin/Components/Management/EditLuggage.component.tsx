@@ -16,7 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { AppThunkDispatch } from "../../../store";
 import { fetchLuggage } from "../../../Actions/Admin/Utility.action";
-import { callAPI } from "../../../Services/APIFetch";
+import { callAPI, postAPI } from "../../../Services/API.services";
 
 export default function EditLuggageComponent({
   data,
@@ -59,18 +59,8 @@ export default function EditLuggageComponent({
   const updateLuggage = async () => {
     // //  console.log(updateData);
     const data = JSON.stringify(updateData);
-    let config = {
-      method: "post",
-      url: `${process.env.REACT_APP_API}/airlines/myairline/rule/add?type=0`,
-      headers: {
-        // token: Cookies.get("token"),
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
-
     try {
-      const res = await axios(config);
+      const res = await postAPI(`/airlines/myairline/rule/add?type=0`, data);
       if (res.status == 200) {
         // //  console.log(res.data);
         setOpen(false);
