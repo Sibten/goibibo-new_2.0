@@ -210,7 +210,13 @@ export default function TripMorepage() {
               <li className="flex justify-between my-1">
                 {" "}
                 <span className="font-bold"> Basic Fare</span>{" "}
-                <span> &#8377; {data?.payment.payment_amount.basic_total}</span>
+                <span>
+                  {" "}
+                  &#8377;{" "}
+                  {data?.payment.payment_amount.basic_total.toLocaleString(
+                    process.env.REACT_APP_REGION
+                  )}
+                </span>
               </li>
               <li className="flex justify-between my-1">
                 {" "}
@@ -218,14 +224,23 @@ export default function TripMorepage() {
                   {" "}
                   Tax & Surcharges (18% GST Inc.)
                 </span>{" "}
-                <span> &#8377; {data?.payment.payment_amount.tax_total}</span>
+                <span>
+                  {" "}
+                  &#8377;{" "}
+                  {data?.payment.payment_amount.tax_total.toLocaleString(
+                    process.env.REACT_APP_REGION
+                  )}
+                </span>
               </li>
               <li className="flex justify-between my-1">
                 {" "}
                 <span className="font-bold"> Promotion</span>{" "}
                 <span className="text-red-500">
                   {" "}
-                  -&#8377; {data?.payment.payment_amount.promotion}
+                  -&#8377;{" "}
+                  {data?.payment.payment_amount.promotion.toLocaleString(
+                    process.env.REACT_APP_REGION
+                  )}
                 </span>
               </li>
               <li className="flex justify-between my-1">
@@ -233,7 +248,10 @@ export default function TripMorepage() {
                 <span className="font-bold"> Disount</span>{" "}
                 <span className="text-red-500">
                   {" "}
-                  -&#8377; {data?.payment.payment_amount.discount}
+                  -&#8377;{" "}
+                  {data?.payment.payment_amount.discount.toLocaleString(
+                    process.env.REACT_APP_REGION
+                  )}
                 </span>
               </li>
               <li className="flex justify-between my-1">
@@ -241,7 +259,10 @@ export default function TripMorepage() {
                 <span className="font-bold"> Add ons</span>{" "}
                 <span className="text-blue-700">
                   {" "}
-                  +&#8377; {data?.payment.payment_amount.total_add_on}
+                  +&#8377;{" "}
+                  {data?.payment.payment_amount.total_add_on.toLocaleString(
+                    process.env.REACT_APP_REGION
+                  )}
                 </span>
               </li>
               <li className="flex justify-between my-4 border-t border-gray-300">
@@ -249,10 +270,12 @@ export default function TripMorepage() {
                 <span className="font-bold"> Grand Total</span>{" "}
                 <span className="text-indigo-700 font-bold text-lg">
                   &#8377;
-                  {data?.payment.payment_amount.original_total! +
+                  {(
+                    data?.payment.payment_amount.original_total! +
                     data?.payment.payment_amount.total_add_on! -
                     (data?.payment.payment_amount.promotion! +
-                      data?.payment.payment_amount.discount!)}{" "}
+                      data?.payment.payment_amount.discount!)
+                  ).toLocaleString(process.env.REACT_APP_REGION)}
                 </span>
               </li>
             </ul>

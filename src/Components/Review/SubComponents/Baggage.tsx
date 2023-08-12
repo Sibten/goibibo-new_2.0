@@ -46,7 +46,9 @@ export default function Baggage({
                 </div>
               </div>
               <div className="m-4 flex items-center">
-                <p className="mx-2">&#8377; {s.price} </p>
+                <p className="mx-2">
+                  &#8377; {s.price.toLocaleString(process.env.REACT_APP_REGION)}{" "}
+                </p>
                 <Radio
                   name={`baggage-${type}`}
                   color="pink"

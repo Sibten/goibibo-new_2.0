@@ -178,3 +178,4 @@ export const getPeopleType = (type: number) => {
       return "Infants";
   }
 };
+

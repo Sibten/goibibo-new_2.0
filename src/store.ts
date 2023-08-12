@@ -14,6 +14,7 @@ import AirlineFlightReducer from "./Actions/Admin/AirlineFlights.action";
 import AirbusReducer from "./Actions/Admin/Airbuses.action";
 import RouteReducer from "./Actions/Admin/Route.action";
 import UtilityReducer from "./Actions/Admin/Utility.action";
+import Admin from "./Actions/Admin/AdminDetails.action";
 
 const store = configureStore({
   reducer: {
@@ -32,6 +33,7 @@ const store = configureStore({
     Airbuses: AirbusReducer,
     Routes: RouteReducer,
     Utility: UtilityReducer,
+    Admin: Admin,
   },
 });
 

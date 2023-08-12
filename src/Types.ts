@@ -6,6 +6,8 @@ export interface MyProps {
   callType?: number;
 }
 
+export const emailRegx = /^[A-Za-z0-9_.]+@[a-z.]+\.[a-z]{2,4}$/;
+
 export enum APICallType {
   POST,
   GET,

@@ -10,7 +10,7 @@ import { fetchUser, userActions } from "../../Actions/User.action";
 import Cookies from "js-cookie";
 import { fetchOffers } from "../../Actions/Offers.action";
 import { fetchTrips } from "../../Actions/Trip.action";
-import { Roles } from "../../Types";
+import { Roles, emailRegx } from "../../Types";
 import { ToastContainer, toast } from "react-toastify";
 import { postAPI } from "../../Services/API.services";
 const makeSecrete = (data: string) => {
@@ -22,7 +22,7 @@ const makeSecrete = (data: string) => {
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [OTP, setOTP] = useState("");
-  const emailRegx = /^[A-Za-z0-9_.]+@[a-z.]+\.[a-z]{2,4}$/;
+
   const OTPRegx = /^\d{6}$/;
 
   const [OTPBoxOpen, setOTPBoxOpen] = useState(0);

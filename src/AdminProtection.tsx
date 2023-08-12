@@ -1,22 +1,16 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppThunkDispatch } from "./store";
+import { useSelector } from "react-redux";
+import { RootState } from "./store";
 import { Roles } from "./Types";
-import Homepage from "./Pages/Home/Home.page";
 import { Outlet } from "react-router-dom";
-import { fetchAirlineDetails } from "./Actions/Admin/Airline.action";
-import { fetchAirlineFlights } from "./Actions/Admin/AirlineFlights.action";
-import { fetchAirbus } from "./Actions/Admin/Airbuses.action";
-import { fetchRoutes } from "./Actions/Admin/Route.action";
-
+import AdminLoginpage from "./Admin/Pages/Login.page";
 export default function AdminProtection() {
-  const user = useSelector((state: RootState) => state.User);
+  const admin = useSelector((state: RootState) => state.Admin);
 
-  return user.email && user.role?.role_id == Roles.Admin ? (
+  return admin.email && admin.role?.role_id == Roles.Admin ? (
     <>
       <Outlet />
     </>
   ) : (
-    <Homepage />
+    <AdminLoginpage />
   );
 }

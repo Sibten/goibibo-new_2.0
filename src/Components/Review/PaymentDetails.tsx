@@ -305,7 +305,7 @@ export default function PaymentDetails({
       <div className="p-4">
         <div className="flex font-bold justify-between">
           <h1>Basic Fare </h1>
-          <p>&#8377; {TotalPayment.basic_total}</p>
+          <p>&#8377; {TotalPayment.basic_total.toLocaleString(process.env.REACT_APP_REGION)}</p>
         </div>
         <ul className="mx-2 my-2">
           {IndiPayment.map((s) => (
@@ -318,32 +318,47 @@ export default function PaymentDetails({
                 <p className="w-max">
                   <span className="ms-8 text-xs">
                     {" "}
-                    (Dep - 1 x &#8377; {s.fare.dep.basic}){" "}
+                    (Dep - 1 x &#8377; {s.fare.dep.basic.toLocaleString(process.env.REACT_APP_REGION)}){" "}
                   </span>
                   {bookingFlight.rtn ? (
                     <span className="text-xs">
                       {" "}
-                      (Rtn - 1 x &#8377; {s.fare.rtn.basic}){" "}
+                      (Rtn - 1 x &#8377; {s.fare.rtn.basic.toLocaleString(process.env.REACT_APP_REGION)}){" "}
                     </span>
                   ) : (
                     ""
                   )}
                 </p>
               </div>
-              <p> &#8377; {s.basic_total} </p>
+              <p>
+                {" "}
+                &#8377;{" "}
+                {s.basic_total.toLocaleString(
+                  process.env.REACT_APP_REGION
+                )}{" "}
+              </p>
             </li>
           ))}
         </ul>
         <div className="flex  justify-between my-2 text-gray-700">
           <h1>Tax & Surcharges </h1>
-          <p>&#8377; {TotalPayment.tax_total}</p>
+          <p>
+            &#8377;{" "}
+            {TotalPayment.tax_total.toLocaleString(
+              process.env.REACT_APP_REGION
+            )}
+          </p>
         </div>
         {depAddon ? (
           <div className="flex justify-between my-2">
             <h1>Departure Addon </h1>
             <p className="text-blue-800">
               {" "}
-              <span> + &#8377; {depAddon.price}</span>
+              <span>
+                {" "}
+                + &#8377;{" "}
+                {depAddon.price.toLocaleString(process.env.REACT_APP_REGION)}
+              </span>
             </p>
           </div>
         ) : (
@@ -354,7 +369,11 @@ export default function PaymentDetails({
             <h1>Return Addon </h1>
             <p className="text-blue-800">
               {" "}
-              <span> + &#8377; {rtnAddon.price}</span>
+              <span>
+                {" "}
+                + &#8377;{" "}
+                {rtnAddon.price.toLocaleString(process.env.REACT_APP_REGION)}
+              </span>
             </p>
           </div>
         ) : (
@@ -363,7 +382,12 @@ export default function PaymentDetails({
         {TotalPayment.discount > 0 ? (
           <div className="flex justify-between my-2">
             <h1>Discount</h1>
-            <p className="text-red-600">- &#8377; {TotalPayment.discount}</p>
+            <p className="text-red-600">
+              - &#8377;{" "}
+              {TotalPayment.discount.toLocaleString(
+                process.env.REACT_APP_REGION
+              )}
+            </p>
           </div>
         ) : (
           ""
@@ -371,7 +395,12 @@ export default function PaymentDetails({
         {TotalPayment.promotion > 0 ? (
           <div className="flex justify-between">
             <h1>Promotion</h1>
-            <p className="text-red-600">- &#8377; {TotalPayment.promotion}</p>
+            <p className="text-red-600">
+              - &#8377;{" "}
+              {TotalPayment.promotion.toLocaleString(
+                process.env.REACT_APP_REGION
+              )}
+            </p>
           </div>
         ) : (
           ""
@@ -380,11 +409,13 @@ export default function PaymentDetails({
           <h1>Grand Total</h1>
           <p className="text-xl">
             &#8377;{" "}
-            {TotalPayment.original_total +
+            {(
+              TotalPayment.original_total +
               (depAddon?.price ?? 0) +
               (rtnAddon?.price ?? 0) -
               TotalPayment.discount -
-              TotalPayment.promotion}
+              TotalPayment.promotion
+            ).toLocaleString(process.env.REACT_APP_REGION)}
           </p>
         </div>
       </div>

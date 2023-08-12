@@ -126,15 +126,33 @@ export default function ExtraInfo({
                 <tbody className="text-black">
                   <tr>
                     <td> Base fare (1 Adult)</td>
-                    <td> &#8377; {flightfare.basic} </td>
+                    <td>
+                      {" "}
+                      &#8377;{" "}
+                      {flightfare.basic.toLocaleString(
+                        process.env.REACT_APP_REGION
+                      )}{" "}
+                    </td>
                   </tr>
                   <tr>
                     <td> Taxes and Fees (1 Adult) </td>
-                    <td> &#8377; {flightfare.tax}</td>
+                    <td>
+                      {" "}
+                      &#8377;{" "}
+                      {flightfare.tax.toLocaleString(
+                        process.env.REACT_APP_REGION
+                      )}
+                    </td>
                   </tr>
                   <tr>
                     <td> Total Fare (1 Adult) </td>
-                    <td> &#8377; {flightfare.basic + flightfare.tax} </td>
+                    <td>
+                      {" "}
+                      &#8377;{" "}
+                      {(flightfare.basic + flightfare.tax).toLocaleString(
+                        process.env.REACT_APP_REGION
+                      )}{" "}
+                    </td>
                   </tr>
                 </tbody>
               </table>

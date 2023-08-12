@@ -131,7 +131,10 @@ export default function SearchCard({
               <p className="text-gray-500 text-xs"> Fare </p>
               <h1 className="text-xl font-bold mt-2">
                 {" "}
-                &#8377; {Flightfare.basic + Flightfare.tax}{" "}
+                &#8377;{" "}
+                {(Flightfare.basic + Flightfare.tax).toLocaleString(
+                  process.env.REACT_APP_REGION
+                )}{" "}
               </h1>
             </div>
 
