@@ -17,7 +17,11 @@ export const fetchAdmin = createAsyncThunk(
 const adminSlice = createSlice({
   name: "Admin",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    remove: (state) => {
+      Object.assign(state, initialState);
+    },
+  },
   extraReducers: (build) => {
     build.addCase(
       fetchAdmin.fulfilled,

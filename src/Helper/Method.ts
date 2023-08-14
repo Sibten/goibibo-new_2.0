@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import FlightClass from "../Components/FlightSearchBox/MainSubcomponents/FlightClass";
+import FlightClass from "../Modules/User/Components/FlightSearchBox/MainSubcomponents/FlightClass";
 import {
   Flighclass,
   ClassFare,

@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppThunkDispatch, RootState } from "./store";
 import { Outlet, useNavigate } from "react-router-dom";
-import LoginPage from "./Pages/Login/Login.page";
-import Tracking from "./Components/Tracking/Tracking";
+import LoginPage from "./Modules/User/Pages/Login/Login.page";
+import Tracking from "./Modules/User/Components/Tracking/Tracking";
 import Cookies from "js-cookie";
 import { fetchUser } from "./Actions/User.action";
 import { fetchTrips } from "./Actions/Trip.action";

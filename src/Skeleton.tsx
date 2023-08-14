@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from "react";
-import Header from "./Components/Header/Header.components";
+import Header from "./Modules/User/Components/Header/Header.components";
 import { Outlet } from "react-router-dom";
-import Footer from "./Components/Footer/Footer";
-import AdminHeadercomponent from "./Admin/Components/Header/AdminHeader.component";
-import AdminFootercomponent from "./Admin/Components/Footer/AdminFooter.component";
+import Footer from "./Modules/User/Components/Footer/Footer";
+import AdminHeadercomponent from "./Modules/Admin/Components/Navigation/AdminHeader.component";
+import AdminFootercomponent from "./Modules/Admin/Components/Footer/AdminFooter.component";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrips } from "./Actions/Trip.action";
-import { fetchUser } from "./Actions/User.action";
+import { fetchUser, userActions } from "./Actions/User.action";
 import { getAPI } from "./Services/API.services";
 import { Roles } from "./Types";
 import { AppThunkDispatch, RootState } from "./store";
 import { fetchAdmin } from "./Actions/Admin/AdminDetails.action";
-import Loaderdialog from "./Components/Dialog/Loader.dialog";
+import Loaderdialog from "./Modules/User/Components/Dialog/Loader.dialog";
 import { error } from "console";
-import BadError from "./Components/Errors/Bad";
+import BadError from "./Modules/User/Components/Errors/Bad";
+import { fetchAirbus } from "./Actions/Admin/Airbuses.action";
+import { fetchAirlineDetails } from "./Actions/Admin/Airline.action";
+import { fetchAirlineFlights } from "./Actions/Admin/AirlineFlights.action";
+import { fetchLuggage, fetchFare } from "./Actions/Admin/Utility.action";
+import { fetchRoutes } from "./Actions/Admin/Route.action";
 export default function Skeleton({ isAdmin }: { isAdmin: boolean }) {
   const email = Cookies.get("email");
   const dispatch = useDispatch<AppThunkDispatch>();
+  const simpleDispatch = useDispatch();
 
   const Admin = useSelector((state: RootState) => state.Admin);
   const User = useSelector((state: RootState) => state.User);
@@ -40,8 +46,15 @@ export default function Skeleton({ isAdmin }: { isAdmin: boolean }) {
             setLoading(false);
           }, 1000);
         } else if (res.data.role.role_id == Roles.Admin) {
+          simpleDispatch(userActions.remove());
           dispatch(fetchAdmin(email ?? ""));
 
+          dispatch(fetchAirlineDetails());
+          dispatch(fetchAirlineFlights());
+          dispatch(fetchAirbus());
+          dispatch(fetchLuggage());
+          dispatch(fetchFare());
+          dispatch(fetchRoutes());
           setTimeout(() => {
             setLoading(false);
           }, 1000);
@@ -55,8 +68,6 @@ export default function Skeleton({ isAdmin }: { isAdmin: boolean }) {
     fetchUserData();
   }, []);
 
-  const response = err ? <BadError /> : <Outlet />;
-
   return (
     <div>
       {isAdmin ? <AdminHeadercomponent /> : <Header />}
@@ -66,7 +77,7 @@ export default function Skeleton({ isAdmin }: { isAdmin: boolean }) {
           <Loaderdialog />{" "}
         </>
       ) : (
-        response
+        <Outlet />
       )}
       {isAdmin ? <AdminFootercomponent /> : <Footer />}
     </div>
