@@ -4,7 +4,13 @@ import { Button, Tooltip } from "@material-tailwind/react";
 import { FaDownload, FaInfoCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-export default function Card({ data }: { data: TripData }) {
+export default function Card({
+  data,
+  disable,
+}: {
+  data: TripData;
+  disable?: boolean;
+}) {
   const navigate = useNavigate();
   return (
     <div className="bg-white rounded-md p-2 flex items-center my-2">
@@ -48,18 +54,22 @@ export default function Card({ data }: { data: TripData }) {
           </div>
         </div>
       </div>
-      <div>
-        <Button
-          variant="outlined"
-          size="sm"
-          color="blue"
-          onClick={() => navigate(`/mytrip/${data.PNR_no}`)}
-          className="text-xs flex"
-        >
-          <FaInfoCircle className="mr-1 mt-[1px]" />
-          More Info
-        </Button>
-      </div>
+      {disable ? (
+        ""
+      ) : (
+        <div>
+          <Button
+            variant="outlined"
+            size="sm"
+            color="blue"
+            onClick={() => navigate(`/mytrip/${data.PNR_no}`)}
+            className="text-xs flex"
+          >
+            <FaInfoCircle className="mr-1 mt-[1px]" />
+            More Info
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

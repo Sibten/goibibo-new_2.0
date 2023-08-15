@@ -9,6 +9,7 @@ import {
 } from "@material-tailwind/react";
 import { FaSuitcase } from "react-icons/fa";
 import {
+  MdCancelPresentation,
   MdDoneOutline,
   MdFreeCancellation,
   MdOutlineDone,
@@ -78,6 +79,20 @@ export default function Tripspage() {
                   <MdDoneOutline className="mx-2 my-1" /> Completed Trip
                 </p>
               </Tab>
+              <Tab
+                key={"cancel"}
+                value="cancel"
+                className={
+                  currentTab == 3
+                    ? "font-qs font-bold"
+                    : " font-qs font-bold opacity-60"
+                }
+                onClick={() => setCurrentTab(3)}
+              >
+                <p className="flex">
+                  <MdCancelPresentation className="mx-2 my-1" /> Cancelled Trip
+                </p>
+              </Tab>
             </TabsHeader>
             <TabsBody>
               <TabPanel key={"upcoming"} value={"upcoming"}>
@@ -86,6 +101,9 @@ export default function Tripspage() {
 
               <TabPanel key={"completed"} value={"completed"}>
                 <Completedtrip data={completed} />
+              </TabPanel>
+              <TabPanel key={"cancel"} value={"cancel"}>
+                <CancelTrip data={cancel} />
               </TabPanel>
             </TabsBody>
           </Tabs>
