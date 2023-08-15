@@ -70,6 +70,8 @@ export default function TravellerDetails() {
   const navigate = useNavigate();
 
   const navigateSeatSelection = () => {
+    console.log("Hello");
+    console.log(bookingDetails);
     if (
       bookingDetails.payment?.basic_total != 0 &&
       bookingDetails.payment?.tax_total != 0 &&

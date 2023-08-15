@@ -349,7 +349,7 @@ interface Flight {
   };
 }
 
-interface PeopleBase {
+export interface PeopleBase {
   type: number;
   first_name: string;
   last_name: string;
@@ -475,4 +475,42 @@ export interface LuggageUpdate {
   BC: number;
   PE: number;
   FC: number;
+}
+
+export interface UserBookingBase {
+  bookings: Array<{
+    date: string;
+    booking: [
+      {
+        mail: string;
+        id: {
+          jouerny_info: {
+            departure_date: string;
+            return_date: string | null;
+            destination_city: AirportType;
+            source_city: AirportType;
+            isRtn: boolean;
+            peoples: Array<PeopleBase>;
+            address: string;
+            pincode: number;
+            state: string;
+            infants: [];
+          };
+          addons: {
+            departure_addons: Array<AddonBase>;
+            return_addons: Array<AddonBase>;
+          };
+          class_type: number;
+          status: number;
+          payment: {
+            payment_amount: TotalPaymentDetails;
+            order_id: string;
+            razor_pay_id: string;
+            transaction_stamp: string;
+            status: number;
+          };
+        };
+      }
+    ];
+  }>;
 }

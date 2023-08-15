@@ -65,18 +65,18 @@ export default function EditFarecomponents({
     console.log(tax - GST / 100);
     const data = JSON.stringify(updateData);
     console.log(data);
-    // try {
-    //   const res = await postAPI("/airlines/myairline/fare/add", data);
-    //   if (res.status == 200) {
-    //     toast.success("Fare Updated Successfully", {
-    //       position: "bottom-right",
-    //     });
-    //     dispatch(fetchFare());
-    //     setOpen(false);
-    //   } else toast.error("Unable to update!", { position: "bottom-right" });
-    // } catch (e) {
-    //   toast.error("Something bad happen!", { position: "bottom-right" });
-    // }
+    try {
+      const res = await postAPI("/airlines/myairline/fare/add", data);
+      if (res.status == 200) {
+        toast.success("Fare Updated Successfully", {
+          position: "bottom-right",
+        });
+        dispatch(fetchFare());
+        setOpen(false);
+      } else toast.error("Unable to update!", { position: "bottom-right" });
+    } catch (e) {
+      toast.error("Something bad happen!", { position: "bottom-right" });
+    }
   };
 
   return (

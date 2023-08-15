@@ -32,20 +32,11 @@ export default function FlightDatecomponent({
       </ul>
       <div className="flex border-t border-gray-300 my-1 p-1 justify-around text-lg">
         <Tooltip content="Reschedule">
-          <Link to={`${jouDate}/manage`}>
+          <Link to={`${source}/manage`}>
             {" "}
             <button>
               {" "}
               <LuSettings />
-            </button>{" "}
-          </Link>
-        </Tooltip>
-        <Tooltip content="View Booking">
-          <Link to={`${jouDate}/viewbooking`}>
-            {" "}
-            <button>
-              {" "}
-              <FaEye />{" "}
             </button>{" "}
           </Link>
         </Tooltip>

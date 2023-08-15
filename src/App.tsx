@@ -59,7 +59,6 @@ function App() {
                 <Route path="" element={<Flightpage />} />
                 <Route path=":date">
                   <Route path="manage" element={<Reschedulepage />} />
-                  <Route path="viewbooking" element={<ViewBookingpage />} />
                 </Route>
               </Route>
             </Route>
