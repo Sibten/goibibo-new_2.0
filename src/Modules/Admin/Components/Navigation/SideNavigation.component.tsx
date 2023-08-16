@@ -7,7 +7,7 @@ export default function SideNavigationcomponent() {
   const url = useLocation();
 
   return (
-    <div className="flex flex-col bg-white w-full text-lg font-qs h-[51.4rem]">
+    <div className="flex sticky top-[82px] flex-col bg-white w-full text-lg font-qs h-[51.4rem]">
       <Link to="dashboard">
         {" "}
         <div
@@ -64,7 +64,7 @@ export default function SideNavigationcomponent() {
         >
           <p className="flex ">
             {" "}
-            <MdAirplaneTicket className="mx-2 my-1" /> Booking & Flights
+            <MdAirplaneTicket className="mx-2 my-1" /> Flights Management
           </p>
         </div>{" "}
       </Link>

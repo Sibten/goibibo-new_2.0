@@ -7,7 +7,8 @@ import { payment } from "../../../../Types";
 import { Button } from "@material-tailwind/react";
 import { FaPrint } from "react-icons/fa";
 import { URL } from "url";
-import { getFlightClass } from "../../../../Helper/Method";
+import { getFlightClass, date } from "../../../../Helper/Method";
+import CancelDialog from "../../Components/Trips/CancelDialog.component";
 
 export default function TripMorepage() {
   const params = useParams();
@@ -24,14 +25,22 @@ export default function TripMorepage() {
         <img src="https://res.cloudinary.com/dgsqarold/image/upload/v1690998775/Goibibo/gbo_gstxd2.png" />
       </div>
       <div className=" mx-auto w-max my-2">
-        <Button
-          className="print:hidden flex"
-          variant="outlined"
-          color="indigo"
-          onClick={() => window.print()}
-        >
-          Print <FaPrint className="mx-2" />
-        </Button>
+        <div className="flex">
+          <Button
+            className="print:hidden flex"
+            variant="outlined"
+            color="indigo"
+            onClick={() => window.print()}
+          >
+            Print <FaPrint className="mx-2" />
+          </Button>
+          <CancelDialog
+            pnr={data?.PNR_no ?? 0}
+            date={new Date(data?.jouerny_info.departure_date ?? "")}
+            payment={data?.payment.payment_amount ?? null}
+          />
+        </div>
+
         {/* <a
           className="print:hidden flex"
           // variant="outlined"

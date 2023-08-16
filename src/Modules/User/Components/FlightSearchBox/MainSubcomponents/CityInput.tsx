@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MyProps,
   AirportType,
@@ -13,6 +13,8 @@ import { MenuItem } from "@material-tailwind/react";
 import { FaPlane } from "react-icons/fa";
 import "./CityInput.css";
 import { searchActions } from "../../../../../Actions/Search.action";
+import { getAPI } from "../../../../../Services/API.services";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function FlightInput({
   label,
@@ -39,6 +41,22 @@ export default function FlightInput({
         )
       );
   };
+
+  const [input, setInput] = useState("");
+
+  useEffect(() => {
+    const getData = setTimeout(() => {
+      try {
+        getAPI(`/city/search?cityName=${input}`).then((s) => {
+          setAirportData([...s.data]);
+        });
+      } catch (e) {
+        toast.error("Something bad happen");
+      }
+    }, 2000);
+
+    return () => clearInterval(getData);
+  }, [input]);
 
   const clickSearchParams: SearchParamsType = {
     ...SearchParams,
@@ -77,7 +95,10 @@ export default function FlightInput({
         </label>
         <input
           className="text-xl font-qs w-full p-2 border-blue-500 border-2 text-black focus:outline-blue-600 rounded-lg"
-          onChange={(e) => handleSearch(e)}
+          onChange={(e) => {
+            if (e.target.value != "") setInput(e.target.value);
+            else setTimeout(() => setAirportData([...Airports]), 2000);
+          }}
         />
         <div className="h-96 overflow-y-auto inputPred bg-white text-gray-600">
           <ul className="mt-2">
@@ -102,6 +123,7 @@ export default function FlightInput({
           </ul>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

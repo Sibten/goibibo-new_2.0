@@ -82,10 +82,10 @@ export default function AdminLoginpage() {
             />
           )}
         </div>
-        <div className="my-2 ">
+        <div className="my-2 w-max ml-auto">
           <Link to="/admin/forgot">
             {" "}
-            <p className="text-blue-700 text-sm text-right">
+            <p className="text-blue-700 w-max text-sm text-right">
               Forgot Password ?
             </p>{" "}
           </Link>

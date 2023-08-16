@@ -72,12 +72,12 @@ export default function Reschedulepage() {
     } else {
       try {
         console.log(updateData);
-        setLoading(false);
         const res = await putAPI(
           `/flight/reschedule?flightNo=${flightNo}`,
           JSON.stringify(updateData)
         );
         if (res.status == 200) {
+          setLoading(false);
           toast.success(`Flight ${flightNo} is reschedulded`);
           setTimeout(() => {
             navigate("/admin/flights");

@@ -13,8 +13,6 @@ import { date, time } from "../../../../Helper/Method";
 import { RxReset } from "react-icons/rx";
 import { MdAdd, MdClose } from "react-icons/md";
 import AddSchedulededFlightcomponent from "../Management/AddSchedulededFlight.component";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../store";
 
 export default function ScheduledFlightComponent({
   data,

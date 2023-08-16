@@ -37,9 +37,9 @@ export default function ViewBookingpage() {
           const response = await getAPI(
             `/flight/getbookings?flightNo=${flightNo}&date=${flightDate}`
           );
-          res(response.data);
+          return res(response.data);
         } catch (e) {
-          rej(e);
+          return rej(e);
         }
       });
     };

@@ -16,7 +16,7 @@ export default function FlightDatecomponent({
   jouDate: string;
 }) {
   return (
-    <div className="border border-gray-300 w-48 p-2 rounded-md">
+    <div className="border border-gray-300 w-48 p-2 rounded-md m-2">
       <div className="flex justify-between items-center">
         <h1 className="font-bold text-lg">{date(jouDate)}</h1>
       </div>
