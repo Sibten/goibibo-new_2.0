@@ -137,7 +137,9 @@ export default function CancelDialog({
               </div>
             </DialogBody>
             <DialogFooter>
-              <button className="mx-2">Cancel </button>
+              <button className="mx-2" onClick={() => setOpen(!open)}>
+                Cancel{" "}
+              </button>
               <Button disabled={!ack} onClick={() => cancelTrip()}>
                 Confirm
               </Button>

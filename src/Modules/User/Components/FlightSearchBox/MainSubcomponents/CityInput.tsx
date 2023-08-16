@@ -45,17 +45,18 @@ export default function FlightInput({
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    const getData = setTimeout(() => {
-      try {
-        getAPI(`/city/search?cityName=${input}`).then((s) => {
-          setAirportData([...s.data]);
-        });
-      } catch (e) {
-        toast.error("Something bad happen");
-      }
-    }, 2000);
-
-    return () => clearInterval(getData);
+    if (input.length > 0) {
+      const getData = setTimeout(() => {
+        try {
+          getAPI(`/city/search?cityName=${input}`).then((s) => {
+            setAirportData([...s.data]);
+          });
+        } catch (e) {
+          toast.error("Something bad happen");
+        }
+      }, 1500);
+      return () => clearInterval(getData);
+    }
   }, [input]);
 
   const clickSearchParams: SearchParamsType = {
@@ -96,7 +97,7 @@ export default function FlightInput({
         <input
           className="text-xl font-qs w-full p-2 border-blue-500 border-2 text-black focus:outline-blue-600 rounded-lg"
           onChange={(e) => {
-            if (e.target.value != "") setInput(e.target.value);
+            if (e.target.value.length > 2) setInput(e.target.value);
             else setTimeout(() => setAirportData([...Airports]), 2000);
           }}
         />
